@@ -97,7 +97,8 @@ productManager.addProduct({
 //Creamos nuevamente el producto 4, esta vez ingresando los valores por parámetro.
 const producto4 = new Product("A/A 6000fr", "Aire acondicionado split 6000fr F/C", 250000, "Ruta imagen", 6, 04);
 productManager.addProduct(producto4);
-//Buscamos y mostramos los productos por consola utilizando su id.
+//Buscamos y mostramos los productos por consola utilizando su id. El último debería tirar error al no existir.
 productManager.getProductById(1);
 productManager.getProductById(2);
 productManager.getProductById(3);
+productManager.getProductById(4);
