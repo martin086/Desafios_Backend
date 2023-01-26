@@ -1,94 +1,130 @@
 /*Desafio 2*/
-const fs = require('fs').promises
-class ProductManager {
-    static idCounter = 0;
-    constructor(path) {
-        this.products = [];
-        this.path = path;
-    }
-
-    addProduct = async(product) => {
-        //Validar que todos los campos sean completados.
-        if (Object.values(product).includes("") || Object.values(product).includes(null)) {
-            console.log("Todos los campos deben ser completados.");
-        } else {
-            // Validar que la propiedad "code" no esté repetida.
-            const existingCode = this.products.find((prod) => prod.code === product.code);
-            if (existingCode) {
-                console.log(`El código ${existingCode.code} está duplicado. Ingrese uno diferente.`);
-                } else {
-                    // Agregar el producto al array.
-                    this.products.push({...product, id: ++ProductManager.idCounter}); 
-                    let read = await fs.readFile(this.path, 'utf-8')
-                    let aux = await JSON.parse(read)
-                    console.log(aux)
-                    aux.push(this.products)
-                    console.log(aux)
-                    await fs.writeFile(this.path, JSON.stringify(aux))
-                }
-        }
-            
-    }
-
-    getProducts = async () => {
-        try {
-            let read = await fs.exists(this.path, 'utf-8')
-            let aux = await JSON.parse(read)
-            console.log("Listado completo de productos:");
-            console.log(aux);
-        } catch {
-            await fs.writeFile(this.path, JSON.stringify([]))
-        }
-        
-    }
-
-    getProductById(id) {
-        const findProduct = this.products.find((prod) => prod.id === id);
-        if (findProduct) {
-            let index = this.products.indexOf(findProduct);
-            console.log("Se ha encontrado el siguiente producto:")
-            console.log(this.products[index]);
-        } else {
-            console.log("Not found");
-        }
-    }
-}
+const fs = require('fs').promises;
+const ruta = "./productos.json";
 
 
 class Product {
-    constructor(title, description, price, thumbnail, stock, code) {
+    constructor(title, description, price, thumbnail, code, stock) {
         this.title = title
         this.description = description
         this.price = price
         this.thumbnail = thumbnail
-        this.stock = stock
         this.code = code
+        this.stock = stock
+        this.id = Product.addId()
+    }
+
+    static addId(){
+        if (this.idIncrement) {
+            this.idIncrement++
+        } else {
+            this.idIncrement = 1
+        }
+        return this.idIncrement
+    }
+}
+
+class ProductManager {
+    constructor(path) {
+        this.path = path;
+    }
+
+    addProduct = async(product) => {
+        //Validar que todos los campos sean completados que la propiedad "code" no esté repetida.
+        const read = await fs.readFile(this.path, 'utf-8');
+        const data = JSON.parse(read);
+        const prodCode = data.map((prod) => prod.code);
+        const prodExist = prodCode.includes(product.code); 
+        if (prodExist) {
+            return console.log (`El código ${product.code} ya existe. Ingrese uno diferente.`)
+        } else if (Object.values(product).includes("") || Object.values(product).includes(null)) {
+            return console.log("Todos los campos deben ser completados.");
+        } else {
+            const nuevoProducto = {...product};
+            data.push(nuevoProducto);
+            await fs.writeFile(this.path, JSON.stringify(data), 'utf-8')
+            //console.log(data)
+            return console.log(`El producto con id: ${nuevoProducto.id} ha sido agregado.`)
+        }
+    }
+
+    getProducts = async () => {
+        const read = await fs.readFile(this.path, 'utf-8')
+        const data = JSON.parse(read)
+        if (data.length != 0) {
+            console.log("Listado completo de productos:");
+            console.log(data);
+        } else {
+            console.log ("No se encuentran productos en el listado.")
+        }
+    }
+
+    getProductById = async (id) => {
+        const read = await fs.readFile(this.path, 'utf-8');
+        const data = JSON.parse(read);
+        const findProduct = data.find((prod) => prod.id === id);
+        if (findProduct) {
+            console.log("Se ha encontrado el siguiente producto:")
+            return console.log(findProduct);
+        } else {
+            return console.log("Product Not found");
+        }
+    }
+
+    async deleteProduct(id) {
+        const read = await fs.readFile(this.path, "utf-8");
+        const data = JSON.parse(read);
+        const productoEliminado = JSON.stringify(
+        data.find((product) => product.id === id)
+        );
+        const newData = data.filter((product) => product.id !== id);
+        await fs.writeFile(this.path, JSON.stringify(newData), "utf-8");
+        return console.log(
+        `El producto ${productoEliminado} ha sido eliminado exitosamente`
+        );
+    }
+
+    async updateProduct(id, entry, value) {
+            const read = await fs.readFile(this.path, "utf-8");
+            const data = JSON.parse(read);
+            const index = data.findIndex((product) => product.id === id);
+            if(!data[index][entry]){
+                return console.log("El producto no pudo ser actualizado.")
+            } else {
+                data[index][entry] = value;
+                await fs.writeFile(this.path, JSON.stringify(data, null, 2));
+                console.log("El producto se ha modificado de la siguiente manera:")
+                return console.log(data[index]);
+            }
+            
     }
 }
 
 
+//TESTING
 //Instanciamos productManager.
-const productManager = new ProductManager('./products.txt'); 
-// Listamos array de productos, que debería estar vacío.
-productManager.getProducts(); 
-// Agregamos primer producto.
-const producto1 = new Product("A/A 2250fr", "Aire acondicionado split 2250fr F/C", 100000, "https://firebasestorage.googleapis.com/v0/b/myapp-ecommerce-67f3e.appspot.com/o/12-aireacondicionado.jpg?alt=media&token=d63b800f-aec1-4132-abbe-21164830dfe5example.jpg", 5, "#101")
-productManager.addProduct(producto1);
+const productManager = new ProductManager(ruta); 
 
-//Listamos array, que debería contener el producto recién ingresado.
-productManager.getProducts(); 
-// Agregamos productos adicionales
-const producto2 = new Product("A/A 3000fr", "Aire acondicionado split 3000fr F/C", 150000, "https://firebasestorage.googleapis.com/v0/b/myapp-ecommerce-67f3e.appspot.com/o/12-aireacondicionado.jpg?alt=media&token=d63b800f-aec1-4132-abbe-21164830dfe5example.jpg", 8, "#102")
-const producto3 = new Product("A/A 4500fr", "Aire acondicionado split 4500fr F/C", 200000, "https://firebasestorage.googleapis.com/v0/b/myapp-ecommerce-67f3e.appspot.com/o/12-aireacondicionado.jpg?alt=media&token=d63b800f-aec1-4132-abbe-21164830dfe5example.jpg", 7, "#103")
-const producto4 = new Product("A/A 6000fr", "Aire acondicionado split 6000fr F/C", 250000, "https://firebasestorage.googleapis.com/v0/b/myapp-ecommerce-67f3e.appspot.com/o/12-aireacondicionado.jpg?alt=media&token=d63b800f-aec1-4132-abbe-21164830dfe5example.jpg", 6, "#104");
+
+
+// Agregamos productos.
+const aa2250 = new Product("A/A 2250fr", "Aire acondicionado split 2250fr F/C", 100000, "https://firebasestorage.googleapis.com/v0/b/myapp-ecommerce-67f3e.appspot.com/o/12-aireacondicionado.jpg?alt=media&token=d63b800f-aec1-4132-abbe-21164830dfe5example.jpg", "#101", 5);
+const aa3000 = new Product("A/A 3000fr", "Aire acondicionado split 3000fr F/C", 150000, "https://firebasestorage.googleapis.com/v0/b/myapp-ecommerce-67f3e.appspot.com/o/12-aireacondicionado.jpg?alt=media&token=d63b800f-aec1-4132-abbe-21164830dfe5example.jpg", "#102", 8);
+const aa4500 = new Product("A/A 4500fr", "Aire acondicionado split 4500fr F/C", 200000, "https://firebasestorage.googleapis.com/v0/b/myapp-ecommerce-67f3e.appspot.com/o/12-aireacondicionado.jpg?alt=media&token=d63b800f-aec1-4132-abbe-21164830dfe5example.jpg", "#103", 7);
+const aa6000 = new Product("A/A 6000fr", "Aire acondicionado split 6000fr F/C", 250000, "https://firebasestorage.googleapis.com/v0/b/myapp-ecommerce-67f3e.appspot.com/o/12-aireacondicionado.jpg?alt=media&token=d63b800f-aec1-4132-abbe-21164830dfe5example.jpg", "#104", 6);
 
 const test = async() => {
-    await productManager.addProduct(producto2);
-    //await productManager.addProduct(producto3);
-    //await productManager.addProduct(producto4);
+    //Creamos archivo JSON.
+    //await nuevoJson(ruta);
+    // Listamos array de productos, que debería estar vacío.
+    await productManager.getProducts(); 
+    await productManager.addProduct(aa2250);
+    await productManager.addProduct(aa3000);
+    await productManager.addProduct(aa4500);
+    await productManager.addProduct(aa6000);
 }
 
-test().then(productManager.getProducts());
+test()
 /*
 //Buscamos y mostramos los productos por consola utilizando su id. El último debería tirar error al no existir.
 productManager.getProductById(1);
