@@ -7,7 +7,7 @@ class ProductManager {
         this.path = path;
     }
 
-    addProduct(product) {
+    addProduct = async(product) => {
         //Validar que todos los campos sean completados.
         if (Object.values(product).includes("") || Object.values(product).includes(null)) {
             console.log("Todos los campos deben ser completados.");
@@ -19,15 +19,27 @@ class ProductManager {
                 } else {
                     // Agregar el producto al array.
                     this.products.push({...product, id: ++ProductManager.idCounter}); 
+                    let read = await fs.readFile(this.path, 'utf-8')
+                    let aux = await JSON.parse(read)
+                    console.log(aux)
+                    aux.push(this.products)
+                    console.log(aux)
+                    await fs.writeFile(this.path, JSON.stringify(aux))
                 }
         }
-        //const agregarProd = async 
+            
     }
 
-    getProducts() {
-        console.log("Listado completo de productos:");
-        console.log(this.products);
-        return this.products;
+    getProducts = async () => {
+        try {
+            let read = await fs.exists(this.path, 'utf-8')
+            let aux = await JSON.parse(read)
+            console.log("Listado completo de productos:");
+            console.log(aux);
+        } catch {
+            await fs.writeFile(this.path, JSON.stringify([]))
+        }
+        
     }
 
     getProductById(id) {
@@ -62,6 +74,7 @@ productManager.getProducts();
 // Agregamos primer producto.
 const producto1 = new Product("A/A 2250fr", "Aire acondicionado split 2250fr F/C", 100000, "https://firebasestorage.googleapis.com/v0/b/myapp-ecommerce-67f3e.appspot.com/o/12-aireacondicionado.jpg?alt=media&token=d63b800f-aec1-4132-abbe-21164830dfe5example.jpg", 5, "#101")
 productManager.addProduct(producto1);
+
 //Listamos array, que debería contener el producto recién ingresado.
 productManager.getProducts(); 
 // Agregamos productos adicionales
@@ -69,12 +82,17 @@ const producto2 = new Product("A/A 3000fr", "Aire acondicionado split 3000fr F/C
 const producto3 = new Product("A/A 4500fr", "Aire acondicionado split 4500fr F/C", 200000, "https://firebasestorage.googleapis.com/v0/b/myapp-ecommerce-67f3e.appspot.com/o/12-aireacondicionado.jpg?alt=media&token=d63b800f-aec1-4132-abbe-21164830dfe5example.jpg", 7, "#103")
 const producto4 = new Product("A/A 6000fr", "Aire acondicionado split 6000fr F/C", 250000, "https://firebasestorage.googleapis.com/v0/b/myapp-ecommerce-67f3e.appspot.com/o/12-aireacondicionado.jpg?alt=media&token=d63b800f-aec1-4132-abbe-21164830dfe5example.jpg", 6, "#104");
 
-productManager.addProduct(producto2);
-productManager.addProduct(producto3);
-productManager.addProduct(producto4);
+const test = async() => {
+    await productManager.addProduct(producto2);
+    //await productManager.addProduct(producto3);
+    //await productManager.addProduct(producto4);
+}
 
+test().then(productManager.getProducts());
+/*
 //Buscamos y mostramos los productos por consola utilizando su id. El último debería tirar error al no existir.
 productManager.getProductById(1);
 productManager.getProductById(2);
 productManager.getProductById(3);
 productManager.getProductById(4);
+*/
