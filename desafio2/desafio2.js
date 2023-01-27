@@ -2,7 +2,6 @@
 const fs = require('fs').promises;
 const ruta = "./productos.json";
 
-
 class Product {
     constructor(title, description, price, thumbnail, code, stock) {
         this.title = title
@@ -29,7 +28,7 @@ class ProductManager {
         this.path = path;
     }
 
-    addProduct = async(product) => {
+    addProduct = async (product) => {
         //Validar que todos los campos sean completados que la propiedad "code" no esté repetida.
         const read = await fs.readFile(this.path, 'utf-8');
         const data = JSON.parse(read);
@@ -71,7 +70,7 @@ class ProductManager {
         }
     }
 
-    async deleteProduct(id) {
+    deleteProduct = async (id) => {
         const read = await fs.readFile(this.path, "utf-8");
         const data = JSON.parse(read);
         const productoEliminado = JSON.stringify(
@@ -84,7 +83,7 @@ class ProductManager {
         );
     }
 
-    async updateProduct(id, entry, value) {
+    updateProduct = async (id, entry, value) => {
             const read = await fs.readFile(this.path, "utf-8");
             const data = JSON.parse(read);
             const index = data.findIndex((product) => product.id === id);
@@ -105,30 +104,38 @@ class ProductManager {
 //Instanciamos productManager.
 const productManager = new ProductManager(ruta); 
 
-
-
-// Agregamos productos.
+// Creamos productos.
 const aa2250 = new Product("A/A 2250fr", "Aire acondicionado split 2250fr F/C", 100000, "https://firebasestorage.googleapis.com/v0/b/myapp-ecommerce-67f3e.appspot.com/o/12-aireacondicionado.jpg?alt=media&token=d63b800f-aec1-4132-abbe-21164830dfe5example.jpg", "#101", 5);
 const aa3000 = new Product("A/A 3000fr", "Aire acondicionado split 3000fr F/C", 150000, "https://firebasestorage.googleapis.com/v0/b/myapp-ecommerce-67f3e.appspot.com/o/12-aireacondicionado.jpg?alt=media&token=d63b800f-aec1-4132-abbe-21164830dfe5example.jpg", "#102", 8);
 const aa4500 = new Product("A/A 4500fr", "Aire acondicionado split 4500fr F/C", 200000, "https://firebasestorage.googleapis.com/v0/b/myapp-ecommerce-67f3e.appspot.com/o/12-aireacondicionado.jpg?alt=media&token=d63b800f-aec1-4132-abbe-21164830dfe5example.jpg", "#103", 7);
 const aa6000 = new Product("A/A 6000fr", "Aire acondicionado split 6000fr F/C", 250000, "https://firebasestorage.googleapis.com/v0/b/myapp-ecommerce-67f3e.appspot.com/o/12-aireacondicionado.jpg?alt=media&token=d63b800f-aec1-4132-abbe-21164830dfe5example.jpg", "#104", 6);
 
+// Definimos función de testing.
 const test = async() => {
     //Creamos archivo JSON.
-    //await nuevoJson(ruta);
+    await fs.writeFile(ruta, "[]");
     // Listamos array de productos, que debería estar vacío.
     await productManager.getProducts(); 
+    // Agregamos los productos.
     await productManager.addProduct(aa2250);
     await productManager.addProduct(aa3000);
     await productManager.addProduct(aa4500);
     await productManager.addProduct(aa6000);
+    // Listamos nuevamente el array de productos, ahora con los mismos cargados.
+    await productManager.getProducts(); 
+    // Buscamos dos productos por ID. Uno está presente; el otro no.
+    await productManager.getProductById(2);
+    await productManager.getProductById(5);
+    // Actualizamos una o varias propiedades de un producto.
+    await productManager.updateProduct(1, "stock", 10);
+    await productManager.updateProduct(1, "price", 110000);
+    // Listamos nuevamente los productos.
+    await productManager.getProducts();
+    // Eliminamos un producto.
+    await productManager.deleteProduct(4);
+    // Listamos nuevamente los productos.
+    await productManager.getProducts();
+
 }
 
 test()
-/*
-//Buscamos y mostramos los productos por consola utilizando su id. El último debería tirar error al no existir.
-productManager.getProductById(1);
-productManager.getProductById(2);
-productManager.getProductById(3);
-productManager.getProductById(4);
-*/
