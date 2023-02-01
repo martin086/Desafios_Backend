@@ -1,5 +1,5 @@
-/*Desafio 2*/
-const fs = require('fs').promises;
+/*Desafio 3*/
+import {promises as fs} from 'fs';
 const ruta = "./productos.json";
 
 class Product {
@@ -111,16 +111,16 @@ const aa4500 = new Product("A/A 4500fr", "Aire acondicionado split 4500fr F/C", 
 const aa6000 = new Product("A/A 6000fr", "Aire acondicionado split 6000fr F/C", 250000, "https://firebasestorage.googleapis.com/v0/b/myapp-ecommerce-67f3e.appspot.com/o/12-aireacondicionado.jpg?alt=media&token=d63b800f-aec1-4132-abbe-21164830dfe5example.jpg", "#104", 6);
 
 // Definimos función de testing.
-const test = async() => {
+//const test = async() => {
     //Creamos archivo JSON.
-    await fs.writeFile(ruta, "[]");
+    //await fs.writeFile(ruta, "[]");
     // Listamos array de productos, que debería estar vacío.
-    await productManager.getProducts(); 
+    //await productManager.getProducts(); 
     // Agregamos los productos.
-    await productManager.addProduct(aa2250);
-    await productManager.addProduct(aa3000);
-    await productManager.addProduct(aa4500);
-    await productManager.addProduct(aa6000);
+    //await productManager.addProduct(aa2250);
+    //await productManager.addProduct(aa3000);
+    //await productManager.addProduct(aa4500);
+    //await productManager.addProduct(aa6000);
     // Listamos nuevamente el array de productos, ahora con los mismos cargados.
     //await productManager.getProducts(); 
     // Buscamos dos productos por ID. Uno está presente; el otro no.
@@ -135,7 +135,8 @@ const test = async() => {
     //await productManager.deleteProduct(4);
     // Listamos nuevamente los productos.
     //await productManager.getProducts();
+//}
 
-}
+//test()
 
-test()
+export default ProductManager;
