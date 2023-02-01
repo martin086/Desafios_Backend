@@ -48,9 +48,10 @@ app.get('/', (req, res) => {
     res.send("Este es mi primer servidor con Express.")
 })
 
+//http://localhost:4000/user?cargo=Tutor&nombre=Kevin
 app.get('/user', (req,res) => {
     let {cargo, nombre} = req.query
-    const usuarios = users.filter(user => user.cargo = cargo)
+    const usuarios = users.filter(user => user.cargo === cargo)
     //console.log(cargo, nombre)
     res.send(JSON.stringify(usuarios))
 
