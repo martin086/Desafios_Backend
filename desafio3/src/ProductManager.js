@@ -102,13 +102,13 @@ class ProductManager {
 
 //TESTING
 //Instanciamos productManager.
-const productManager = new ProductManager(ruta); 
+//const productManager = new ProductManager(ruta); 
 
 // Creamos productos.
-const aa2250 = new Product("A/A 2250fr", "Aire acondicionado split 2250fr F/C", 100000, "https://firebasestorage.googleapis.com/v0/b/myapp-ecommerce-67f3e.appspot.com/o/12-aireacondicionado.jpg?alt=media&token=d63b800f-aec1-4132-abbe-21164830dfe5example.jpg", "#101", 5);
-const aa3000 = new Product("A/A 3000fr", "Aire acondicionado split 3000fr F/C", 150000, "https://firebasestorage.googleapis.com/v0/b/myapp-ecommerce-67f3e.appspot.com/o/12-aireacondicionado.jpg?alt=media&token=d63b800f-aec1-4132-abbe-21164830dfe5example.jpg", "#102", 8);
-const aa4500 = new Product("A/A 4500fr", "Aire acondicionado split 4500fr F/C", 200000, "https://firebasestorage.googleapis.com/v0/b/myapp-ecommerce-67f3e.appspot.com/o/12-aireacondicionado.jpg?alt=media&token=d63b800f-aec1-4132-abbe-21164830dfe5example.jpg", "#103", 7);
-const aa6000 = new Product("A/A 6000fr", "Aire acondicionado split 6000fr F/C", 250000, "https://firebasestorage.googleapis.com/v0/b/myapp-ecommerce-67f3e.appspot.com/o/12-aireacondicionado.jpg?alt=media&token=d63b800f-aec1-4132-abbe-21164830dfe5example.jpg", "#104", 6);
+//const aa2250 = new Product("A/A 2250fr", "Aire acondicionado split 2250fr F/C", 100000, "https://firebasestorage.googleapis.com/v0/b/myapp-ecommerce-67f3e.appspot.com/o/12-aireacondicionado.jpg?alt=media&token=d63b800f-aec1-4132-abbe-21164830dfe5example.jpg", "#101", 5);
+//const aa3000 = new Product("A/A 3000fr", "Aire acondicionado split 3000fr F/C", 150000, "https://firebasestorage.googleapis.com/v0/b/myapp-ecommerce-67f3e.appspot.com/o/12-aireacondicionado.jpg?alt=media&token=d63b800f-aec1-4132-abbe-21164830dfe5example.jpg", "#102", 8);
+//const aa4500 = new Product("A/A 4500fr", "Aire acondicionado split 4500fr F/C", 200000, "https://firebasestorage.googleapis.com/v0/b/myapp-ecommerce-67f3e.appspot.com/o/12-aireacondicionado.jpg?alt=media&token=d63b800f-aec1-4132-abbe-21164830dfe5example.jpg", "#103", 7);
+//const aa6000 = new Product("A/A 6000fr", "Aire acondicionado split 6000fr F/C", 250000, "https://firebasestorage.googleapis.com/v0/b/myapp-ecommerce-67f3e.appspot.com/o/12-aireacondicionado.jpg?alt=media&token=d63b800f-aec1-4132-abbe-21164830dfe5example.jpg", "#104", 6);
 
 // Definimos función de testing.
 //const test = async() => {

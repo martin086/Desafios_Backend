@@ -18,13 +18,13 @@ app.get('/', (req, res) => {
 app.get('/products', async (req,res) => {
     const products = await manager.getProducts();
     let {limit} = req.query;
-    let data;
+    let datos;
     if(!limit) {
-        data = products;
+        datos = products;
     } else {
-        data = products.slice(0, parseInt(limit));
+        datos = products.slice(0, parseInt(limit));
     }
-    res.send(`Estos son los productos existentes: ${(JSON.stringify(data))}`);
+    res.send(`Estos son los productos existentes: ${datos}`);
 });
 
 //Consulta de productos según id.
