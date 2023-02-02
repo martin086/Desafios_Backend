@@ -53,6 +53,7 @@ class ProductManager {
         if (data.length != 0) {
             console.log("Listado completo de productos:");
             console.log(data);
+            return data;
         } else {
             console.log ("No se encuentran productos en el listado.")
         }
@@ -64,7 +65,8 @@ class ProductManager {
         const findProduct = data.find((prod) => prod.id === id);
         if (findProduct) {
             console.log("Se ha encontrado el siguiente producto:")
-            return console.log(findProduct);
+            console.log(findProduct);
+            return findProduct;
         } else {
             return console.log("Product Not found");
         }
