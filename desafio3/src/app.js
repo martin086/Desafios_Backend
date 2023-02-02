@@ -8,6 +8,9 @@ const manager = new ProductManager("./src/productos.json");
 
 //Permite realizar consultas en la URL (req.query)
 app.use(express.urlencoded({extended:true})) 
+//Permite manejar archivos JSON
+app.use(express.json())
+
 
 //Ruta Raíz
 app.get('/', (req, res) => {
