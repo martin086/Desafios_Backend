@@ -3,7 +3,7 @@ import express from 'express';
 import ProductManager from './ProductManager.js';
 
 const app = express() //app es igual a la ejecución de express
-const PORT = 4000
+const PORT = 8080
 const manager = new ProductManager("./src/productos.json");
 
 //Permite realizar consultas en la URL (req.query)
