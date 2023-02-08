@@ -14,7 +14,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({storage:storage})
 const app = express()
-const PORT = 4000
+const PORT = 8080
 
 //Middlewares
 app.use(express.json()) 
@@ -24,10 +24,11 @@ app.use(express.urlencoded({extended: true}))
 app.use('/static', express.static(__dirname + '/public'))
 app.use('/api/products', routerProduct)
 app.post('/upload',upload.single('product'), (req,res) => {
-    console.log(req.body)
+    //console.log(req.body)
     console.log(req.file)
     res.send("Imagen subida")
 })
+app.use('/api/carts', routerCart)
 
 
 app.listen(PORT, () => {

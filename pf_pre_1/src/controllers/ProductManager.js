@@ -41,7 +41,7 @@ export class ProductManager {
         }
     }
 
-    async updateProduct(id, {title, description, price, thumbnail, code, stock}) {
+    async updateProduct(id, {title, description, price, thumbnail, code, stock, category, status}) {
         const prods = JSON.parse(await fs.readFile(this.path, 'utf-8'))
         if(prods.some(prod => prod.id === parseInt(id))) {
             let index= prods.findIndex(prod => prod.id === parseInt(id))
@@ -51,6 +51,8 @@ export class ProductManager {
             prods[index].thumbnail = thumbnail
             prods[index].code = code
             prods[index].stock = stock
+            prods[index].category = category
+            prods[index].status = status
             await fs.writeFile(this.path, JSON.stringify(prods))
             return "Producto actualizado"
         } else {
