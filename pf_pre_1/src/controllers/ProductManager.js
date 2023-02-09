@@ -1,43 +1,83 @@
 import {promises as fs} from 'fs'
 
-export class ProductManager {
-    constructor(path) {
-        this.path = path
+class Product {
+    constructor(title, description, price, thumbnail, code, stock, category, status) {
+        this.id = Product.addId()
+        this.title = title;
+        this.description = description;
+        this.price = price;
+        this.thumbnail = thumbnail;
+        this.code = code;
+        this.stock = stock;
+        this.category = category;
+        this.status = status;
     }
 
-    static incrementarID() {
-        if(this.idIncrement) {
+    static addId(){
+        if (this.idIncrement) {
             this.idIncrement++
         } else {
             this.idIncrement = 1
         }
         return this.idIncrement
     }
+}
 
-    async addProduct(producto) {
-        const prods = JSON.parse(await fs.readFile(this.path, 'utf-8'))
-        producto.id = ProductManager.incrementarID()
-        prods.push(producto)
-        await fs.writeFile(this.path, JSON.stringify(prods))
-        return "Producto creado"
+//Creamos los productos de base
+const p1 = new Product ("A/A 2250fr","Aire acondicionado split 2250fr F/C",100000,[],"#121",5,"A/A",true);
+const p2 = new Product ("A/A 3000fr","Aire acondicionado split 3000fr F/C",150000,[],"#122",8,"A/A",true);
+const p3 = new Product ("A/A 4500fr","Aire acondicionado split 4500fr F/C",200000,[],"#123",7,"A/A",true);
+const p4 = new Product ("A/A 6000fr","Aire acondicionado split 6000fr F/C",250000,[],"#124",6,"A/A",true);
+
+
+
+export class ProductManager {
+    constructor(path) {
+        this.path = path
+    }
+
+    async addProduct(product,imgPath) {
+        //Validar que todos los campos sean completados que la propiedad "code" no esté repetida.
+        const read = await fs.readFile(this.path, 'utf-8');
+        const data = JSON.parse(read);
+        const prodCode = data.map((prod) => prod.code);
+        const prodExist = prodCode.includes(product.code); 
+        if (prodExist) {
+            return console.log (`El código ${product.code} ya existe. Ingrese uno diferente.`)
+        } else if (Object.values(product).includes("") || Object.values(product).includes(null)) {
+            return console.log("Todos los campos deben ser completados.");
+        } else {
+            const nuevoProducto = {...product};
+            nuevoProducto.thumbnail = imgPath;
+            data.push(nuevoProducto);
+            await fs.writeFile(this.path, JSON.stringify(data), 'utf-8')
+            return console.log(`El producto con id: ${nuevoProducto.id} ha sido agregado.`)
+        }
     }
 
     async getProducts() {
-        try {
-            const prods = JSON.parse(await fs.readFile(this.path, 'utf-8'))
+        await this.createJson();
+        await this.createProducts();
+        const read = await fs.readFile(this.path, 'utf-8')
+        const prods = await JSON.parse(read)
+        if (prods.length != 0) {
+            console.log("Listado de productos:");
+            console.log(prods);
             return prods
-        } catch(error) {
-            return error
+        } else {
+            return "Listado vacío"
         }
-        
     }
 
     async getProductById(id) {
         const prods = JSON.parse(await fs.readFile(this.path, 'utf-8'))
-        if(prods.some(prod => prod.id === parseInt(id))) {
-            return prods.find(prod => prod.id === parseInt(id))
+        const findProduct = prods.find((prod) => prod.id === parseInt(id));
+        if (findProduct) {
+            console.log("Se ha encontrado el siguiente producto:")
+            console.log(findProduct);
+            return findProduct;
         } else {
-            return "Producto no encontrado"
+            return console.log("Product Not found");
         }
     }
 
@@ -71,4 +111,17 @@ export class ProductManager {
         }
     }
 
+    
+    async createJson() {
+        //Creamos archivo JSON.
+        await fs.writeFile(this.path, "[]");
+    }
+
+    async createProducts() {
+    // Agregamos los productos.
+    await this.addProduct(p1, ['../public/img/12-aireacondicionado.jpg']);
+    await this.addProduct(p2, ['../public/img/12-aireacondicionado.jpg']);
+    await this.addProduct(p3, ['../public/img/12-aireacondicionado.jpg']);
+    await this.addProduct(p4, ['../public/img/12-aireacondicionado.jpg']);
+    }
 }

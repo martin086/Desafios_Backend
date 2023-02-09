@@ -31,10 +31,10 @@ export class CartManager {
         }
     }
 
-    async updateCart(id, {prods}) {
+    async addProductToCart(id, {idProduct, quantity}) {
         const carts = JSON.parse(await fs.readFile(this.path, 'utf-8'))
         if(carts.some(cart => cart.id === parseInt(id))) {
-            let index = prods.findIndex(prod => prod.id === parseInt(id))
+            let index = prods.findIndex(prod => prod.id === parseInt(idProduct))
             prods[index].quantity = quantity
             await fs.writeFile(this.path, JSON.stringify(prods))
             return "Producto actualizado"

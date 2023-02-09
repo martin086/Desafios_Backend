@@ -4,7 +4,7 @@ const routerCart = Router()
 const cartManager = new CartManager('src/models/carrito.json')
 
 
-routerCart.get('/:cid', async (req, res) => { 
+routerCart.get('/:id', async (req, res) => { 
     const carrito = await cartManager.getCartById(req.params.id)
     console.log(carrito)
     res.send(JSON.stringify(carrito))
@@ -15,8 +15,8 @@ routerCart.post('/', async (req, res) => {
     res.send(mensaje)
 })
 
-routerCart.post('/:cid/product/:pid', async (req, res) => { 
-    let mensaje = await cartManager.updateCart(req.body)
+routerCart.post('/:id/product/:id', async (req, res) => { 
+    let mensaje = await cartManager.addProductToCart(req.body)
     res.send(mensaje)
 })
 /* NO SE PIDEN
