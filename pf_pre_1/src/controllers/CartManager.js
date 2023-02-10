@@ -1,12 +1,13 @@
 import {promises as fs} from 'fs'
 
-export class CartManager {
-    constructor(path) {
-        this.path = path
+class Cart {
+    constructor(id, products) {
+        this.id = Cart.addId();
+        this.products = products;
     }
 
-    static incrementarID() {
-        if(this.idIncrement) {
+    static addId(){
+        if (this.idIncrement) {
             this.idIncrement++
         } else {
             this.idIncrement = 1
@@ -14,15 +15,32 @@ export class CartManager {
         return this.idIncrement
     }
 
-    async addCart(cart) {
-        const carts = JSON.parse(await fs.readFile(this.path, 'utf-8'))
-        carrito.id = CartManager.incrementarID()
-        carts.push(carrito)
-        await fs.writeFile(this.path, JSON.stringify(carts))
-        return "Carrito creado"
+}
+
+
+export class CartManager {
+    constructor(path) {
+        this.path = path
     }
 
-    async getCartById(id) {
+    addCart = async () => {
+        try {
+            const carts = JSON.parse(await fs.readFile(this.path, 'utf-8'))
+            if (carts) { 
+                const nuevoCarrito = new Cart (carts.id = Cart.addId(), []);
+                carts.push(nuevoCarrito);
+                await fs.writeFile(this.path, JSON.stringify(carts))
+                return console.log(`Carrito con id:${nuevoCarrito.id} creado`)
+            }
+        } catch (error) {
+            await this.createJson();
+            return "Array de carritos creado."
+        }
+        
+    
+    }
+
+    getCartById = async (id) => {
         const carts = JSON.parse(await fs.readFile(this.path, 'utf-8'))
         if(carts.some(cart => cart.id === parseInt(id))) {
             return carts.find(cart => cart.id === parseInt(id))
@@ -31,7 +49,7 @@ export class CartManager {
         }
     }
 
-    async addProductToCart(id, {idProduct, quantity}) {
+    addProductToCart = async (id, {idProduct, quantity}) => {
         const carts = JSON.parse(await fs.readFile(this.path, 'utf-8'))
         if(carts.some(cart => cart.id === parseInt(id))) {
             let index = prods.findIndex(prod => prod.id === parseInt(idProduct))
@@ -43,15 +61,20 @@ export class CartManager {
         }
     }
 
-    async deleteCart(id) {
+    deleteCart = async (id) => {
         const carts = JSON.parse(await fs.readFile(this.path, 'utf-8'))
         if(carts.some(cart => cart.id === parseInt(id))) {
-           const cartsFiltrados = carts.filter(cart => cart.id !== parseInt(id))
-           await fs.writeFile(this.path, JSON.stringify(cartsFiltrados))
-           return "Carrito eliminado"
+            const cartsFiltrados = carts.filter(cart => cart.id !== parseInt(id))
+            await fs.writeFile(this.path, JSON.stringify(cartsFiltrados))
+            return "Carrito eliminado"
         } else {
             return "Carrito no encontrado"
         }
+    }
+
+    async createJson() {
+        //Creamos archivo JSON de carrito.
+        await fs.writeFile(this.path, "[]");
     }
 
 }

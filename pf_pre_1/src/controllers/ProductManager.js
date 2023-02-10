@@ -105,9 +105,9 @@ export class ProductManager {
     deleteProduct = async (id) => {
         const prods = JSON.parse(await fs.readFile(this.path, 'utf-8'))
         if(prods.some(prod => prod.id === parseInt(id))) {
-           const prodsFiltrados = prods.filter(prod => prod.id !== parseInt(id))
-           await fs.writeFile(this.path, JSON.stringify(prodsFiltrados))
-           return "Producto eliminado"
+            const prodsFiltrados = prods.filter(prod => prod.id !== parseInt(id))
+            await fs.writeFile(this.path, JSON.stringify(prodsFiltrados))
+            return "Producto eliminado"
         } else {
             return "Producto no encontrado"
         }
@@ -115,7 +115,7 @@ export class ProductManager {
 
     
     async createJson() {
-        //Creamos archivo JSON.
+        //Creamos archivo JSON de productos.
         await fs.writeFile(this.path, "[]");
     }
 
