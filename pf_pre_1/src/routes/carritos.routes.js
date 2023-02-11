@@ -1,13 +1,15 @@
 import { Router } from "express";
 import { CartManager } from "../controllers/CartManager.js";
+import { ProductManager } from "../controllers/ProductManager.js";
+
 const routerCart = Router()
 const cartManager = new CartManager('src/models/carritos.json')
+const prodManager = new ProductManager('src/models/productos.json')
 
 
-routerCart.get('/:id', async (req, res) => { 
-    const carrito = await cartManager.getCartById(req.params.id)
-    console.log(carrito)
-    res.send(JSON.stringify(carrito))
+routerCart.get('/:cid', async (req, res) => { 
+    const cart = await cartManager.getCartById(req.params.id)
+    res.send(cart)
 })
 
 routerCart.post('/', async (req, res) => { 
@@ -15,11 +17,18 @@ routerCart.post('/', async (req, res) => {
     res.send(carrito)
 })
 
-routerCart.post('/:id/product/:id', async (req, res) => { 
-    let mensaje = await cartManager.addProductToCart(req.body)
-    res.send(mensaje)
+routerCart.post('/:cid/product/:pid', async (req, res) => { 
+    const prodQty = 1;
+    const productData = await prodManager.getProductById(parseInt(req.params.pid));
+    if (productData) {
+        const data = await cartManager.addProductToCart(parseInt(req.params.cid), parseInt(req.params.pid), prodQty)
+        data ? res.send(`Producto ${productData.id} agregado al carrito.`) : res.send(`Hubo un error al agregar el producto al carrito.`)
+    } else {
+        res.send(`El producto ${req.params.pid} no se ha encontrado.`)
+    }
+    
 })
-/* NO SE PIDEN
+
 routerCart.delete('/:id', async (req, res) => {
     let mensaje = await cartManager.deleteProduct(req.params.id) 
     res.send(mensaje)
@@ -29,5 +38,5 @@ routerCart.put('/:id', async (req, res) => {
     let mensaje = await cartManager.updateProduct(req.params.id, req.body)
     res.send(mensaje)
 })
-*/
+
 export default routerCart

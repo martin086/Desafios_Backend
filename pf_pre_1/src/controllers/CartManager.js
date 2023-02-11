@@ -1,20 +1,10 @@
-import {promises as fs} from 'fs'
+import {existsSync, promises as fs} from 'fs'
 
 class Cart {
     constructor(id, products) {
-        this.id = Cart.addId();
+        this.id = id;
         this.products = products;
     }
-
-    static addId(){
-        if (this.idIncrement) {
-            this.idIncrement++
-        } else {
-            this.idIncrement = 1
-        }
-        return this.idIncrement
-    }
-
 }
 
 
@@ -23,41 +13,69 @@ export class CartManager {
         this.path = path
     }
 
+    checkJson = () => {
+        //Creamos archivo JSON de carrito.
+        !existsSync(this.path) && fs.writeFile(this.path, "[]", 'utf-8');
+    }
+
     addCart = async () => {
+        this.checkJson()
+        try {
+            const read = await fs.readFile(this.path, 'utf-8')
+            let carts = JSON.parse(read)
+            let newId
+            carts.length > 0 ? newId = carts[carts.length - 1].id + 1 : newId = 1;
+            const nuevoCarrito = new Cart (newId, []);
+            carts.push(nuevoCarrito);
+            await fs.writeFile(this.path, JSON.stringify(carts))
+            console.log(`Carrito con id: ${nuevoCarrito.id} creado`)
+            return newId
+        } catch {
+            return console.log("Hubo un error al crear el carrito.")
+        }
+            
+    }
+
+    getCartById = async (idCart) => {
+        this.checkJson()
         try {
             const carts = JSON.parse(await fs.readFile(this.path, 'utf-8'))
-            if (carts) { 
-                const nuevoCarrito = new Cart (carts.id = Cart.addId(), []);
-                carts.push(nuevoCarrito);
-                await fs.writeFile(this.path, JSON.stringify(carts))
-                return console.log(`Carrito con id:${nuevoCarrito.id} creado`)
+            let cartIndex = carts.findIndex(cart => cart.id === idCart);
+            
+            if (carts[cartIndex]) {
+                return carts[cartIndex]
+            } else {
+                throw `Carrito con ID: ${cart.id} no encontrado.`
             }
-        } catch (error) {
-            await this.createJson();
-            return "Array de carritos creado."
-        }
-        
-    
-    }
-
-    getCartById = async (id) => {
-        const carts = JSON.parse(await fs.readFile(this.path, 'utf-8'))
-        if(carts.some(cart => cart.id === parseInt(id))) {
-            return carts.find(cart => cart.id === parseInt(id))
-        } else {
+        } catch {
             return "Carrito no encontrado"
-        }
+        }           
     }
 
-    addProductToCart = async (id, {idProduct, quantity}) => {
+    addProductToCart = async (idCart, idProduct, prodQty) => {
+        this.checkJson()
         const carts = JSON.parse(await fs.readFile(this.path, 'utf-8'))
-        if(carts.some(cart => cart.id === parseInt(id))) {
-            let index = prods.findIndex(prod => prod.id === parseInt(idProduct))
-            prods[index].quantity = quantity
-            await fs.writeFile(this.path, JSON.stringify(prods))
-            return "Producto actualizado"
+        //Chequeamos que el carrito existe con ese id.
+        if(carts.some(cart => cart.id === parseInt(idCart))) {
+            //Obtenemos el índice del array de carritos
+            const cartIndex = carts.findIndex(cart => cart.id === parseInt(idCart))
+            //Obtenemos el índice del prdoucto dentro del carrito
+            const objetoCarrito = new Cart(idCart, carts[cartIndex].products)
+            const prodIndex = objetoCarrito.products.findIndex(obj => obj.product === parseInt(idProduct))
+            if(prodIndex === -1) {
+                //Si no existe pusheamos el producto al array de productos dentro del carrito
+                objetoCarrito.products.push({product: idProduct, quantity: prodQty})
+                //Actualizamos el carrito en el array de carritos
+                carts[cartIndex] = objetoCarrito;
+            } else {
+                //Si existe aumentamos la cantidad en 1
+                carts[cartIndex].products[prodIndex].quantity += prodQty;
+            } 
+
+            await fs.writeFile(this.path, JSON.stringify(carts), 'utf-8')
+            return "Producto agregado al carrito"
         } else {
-            return "Producto no encontrado"
+            return "Hubo un error al agregar el producto al carrito."
         }
     }
 
@@ -70,11 +88,6 @@ export class CartManager {
         } else {
             return "Carrito no encontrado"
         }
-    }
-
-    async createJson() {
-        //Creamos archivo JSON de carrito.
-        await fs.writeFile(this.path, "[]");
     }
 
 }
