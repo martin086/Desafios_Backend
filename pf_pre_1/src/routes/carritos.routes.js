@@ -8,7 +8,7 @@ const prodManager = new ProductManager('src/models/productos.json')
 
 
 routerCart.get('/:cid', async (req, res) => { 
-    const cart = await cartManager.getCartById(req.params.id)
+    const cart = await cartManager.getCartById(parseInt(req.params.cid))
     res.send(cart)
 })
 
