@@ -34,9 +34,4 @@ routerCart.delete('/:id', async (req, res) => {
     res.send(mensaje)
 })
 
-routerCart.put('/:id', async (req, res) => { 
-    let mensaje = await cartManager.updateProduct(req.params.id, req.body)
-    res.send(mensaje)
-})
-
 export default routerCart
