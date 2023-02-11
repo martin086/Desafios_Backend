@@ -31,7 +31,7 @@ export class CartManager {
             console.log(`Carrito con id: ${nuevoCarrito.id} creado`)
             return newId
         } catch {
-            return console.log("Hubo un error al crear el carrito.")
+            return "Hubo un error al crear el carrito."
         }
             
     }
@@ -71,7 +71,7 @@ export class CartManager {
                 //Si existe aumentamos la cantidad en 1
                 carts[cartIndex].products[prodIndex].quantity += prodQty;
             } 
-
+            //Escribimos el Json del carrito con el producto nuevo
             await fs.writeFile(this.path, JSON.stringify(carts), 'utf-8')
             return "Producto agregado al carrito"
         } else {
