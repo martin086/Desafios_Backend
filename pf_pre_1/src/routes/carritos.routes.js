@@ -29,9 +29,21 @@ routerCart.post('/:cid/product/:pid', async (req, res) => {
     
 })
 
-routerCart.delete('/:id', async (req, res) => {
-    let mensaje = await cartManager.deleteProduct(req.params.id) 
+routerCart.delete('/:cid', async (req, res) => {
+    let mensaje = await cartManager.deleteCart(req.params.cid) 
     res.send(mensaje)
 })
+
+routerCart.delete('/:cid/product/:pid', async (req, res) => { 
+    const cartData = await cartManager.getCartById(parseInt(req.params.cid));
+    if (cartData) {
+        const data = await cartManager.deleteProductFromCart(parseInt(req.params.cid), parseInt(req.params.pid))
+        data ? res.send(`Producto ${req.params.pid} eliminado del carrito.`) : res.send(`Hubo un error al eliminar el producto del carrito.`)
+    } else {
+        res.send(`El producto ${req.params.pid} no se ha encontrado.`)
+    }
+    
+})
+
 
 export default routerCart
