@@ -3,7 +3,12 @@ import routerProduct from "./routes/productos.routes.js";
 import routerCart from "./routes/carritos.routes.js";
 import { __dirname } from "./path.js";
 import multer from 'multer';
+import { engine } from 'express-handlebars';
+import * as path from 'path'
+import { Server } from "socket.io";
 
+
+//const upload = multer({dest:'src/public/img'}) Forma basica de utilizar multer
 const storage = multer.diskStorage({
     destination: (req,file,cb) => {
         cb(null, 'src/public/img')
@@ -18,9 +23,29 @@ const upload = multer({storage:storage});
 const app = express();
 const PORT = 8080;
 
+const server = app.listen(PORT, () => {
+    console.log(`Server on port ${PORT}`)
+  })
+  
+
 //Middlewares
 app.use(express.json()) 
 app.use(express.urlencoded({extended: true}))
+
+//ServerIO
+const io = new Server(server)
+
+io.on("connection", (socket) => { //io.on es cuando se establece la conexion
+  console.log("Cliente conectado")
+
+  socket.on("mensaje", info => {//Cuando recibo informacion de mi cliente
+    console.log(info)
+  })  
+
+  socket.emit("mensaje-general", [])
+
+  socket.broadcast.emit("mensaje-socket-propio", "Hola, desde mensaje socket propio") //Envio un mensaje a todos los clientes conectados a otros sockets menos al que esta conectado a este socket actualmente
+})
 
 //Routes
 app.use('/static', express.static(__dirname + '/public'))
@@ -31,7 +56,25 @@ app.post('/upload',upload.single('product'), (req,res) => {
     res.send("Imagen subida")
 })
 
+//HBS
+app.get('/', (req,res) => {
+    const user = {
+        nombre: "Pablo",
+        email: "p@p.com",
+        rol: "Tutor"
+    }
+    
+    const cursos = [
+        {numero: 123, dia: "LyM", horario: "Noche"},
+        {numero: 456, dia: "MyJ", horario: "Mañana"},
+        {numero: 789, dia: "S", horario: "Mañana"}
+    ]
 
-app.listen(PORT, () => {
-    console.log(`Server on port ${PORT}`)
+    res.render("home", { //Renderizar el siguiente contenido
+        titulo: "Ecommerce Backend",
+        mensaje: "Pepe",
+        usuario: user,
+        isTutor: user.rol === "Tutor",
+        cursos
+        })
 })
