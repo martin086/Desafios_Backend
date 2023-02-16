@@ -6,6 +6,7 @@ import multer from 'multer';
 import { engine } from 'express-handlebars';
 import * as path from 'path'
 import { Server } from "socket.io";
+import routerSocket from "./routes/socket.routes.js";
 
 
 //const upload = multer({dest:'src/public/img'}) Forma basica de utilizar multer
@@ -31,32 +32,39 @@ const server = app.listen(PORT, () => {
 //Middlewares
 app.use(express.json()) 
 app.use(express.urlencoded({extended: true}))
+app.engine('handlebars', engine());
+app.set('view engine', 'handlebars');
+app.set('views', path.resolve(__dirname, './views')); //__dirname + './views'
 
 //ServerIO
 const io = new Server(server)
 
+const mensajes = []
+
 io.on("connection", (socket) => { //io.on es cuando se establece la conexion
-  console.log("Cliente conectado")
+    console.log("Cliente conectado")
+    socket.on("mensaje", info => {//Cuando recibo informacion de mi cliente
+        console.log(info)
+        mensaje.push(info)
+        io.emit("mensajes", mensajes)
+    })
 
-  socket.on("mensaje", info => {//Cuando recibo informacion de mi cliente
-    console.log(info)
-  })  
-
-  socket.emit("mensaje-general", [])
-
-  socket.broadcast.emit("mensaje-socket-propio", "Hola, desde mensaje socket propio") //Envio un mensaje a todos los clientes conectados a otros sockets menos al que esta conectado a este socket actualmente
+    //socket.emit("mensaje-general", [])
+    //socket.broadcast.emit("mensaje-socket-propio", "Hola, desde mensaje socket propio") //Envio un mensaje a todos los clientes conectados a otros sockets menos al que esta conectado a este socket actualmente
 })
 
 //Routes
 app.use('/static', express.static(__dirname + '/public'))
 app.use('/api/products', routerProduct)
 app.use('/api/carts', routerCart)
+app.use('/', routerSocket)
 app.post('/upload',upload.single('product'), (req,res) => {
     console.log(req.file)
     res.send("Imagen subida")
 })
 
 //HBS
+/*
 app.get('/', (req,res) => {
     const user = {
         nombre: "Pablo",
@@ -78,3 +86,4 @@ app.get('/', (req,res) => {
         cursos
         })
 })
+*/
