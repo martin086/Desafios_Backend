@@ -45,16 +45,13 @@ io.on("connection", (socket) => { //io.on es cuando se establece la conexion
     console.log("Cliente conectado")
     socket.on("mensaje", info => {//Cuando recibo informacion de mi cliente
         console.log(info)
-        mensaje.push(info)
+        mensajes.push(info)
         io.emit("mensajes", mensajes)
     })
-
-    //socket.emit("mensaje-general", [])
-    //socket.broadcast.emit("mensaje-socket-propio", "Hola, desde mensaje socket propio") //Envio un mensaje a todos los clientes conectados a otros sockets menos al que esta conectado a este socket actualmente
 })
 
 //Routes
-app.use('/static', express.static(__dirname + '/public'))
+app.use('/', express.static(__dirname + '/public'))
 app.use('/api/products', routerProduct)
 app.use('/api/carts', routerCart)
 app.use('/', routerSocket)

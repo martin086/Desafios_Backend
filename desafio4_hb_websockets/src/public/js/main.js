@@ -1,22 +1,11 @@
 //Front
 const socket = io()
-/*
-socket.emit("mensaje", [{user:"Martin", mensaje: "Hola"}]) //Enviar informacion a mi servidor
-
-socket.on("mensaje-general", info => {
-    console.log(info)
-})
-
-socket.on("mensaje-socket-propio", info => {
-    console.log(info)
-})
-*/
 
 const botonChat = document.getElementById("botonChat");
 const parrafosMensajes = document.getElementById("parrafosMensajes")
 const val = document.getElementById("chatBox")
 
-let = user
+let user
 Swal.fire({
     title: "Identificación de Usuario",
     text: "Por favor ingrese su nombre de usuario",
