@@ -1,11 +1,12 @@
 import { Router } from "express";
-//import { ProductManager } from "../controllers/ProductManager.js";
+import { ProductManager } from "../controllers/ProductManager.js";
 
 const routerSocket = Router();
-//const productManager = new ProductManager('src/models/productos.json')
+const productManager = new ProductManager('src/models/productos.json')
 
-routerSocket.get("/", (req,res) => {
-    res.render("index", {})
+routerSocket.get("/", async (req,res) => {
+    const products = await productManager.getProducts()
+    res.render("index", {products})
 })
 
 routerSocket.get("/realTimeProducts", (req,res) => {
