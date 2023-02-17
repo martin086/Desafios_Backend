@@ -1,57 +1,52 @@
 //Front
 const socket = io()
 
-// const botonChat = document.getElementById("botonChat");
-// const parrafosMensajes = document.getElementById("parrafosMensajes")
-// const val = document.getElementById("chatBox")
-
-// let user
-// Swal.fire({
-//     title: "Identificación de Usuario",
-//     text: "Por favor ingrese su nombre de usuario",
-//     input: "text",
-//     inputValidator: (valor) => {
-//         return !valor && 'Ingrese un valor válido'
-//     },
-//     allowOutsideClick: false
-// }).then(resultado => {
-//     user = resultado.value
-// })
-
-//Envíamos el mensaje al servidor
-// botonChat.addEventListener("click", ()=>{
-//     console.log(val)
-//     if(val.value.trim().length > 0) {
-//         socket.emit("mensaje", {usuario: user, mensaje: val.value})
-//         val.value = "" //Limpiar el input
-
-//     }
-// })
-
-const form = document.getElementById(idForm)
+const form = document.getElementById("realTimeProductsForm")
 form.addEventListener('submit', (e) => {
-    e.preventDefault()
-    //CONSULTO DATOS DEL FORMULARIO
-    socket.emit("newProduct", [{}]) //Enviar informacion a mi servidor
+    e.preventDefault();
+    const title = document.getElementById("title").value
+    const description = document.getElementById("description").value
+    const price = document.getElementById("price").value
+    const thumbnail = document.getElementById("thumbnail").value
+    const code = document.getElementById("code").value
+    const stock = document.getElementById("stock").value
+    const category = document.getElementById("category").value
+    const product = {title,description,price,code,stock,category,thumbnail}
+    socket.emit("addProduct", product) //Enviar informacion a mi servidor
 })
 
-const realTimeProducts = document.getElementById("realTimeProducts")
+socket.on("mensajeAddProduct", mensaje => {
+    console.log(mensaje)
+})
 
 
-//Retornamos el mensaje
-socket.on("products", arrayProducts => {
-    realTimeProducts.innerHTML = "" //Limpio mensajes
-    arrayProducts.forEach(product => {
-        realTimeProducts.innerHTML += `<div>
-            <p>Id: ${this.id}</p>
-            <p>Title: ${this.title}</p>
-            <p>Description: ${this.description}</p>
-            <p>Price: ${this.price}</p>
-            <p>Code: ${this.code}</p>
-            <p>Stock: ${this.stock}</p>
-            <p>Category: ${this.category}</p>
-            <p>Status: ${this.status}</p>
-            <p>Thumbnail: ${this.thumbnail}</p>
-        </div>`
+socket.on("getProducts", products => {
+    let productsCard = document.getElementById("productsCard").innerHTML=""
+    
+    products.forEach(product => {
+        productsCard.innerHTML += 
+        `
+        <div class="card col-sm-2 cardProduct">
+        <img class="card-img-top imgCardProducts" src="${product.thumbnail}">
+        <div class="card-body">
+        <h5 class="card-title">${product.title}</h5>
+            <p class="card-text">ID: ${product.id} </p>
+            <p class="card-text">${product.description} </p>
+            <p class="card-text">Precio: ${product.price} </p>       
+            <p class="card-text">Stock: ${product.stock} </p>   
+            <p class="card-text">Code: ${product.code} </p>                                               
+            <a id="btnProduct${product.id}" class="btn btn-danger">Eliminar</a>
+        </div>
+        `
     });
+
+    products.forEach(product => {
+        const btnProduct = document.getElementById(`btnProduct${product.id}`)
+        btnProduct.addEventListener("click", (e)=>{
+            socket.emit("deleteProduct", product.id)
+            socket.on("mensajeProductoEliminado", mensaje => {
+                console.log(mensaje)
+            })
+        })
+    })
 })
