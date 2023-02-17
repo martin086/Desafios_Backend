@@ -9,7 +9,7 @@ import { Server } from "socket.io";
 import routerSocket from "./routes/socket.routes.js";
 import { ProductManager } from "./controllers/ProductManager.js";
 
-const productManager =  new ProductManager('src/models/products.json');
+const productManager =  new ProductManager('src/models/productos.json');
 
 
 //const upload = multer({dest:'src/public/img'}) Forma basica de utilizar multer
