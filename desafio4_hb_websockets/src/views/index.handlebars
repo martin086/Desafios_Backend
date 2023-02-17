@@ -1,9 +1,14 @@
-<h1>Chat con Socket.io</h1>
-
-<div>
-    <input type="text" id="chatBox">
-    <button id="botonChat">Enviar</button>
-</div>
-<div>
-    <p id="parrafosMensajes"></p>
-</div>
+<h1>Lista de productos estática:</h1>
+{{#each products}}
+  <div>
+    <p>Id: {{this.id}}</p>
+    <p>Title: {{this.title}}</p>
+    <p>Description: {{this.description}}</p>
+    <p>Price: {{this.price}}</p>
+    <p>Code: {{this.code}}</p>
+    <p>Stock: {{this.stock}}</p>
+    <p>Category: {{this.category}}</p>
+    <p>Status: {{this.status}}</p>
+    <p>Thumbnail: {{this.thumbnail}}</p>
+  </div>
+{{/each}}

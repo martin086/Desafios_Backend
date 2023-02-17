@@ -39,14 +39,14 @@ app.set('views', path.resolve(__dirname, './views')); //__dirname + './views'
 //ServerIO
 const io = new Server(server)
 
-const mensajes = []
+const products = []
 
 io.on("connection", (socket) => { //io.on es cuando se establece la conexion
     console.log("Cliente conectado")
     socket.on("mensaje", info => {//Cuando recibo informacion de mi cliente
         console.log(info)
-        mensajes.push(info)
-        io.emit("mensajes", mensajes)
+        products.push(info)
+        io.emit("mensajes", products)
     })
 })
 
@@ -61,26 +61,15 @@ app.post('/upload',upload.single('product'), (req,res) => {
 })
 
 //HBS
-/*
 app.get('/', (req,res) => {
-    const user = {
-        nombre: "Pablo",
-        email: "p@p.com",
-        rol: "Tutor"
-    }
-    
-    const cursos = [
-        {numero: 123, dia: "LyM", horario: "Noche"},
-        {numero: 456, dia: "MyJ", horario: "Mañana"},
-        {numero: 789, dia: "S", horario: "Mañana"}
+    const products = [
+        {id: 1, title: "A/A 2250fr", description: "Aire acondicionado split 2250fr F/C", price: 100000, code: "#121", stock: 5, category: "A/A", status: true, thumbnail: ['../public/img/12-aireacondicionado.jpg']},
+        {id: 2, title: "A/A 3000fr", description: "Aire acondicionado split 3000fr F/C", price: 150000, code: "#122", stock: 8, category: "A/A", status: true, thumbnail: ['../public/img/12-aireacondicionado.jpg']},
+        {id: 3, title: "A/A 4500fr", description: "Aire acondicionado split 4500fr F/C", price: 200000, code: "#123", stock: 7, category: "A/A", status: true, thumbnail: ['../public/img/12-aireacondicionado.jpg']},
+        {id: 4, title: "A/A 6000fr", description: "Aire acondicionado split 6000fr F/C", price: 250000, code: "#124", stock: 6, category: "A/A", status: true, thumbnail: ['../public/img/12-aireacondicionado.jpg']},
     ]
 
-    res.render("home", { //Renderizar el siguiente contenido
-        titulo: "Ecommerce Backend",
-        mensaje: "Pepe",
-        usuario: user,
-        isTutor: user.rol === "Tutor",
-        cursos
-        })
+    res.render("index", { //Renderizar el siguiente contenido
+        products
+    })
 })
-*/

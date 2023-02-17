@@ -1,3 +1,15 @@
 body {
-    background-color: green;
+    background-color: whitesmoke;
+}
+
+input, select {
+    margin: 0px 0px 10px 10px;
+}
+
+label {
+    font-weight: 600;
+}
+
+button {
+    font-weight: 800;
 }
