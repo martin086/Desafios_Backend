@@ -4,7 +4,7 @@ const socket = io()
 const addForm = document.getElementById("addProductForm")
 const deleteForm = document.getElementById("deleteProductForm")
 
-addform.addEventListener('submit', (e) => {
+addForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const title = document.getElementById("title").value
     const description = document.getElementById("description").value
