@@ -1,30 +1,66 @@
 //Front
 const socket = io()
 
-const form = document.getElementById("realTimeProductsForm")
-form.addEventListener('submit', (e) => {
+const addForm = document.getElementById("addProductForm")
+const deleteForm = document.getElementById("deleteProductForm")
+
+addform.addEventListener('submit', (e) => {
     e.preventDefault();
     const title = document.getElementById("title").value
     const description = document.getElementById("description").value
     const price = document.getElementById("price").value
-    const thumbnail = document.getElementById("thumbnail").value
     const code = document.getElementById("code").value
     const stock = document.getElementById("stock").value
     const category = document.getElementById("category").value
+    const thumbnail = document.getElementById("thumbnail").value
     const product = {title,description,price,code,stock,category,thumbnail}
     socket.emit("addProduct", product) //Enviar informacion a mi servidor
 })
 
-socket.on("mensajeAddProduct", mensaje => {
+deleteForm.addEventListener('submit', (e) => {
+    e.preventDefault()
+    const id = document.getElementById("prodId").value
+    socket.emit("deleteProduct", id)
+})
+
+
+socket.on("msgAddProduct", mensaje => {
+    Swal.fire({
+        icon: 'success',
+        title: `Producto agregado con el id: ${mensaje}`,
+        showConfirmButton: true,
+        timer: 2000
+    })
+    console.log(mensaje)
+})
+
+
+socket.on("msgDeleteProduct", mensaje => {
+    if (mensaje) {
+        Swal.fire({
+            icon: 'success',
+            title: 'Producto eliminado',
+            showConfirmButton: true,
+            timer: 2000
+        })
+    } else {
+        Swal.fire({
+            icon: 'error',
+            title: 'No se pudo eliminar el producto',
+            showConfirmButton: true,
+            timer: 2000
+        })
+    }
     console.log(mensaje)
 })
 
 
 socket.on("getProducts", products => {
-    let productsCard = document.getElementById("productsCard").innerHTML=""
+    const prodsFromServer = document.getElementById("productsFromServer")
+    prodsFromServer.innerHTML=""
     
     products.forEach(product => {
-        productsCard.innerHTML += 
+        prodsFromServer.innerHTML += 
         `
         <div class="card col-sm-2 cardProduct">
         <img class="card-img-top imgCardProducts" src="${product.thumbnail}">
@@ -34,19 +70,8 @@ socket.on("getProducts", products => {
             <p class="card-text">${product.description} </p>
             <p class="card-text">Precio: ${product.price} </p>       
             <p class="card-text">Stock: ${product.stock} </p>   
-            <p class="card-text">Code: ${product.code} </p>                                               
-            <a id="btnProduct${product.id}" class="btn btn-danger">Eliminar</a>
+            <p class="card-text">Code: ${product.code} </p>
         </div>
         `
-    });
-
-    products.forEach(product => {
-        const btnProduct = document.getElementById(`btnProduct${product.id}`)
-        btnProduct.addEventListener("click", (e)=>{
-            socket.emit("deleteProduct", product.id)
-            socket.on("mensajeProductoEliminado", mensaje => {
-                console.log(mensaje)
-            })
-        })
     })
 })

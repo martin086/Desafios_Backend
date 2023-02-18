@@ -9,9 +9,11 @@ routerSocket.get("/", async (req,res) => {
     res.render("index", {products})
 })
 
-routerSocket.get("/realTimeProducts", async (req,res) => {
+routerSocket.get("/realtimeproducts", async (req,res) => {
     const products = await productManager.getProducts()
-    res.render("realTimeProducts", {products})
+    res.render("realTimeProducts", {
+        products: products
+    })
 })
 
 export default routerSocket
