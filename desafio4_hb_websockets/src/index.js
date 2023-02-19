@@ -40,7 +40,7 @@ io.on("connection", async (socket) => { //io.on es cuando se establece la conexi
     console.log("Cliente conectado")
 
     socket.on("addProduct", async info => {//Cuando recibo informacion de mi cliente
-        socket.emit("msgAddProduct", await productManager.addProduct(info.title, info.description, info.code, info.price, true, info.stock, info.category, info.thumbnail))
+        socket.emit("msgAddProduct", await productManager.addProduct(info, ["/img/12-aireacondicionado.jpg"]))
         socket.emit("getProducts", await productManager.getProducts())
     })
     

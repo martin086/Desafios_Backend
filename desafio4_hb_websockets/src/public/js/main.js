@@ -12,7 +12,7 @@ addForm.addEventListener('submit', (e) => {
     const code = document.getElementById("code").value
     const stock = document.getElementById("stock").value
     const category = document.getElementById("category").value
-    const thumbnail = document.getElementById("thumbnail").value
+    const thumbnail = []
     const product = {title,description,price,code,stock,category,thumbnail}
     socket.emit("addProduct", product) //Enviar informacion a mi servidor
 })
@@ -27,7 +27,7 @@ deleteForm.addEventListener('submit', (e) => {
 socket.on("msgAddProduct", mensaje => {
     Swal.fire({
         icon: 'success',
-        title: `Producto agregado con el id: ${mensaje}`,
+        title: `Producto agregado con el id: ${mensaje.id}`,
         showConfirmButton: true,
         timer: 2000
     })

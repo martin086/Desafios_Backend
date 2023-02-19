@@ -48,12 +48,18 @@ export class ProductManager {
             return console.log("Todos los campos deben ser completados.");
         } else {
             if (imgPath) {
+                product.thumbnail = imgPath; 
+            } else {
+                imgPath = []
                 product.thumbnail = imgPath;
-            }            
-            const nuevoProducto = {id: Product.addId(), ...product};
-            data.push(nuevoProducto);
-            await fs.writeFile(this.path, JSON.stringify(data), 'utf-8')
-            return console.log(`El producto con id: ${nuevoProducto.id} ha sido agregado.`) 
+            }
+        let newID;
+        !data.length ? (newID = 1) : (newID = data[data.length - 1].id + 1);
+        const nuevoProducto = {id: newID, ...product};
+        data.push(nuevoProducto);
+        await fs.writeFile(this.path, JSON.stringify(data), 'utf-8')
+        console.log(`El producto con id: ${nuevoProducto.id} ha sido agregado.`)
+        return newID
         }
     }
 
@@ -63,6 +69,7 @@ export class ProductManager {
             const prods = await JSON.parse(read)
             if (prods.length != 0) {
                 console.log("Listado de productos:");
+                console.log(prods);
                 return prods
             } 
         } catch {
@@ -83,18 +90,18 @@ export class ProductManager {
         }
     }
 
-    updateProduct = async (id, {title, description, price, thumbnail, code, stock, category, status}) => {
+    updateProduct = async (id, {title, description, price, code, stock, category, status, thumbnail}) => {
         const prods = JSON.parse(await fs.readFile(this.path, 'utf-8'))
         if(prods.some(prod => prod.id === parseInt(id))) {
             let index= prods.findIndex(prod => prod.id === parseInt(id))
             prods[index].title = title
             prods[index].description = description
             prods[index].price = price
-            prods[index].thumbnail = thumbnail
             prods[index].code = code
             prods[index].stock = stock
             prods[index].category = category
             prods[index].status = status
+            prods[index].thumbnail = thumbnail
             await fs.writeFile(this.path, JSON.stringify(prods))
             return "Producto actualizado" 
         } else {
