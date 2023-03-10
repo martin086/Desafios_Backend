@@ -35,6 +35,15 @@ export class ManagerMongoDB {
             return error
         }
     }
+    
+    async getElements(limit) {
+        this.#setConnection()
+        try {
+            return await this.model.find().limit(limit)
+        } catch(error) {
+            return error
+        }
+    }
 
     async getElementById(id) {
         this.#setConnection()

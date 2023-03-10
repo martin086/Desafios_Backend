@@ -10,7 +10,7 @@ const productSchema = new Schema({
     stock: Number
 })
 
-export class ManagerProductMongoDB extends ManagerMongoDB {
+export default class ManagerProductMongoDB extends ManagerMongoDB {
     constructor() {
         super(url, "products", productSchema)
     }

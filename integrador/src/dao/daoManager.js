@@ -2,11 +2,16 @@ const selectedDB = process.env.DBSELECTION
 
 //O importo MongoDB o importo Postgres
 export const getManagerMessages = async() => {
-    const modelMessage = selectedDB === 1 ? await import('./MongoDB/models/Message.js') : await import('./Postgresql/models/Message.js')
+    const modelMessage = process.env.DBSELECTION === 1 ? await import('./MongoDB/models/Message.js').then(module => module.default) : await import('./Postgresql/models/Message.js').then(module => module.default)
     return modelMessage
 }
 
 export const getManagerProducts = async() => {
-    const modeloProducts = selectedDB === 1 ? await import('./MongoDB/models/Product.js') : await import('./Postgresql/models/Product.js')
-    return modeloProducts
+    const modelProduct = process.env.DBSELECTION === 1 ? await import('./MongoDB/models/Product.js').then(module => module.default) : await import('./Postgresql/models/Product.js').then(module => module.default)
+    return modelProduct
+}
+
+export const getManagerCart = async() => {
+    const modelCart = process.env.DBSELECTION === 1 ? await import('./MongoDB/models/Cart.js').then(module => module.default) : await import('./Postgresql/models/Cart.js').then(module => module.default)
+    return modelCart
 }
