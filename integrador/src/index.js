@@ -28,25 +28,27 @@ app.set('views', path.resolve(__dirname, "./views"))
 const server = app.listen(app.get("port", ()=> console.log(`Server on port ${app.get("port")}`)))
 
 //Socket.io
+let messagesArray = [];
 const io = new Server(server)
 
 io.on("connection", async (socket) => {
 
     socket.on("message", async (info) => {
+        messagesArray.push(info)
         await managerMessages.addElements([info])
         const messages = await managerMessages.getElements()
         console.log(messages)
-        socket.emit("allMessages", messages)
+        socket.emit("allMessages", messagesArray)
     })
 })
 
 
-const main = async() => {
-    await mongoose.connect("mongodb+srv://martinsuarez:coderhouse1234@cluster0.huzsazq.mongodb.net/?retryWrites=true&w=majority")
-    // await userModel.create([
-    //     {name: "Pepe", lastname: "Lepu", username: "Pepito01", email: "pepe@pepe.com", password: "123"},
-    //     {name: "Firu", lastname: "Lais", username: "Firu01", email: "firu@firu.com", password: "123"}
-    // ])
-    //const response = await userModel.find().explain('executionStats')
-    console.log(response)
-}
+// const main = async() => {
+//     await mongoose.connect(process.env.URLMONGODB)
+//     // await userModel.create([
+//     //     {name: "Pepe", lastname: "Lepu", username: "Pepito01", email: "pepe@pepe.com", password: "123"},
+//     //     {name: "Firu", lastname: "Lais", username: "Firu01", email: "firu@firu.com", password: "123"}
+//     // ])
+//     //const response = await userModel.find().explain('executionStats')
+//     console.log(response)
+// }
