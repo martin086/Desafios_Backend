@@ -7,6 +7,8 @@ import { Server } from 'socket.io'
 import { getManagerMessages } from './dao/daoManager.js'
 import { engine } from 'express-handlebars'
 import userModel from './dao/MongoDB/models/User.js'
+import routerProducts from './routes/productos.routes.js'
+import routerSocket from './routes/socket.routes.js'
 
 
 //Express Server
@@ -24,21 +26,29 @@ app.engine('handlebars', engine())
 app.set('view engine', 'handlebars')
 app.set('views', path.resolve(__dirname, "./views"))
 
+//Routes
+app.use('/', express.static(__dirname + '/public'))
+app.use('/', routerSocket)
+app.use('/realtimeproducts', routerSocket)
+//app.use('/api/products', routerProduct)
+//app.use('/api/carts', routerCart)
+app.use('/chat', routerSocket)
+
 
 const server = app.listen(app.get("port", ()=> console.log(`Server on port ${app.get("port")}`)))
 
 //Socket.io
-let messagesArray = [];
 const io = new Server(server)
 
 io.on("connection", async (socket) => {
+    console.log("Client connected");
 
     socket.on("message", async (info) => {
-        messagesArray.push(info)
-        await managerMessages.addElements([info])
-        const messages = await managerMessages.getElements()
-        console.log(messages)
-        socket.emit("allMessages", messagesArray)
+        await managerMessages.addElements([info]).then(() => {
+            managerMessages.getElements().then((messages) => {
+                socket.emit("allMessages", messages);
+            })
+        })
     })
 })
 

@@ -1,11 +1,12 @@
 import { Router } from "express";
 import { ProductManager } from "../controllers/ProductManager.js";
 import { getManagerProducts } from "../dao/daoManager.js";
-import { ManagerProductMongoDB } from "../dao/MongoDB/models/Product.js";
+//import { ManagerProductMongoDB } from "../dao/MongoDB/models/Product.js";
 
 const routerProducts = Router()
 //const productManager = new ProductManager('src/models/productos.json')
-const productManager = new getManagerProducts()
+const data = await getManagerProducts();
+const productManager = new data();
 
 
 routerProducts.get('/', async (req, res) => { 
