@@ -39,22 +39,18 @@ const server = app.listen(app.get("port", ()=> console.log(`Server on port ${app
 const io = new Server(server);
 
 const data = await getManagerMessages();
-const managerMessages = new data.ManagerMessageMongoDB;
-//let messagesArr = [];
+const managerMessages = new data();
 
 io.on("connection", async (socket) => {
     console.log("Client connected");
-
     socket.on("message", async (info) => {
+        
         await managerMessages.addElements([info])
-        const message = await managerMessages.getElements()
-        console.log(message)
-        io.emit("allMessages", message)
+        managerMessages.addElements([info]).then(()=>{
+            managerMessages.getElements().then((messages) => {
+                console.log(messages)
+                socket.emit("allMessages", messages)
+            })
+        })
     })
-
-    socket.on("load messages", info => {
-        console.log(messages)
-        io.emit("allMessages", info)
-    })
-
 })

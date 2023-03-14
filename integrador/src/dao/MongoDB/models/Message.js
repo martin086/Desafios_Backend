@@ -23,7 +23,7 @@ const messageSchema = new Schema({
     }
 })
 
-export default class ManagerMessageMongoDB extends ManagerMongoDB {
+export class ManagerMessageMongoDB extends ManagerMongoDB {
     constructor() {
         super(url, "messages", messageSchema)
         //Acá van los atributos propios de la clase
