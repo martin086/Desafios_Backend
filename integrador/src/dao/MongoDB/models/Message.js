@@ -4,12 +4,23 @@ import { Schema } from "mongoose";
 const url = process.env.URLMONGODB //consulto la url desde las variables de entorno
 
 const messageSchema = new Schema({
-    nombre: String,
+    name: {
+        type: String,
+        required: true
+    },
     email: {
         type: String,
+        required: true,
         unique: true
     },
-    message: String
+    message: {
+        type: String,
+        required: true
+    },
+    date: {
+        type: Date,
+        default: Date.now
+    }
 })
 
 export default class ManagerMessageMongoDB extends ManagerMongoDB {

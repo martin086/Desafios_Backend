@@ -5,14 +5,15 @@ export class ManagerMongoDB {
     constructor(url, collection, schema) {
         this.#url = url //Private attribute
         this.collection = collection
-        this.schema = new mongoose.Schema(schema)
+        //this.schema = new mongoose.Schema(schema)
+        this.schema = schema
         this.model = mongoose.model(this.collection, this.schema)
     }
 
     async #setConnection() { //Se usa # para convertirlo en método privado
         try {
             await mongoose.connect(this.#url)
-            console.log("DB connected")
+            console.log("MongoDB connected")
         } catch(error) {
             return error
         }
@@ -27,14 +28,14 @@ export class ManagerMongoDB {
         }
     }
 
-    async getElements() {
-        this.#setConnection()
-        try {
-            return await this.model.find()
-        } catch(error) {
-            return error
-        }
-    }
+    // async getElements() {
+    //     this.#setConnection()
+    //     try {
+    //         return await this.model.find()
+    //     } catch(error) {
+    //         return error
+    //     }
+    // }
     
     async getElements(limit) {
         this.#setConnection()
@@ -54,7 +55,7 @@ export class ManagerMongoDB {
         }
     }
 
-    async updateElement(id,info) {
+    async updateElement(id, info) {
         this.#setConnection()
         try {
             return await this.model.findByIdAndUpdate(id, info)

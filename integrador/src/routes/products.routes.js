@@ -1,12 +1,11 @@
 import { Router } from "express";
-import { ProductManager } from "../controllers/ProductManager.js";
+import { ProductManager } from "../dao/FileSystem/ProductManager.js";
 import { getManagerProducts } from "../dao/daoManager.js";
-//import { ManagerProductMongoDB } from "../dao/MongoDB/models/Product.js";
 
 const routerProducts = Router()
 //const productManager = new ProductManager('src/models/productos.json')
-const data = await getManagerProducts();
-const productManager = new data();
+const managerData = await getManagerProducts()
+const productManager = new managerData()
 
 
 routerProducts.get('/', async (req, res) => { 
@@ -17,15 +16,26 @@ routerProducts.get('/', async (req, res) => {
         ? products = await productManager.getElements(0)
         : products = await productManager.getElements(limit)
         res.send({response: products})
+
+    // const products = await manager.getProducts();
+    // let { limit } = req.query;
+    // let data;
+    // if (!limit) {
+    //     data = products;
+    // } else {
+    //     data = products.slice(0, parseInt(limit));
+    // }
+    // res.send(data);
+    
 })
   
 routerProducts.get('/:id', async (req, res) => { 
     const product = await productManager.getElementById(req.params.id)
     if (product) {
-        res.send(JSON.stringify(product));
+        res.send({ response: product });
         console.log(product);
     } else {
-        res.json({ Error: "id not found"})
+        res.send({ Error: "id not found"})
     }    
 })
   
