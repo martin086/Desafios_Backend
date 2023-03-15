@@ -11,7 +11,6 @@ const messageSchema = new Schema({
     email: {
         type: String,
         required: true,
-        unique: true
     },
     message: {
         type: String,
@@ -23,7 +22,7 @@ const messageSchema = new Schema({
     }
 })
 
-export class ManagerMessageMongoDB extends ManagerMongoDB {
+export default class ManagerMessageMongoDB extends ManagerMongoDB {
     constructor() {
         super(url, "messages", messageSchema)
         //Acá van los atributos propios de la clase

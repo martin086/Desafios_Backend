@@ -13,7 +13,7 @@ const cartSchema = new Schema({
 
 class ManagerCartMongoDB extends ManagerMongoDB {
     constructor() {
-        super(url, "messages", cartSchema)
+        super(url, "carts", cartSchema)
     }
 }
 

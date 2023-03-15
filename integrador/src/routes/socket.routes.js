@@ -3,7 +3,7 @@ import { Router } from "express";
 import { getManagerMessages, getManagerProducts } from "../dao/daoManager.js";
 
 
-const routerSocket = Router();
+const routerSocket = Router()
 //const productManager = new ProductManager('src/models/productos.json')
 const selectedDB = process.env.DBSELECTION
 const prodManagerData = await getManagerProducts()
@@ -31,7 +31,7 @@ routerSocket.get("/realtimeproducts", async (req,res) => {
         const products = await prodManager.getElements(0)
         res.render("realTimeProducts", { products: products })
     } else {
-        console.log("SQL not implemented")
+        console.log("No SQL Database")
     }
 })
 
@@ -41,4 +41,4 @@ routerSocket.get("/chat", async (req, res) => {
 })
 
 
-export default routerSocket
+export default routerSocket;

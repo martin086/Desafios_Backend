@@ -25,7 +25,7 @@ socket.on("allMessages", async message => {
     })
 })
 
-messageForm.addEventListener("submit", (e)=>{
+chatForm.addEventListener("submit", (e)=>{
     e.preventDefault();
 
     if (msgAuthor.value && msgEmail.value && msgText.value) {
