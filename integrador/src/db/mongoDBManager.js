@@ -6,6 +6,8 @@ export class ManagerMongoDB {
         this.#url = url //Private attribute
         this.collection = collection
         //this.schema = new mongoose.Schema(schema)
+        //console.log("esquema por parametro", schema)
+        //console.log("esquema instanciado", this.schema)
         this.schema = schema
         this.model = mongoose.model(this.collection, this.schema)
     }
@@ -22,7 +24,10 @@ export class ManagerMongoDB {
     async addElements(elements) { //Agrego 1 o varios elementos
         this.#setConnection()
         try {
-            return await this.model.insertMany(elements)
+            console.log("llegué")
+            const insertar = await this.model.insertMany(elements)
+            console.log("llegué a insertar", insertar)
+            return insertar
         } catch(error) {
             return error
         }

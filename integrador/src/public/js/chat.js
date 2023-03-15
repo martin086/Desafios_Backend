@@ -1,15 +1,11 @@
 const socket = io();
 
 const chatForm = document.getElementById("chatForm")
-const msgAuthor = document.getElementById("author")
-const msgEmail = document.getElementById("email")
-const msgText = document.getElementById("message")
 const chatBox = document.getElementById("chatBox")
 
-
 window.addEventListener("load", () => {
-
-    socket.emit("load messages")
+    
+    socket.emit("loadmessage")
 })
 
 socket.on("allMessages", async message => {
@@ -28,12 +24,23 @@ socket.on("allMessages", async message => {
 chatForm.addEventListener("submit", (e)=>{
     e.preventDefault();
 
+    const msgAuthor = document.getElementById("author")
+    const msgEmail = document.getElementById("email")
+    const msgText = document.getElementById("message")
+    
+    console.log(msgAuthor.value)
+    console.log(msgEmail.value)
+    console.log(msgText.value)
+    
+
     if (msgAuthor.value && msgEmail.value && msgText.value) {
         const newMessage = {
             author: msgAuthor.value,
             email: msgEmail.value,
-            message: msgText.value
+            message: msgText.value,
+            date: this.date
         }
+        
         socket.emit("message", newMessage)
         msgText.value = ""
         scrollDown()

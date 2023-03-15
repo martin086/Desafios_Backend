@@ -14,6 +14,8 @@ const msgManager = new msgManagerData()
 
 
 routerSocket.get('/', async (req, res) => {
+    
+    
     let { limit } = req.query;
     if (selectedDB == 1) {
         let products

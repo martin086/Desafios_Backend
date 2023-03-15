@@ -33,7 +33,7 @@ app.use('/chat', routerSocket)
 
 
 //Launch
-const server = app.listen(app.get("port", ()=> console.log(`Server on port ${app.get("port")}`)))
+const server = app.listen(app.get("port"), ()=> console.log(`Server on port ${app.get("port")}`))
 
 //Socket.io
 const io = new Server(server);
@@ -44,11 +44,17 @@ const managerMessages = new data();
 io.on("connection", async (socket) => {
     console.log("Client connected");
     socket.on("message", async (info) => {
-        await managerMessages.addElements([info]).then(()=>{
-            managerMessages.getElements().then((messages) => {
-                console.log(messages)
-                socket.emit("allMessages", messages)
-            })
-        })
+        console.log(info)
+        await managerMessages.addElements([info])
+        const messages = await managerMessages.getElements()
+        console.log(messages)
+        socket.emit("allMessages", messages)
+    })
+
+    socket.on("loadmessage", async (info) => {
+        await managerMessages.addElements([info])
+        const messages = await managerMessages.getElements()
+        console.log(messages)
+        socket.emit("allMessages", messages)
     })
 })
