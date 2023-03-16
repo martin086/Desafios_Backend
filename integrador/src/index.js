@@ -51,8 +51,7 @@ io.on("connection", async (socket) => {
         socket.emit("allMessages", messages)
     })
 
-    socket.on("loadmessage", async (info) => {
-        await managerMessages.addElements([info])
+    socket.on("load messages", async () => {
         const messages = await managerMessages.getElements()
         console.log(messages)
         socket.emit("allMessages", messages)

@@ -24,7 +24,7 @@ export class ManagerMongoDB {
     async addElements(elements) { //Agrego 1 o varios elementos
         this.#setConnection()
         try {
-            console.log("llegué")
+            console.log("llegué sin insertar")
             const insertar = await this.model.insertMany(elements)
             console.log("llegué a insertar", insertar)
             return insertar
