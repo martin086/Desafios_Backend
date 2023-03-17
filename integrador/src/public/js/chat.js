@@ -32,7 +32,7 @@ chatForm.addEventListener("submit", (e)=>{
     
     if (msgAuthor.value && msgEmail.value && msgText.value) {
         const newMessage = {
-            author: msgAuthor.value,
+            name: msgAuthor.value,
             email: msgEmail.value,
             message: msgText.value,
             date: this.date
