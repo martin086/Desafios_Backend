@@ -1,5 +1,4 @@
 import { Router } from "express";
-//import { ProductManager } from "../controllers/ProductManager.js";
 import { getManagerMessages, getManagerProducts } from "../dao/daoManager.js";
 
 
@@ -22,7 +21,7 @@ routerSocket.get('/', async (req, res) => {
         !limit
             ? products = await prodManager.getElements(0)
             : products = await prodManager.getElements(limit)
-        res.render("home", { products })
+        res.render("index", { products })
     } else {
         // Postgres
     }
