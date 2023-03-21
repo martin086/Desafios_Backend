@@ -2,7 +2,7 @@
 <div class="productsCardContainer row">
     {{#each products}}
         <div class="card col-sm-2 cardProduct">
-        <img class="card-img-top imgCardProducts" src="{{this.thumbnail}}" alt="Card image cap">
+        <img class="card-img-top imgCardProducts" src="{{this.thumbnail.[0]}}" alt="Card image cap">
         <div class="card-body">
             <h5 class="card-title">{{this.title}}</h5>
             <p class="card-text">ID: {{this.id}} </p>

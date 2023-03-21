@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { getManagerCart, getManagerProducts, getManagerUsers } from "../dao/daoManager.js";
-import ManagerCartMongoDB from "../dao/MongoDB/models/Cart.js";
+
 
 const routerCart = Router()
 
@@ -83,10 +83,8 @@ routerCart.post('/:cid/products/:pid', async (req, res) => {
 //Add an array of products to the cart
 routerCart.put('/:cid', async (req, res) => { 
     try {
-        const cartData = await cartManager.getElementById((req.params.cid));
         const prodArray = req.body
-
-        const addedProducts = await ManagerCartMongoDB.addProductToCart(cartData, prodArray)
+        const addedProducts = await cartManager.updateAllProducts(req.params.cid, prodArray)
 
         res.send({
             status: "success",
@@ -124,7 +122,7 @@ routerCart.put('/:cid/products/:pid', async (req, res) => {
 routerCart.delete('/:cid', async (req, res) => {
     try {
         const cartData = await cartManager.getElementById((req.params.cid))
-        const emptyCart = await ManagerCartMongoDB.deleteAllProducts(cartData)
+        const emptyCart = await cartManager.deleteAllProducts(cartData)
 
         res.send({
             status: "success",
@@ -141,10 +139,10 @@ routerCart.delete('/:cid', async (req, res) => {
 //Elimina el producto seleccionado del carrito.
 routerCart.delete('/:cid/products/:pid', async (req, res) => { 
     try {
-        const cartData = await cartManager.getElementById((req.params.cid))
-        const productData = await prodManager.getElementById((req.params.pid))
+        //const cartData = await cartManager.getElementById((req.params.cid))
+        //const productData = await prodManager.getElementById((req.params.pid))
 
-        const updatedCart = await ManagerCartMongoDB.deleteProductFromCart(cartData, productData)
+        const updatedCart = await cartManager.deleteProductFromCart(req.params.cid, req.params.pid)
 
         res.send({
             status: "success",

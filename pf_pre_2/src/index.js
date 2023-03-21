@@ -9,6 +9,7 @@ import routerProducts from './routes/products.routes.js'
 import routerSocket from './routes/socket.routes.js'
 import routerCart from './routes/carts.routes.js'
 import routerViews from './routes/views.routes.js'
+import MongoStore from 'connect-mongo'
 
 //Express Server
 const app = express()
@@ -37,7 +38,17 @@ app.use('/api/products', routerProducts)
 app.use('/api/carts', routerCart)
 app.use('/chat', routerSocket)
 app.use('/', routerViews)
-
+// app.use(session({
+//     store: MongoStore.create({
+//         mongoUrl: process.env.MONGODBURL,
+//         mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
+//         ttl: 30
+//     }),
+//     //store: new fileStore({ path: './sessions', ttl: 10000, retries: 1 }),
+//     secret: process.env.SESSION_SECRET,
+//     resave: true,
+//     saveUninitialized: true
+// }))
 
 //Launch
 const server = app.listen(app.get("port"), ()=> console.log(`Server on port ${app.get("port")}`))

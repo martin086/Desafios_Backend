@@ -12,7 +12,7 @@ export class ManagerMongoDB {
         this.model = mongoose.model(this.collection, this.schema)
     }
 
-    async _setConnection() { //Se usa # para convertirlo en método privado
+    async _setConnection() { //Se usa # para convertirlo en método privado y _ para protected.
         try {
             await mongoose.connect(this.#url)
             console.log("MongoDB connected")

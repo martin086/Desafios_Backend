@@ -39,8 +39,8 @@ class ManagerCartMongoDB extends ManagerMongoDB {
             console.log("esto es el cart", idCart, " y esto es el prod", idProduct)
             const cart = await this.model.findById(idCart);
             cart.products.push({
-                productId: idProduct
-                //quantity: prodQty
+                productId: idProduct,
+                //quantity: quantity
             })
             await cart.save()
             return cart.products
@@ -52,11 +52,11 @@ class ManagerCartMongoDB extends ManagerMongoDB {
         await this._setConnection() // con el _ se pasa a protected
         //Get cart and check if product exists
         const cart = await this.model.findById(idCart).populate('products.productId');
-        console.log("este es el updated", cart)
+        console.log("Cart actual: ", cart)
         const productIndex = cart.products.findIndex(
             product => {
-                console.log(product.productId.id)
-                console.log(idProduct)
+                //console.log(product.productId.id)
+                //console.log(idProduct)
                 return product.productId.id === idProduct}) 
         if (productIndex === -1) throw new Error("Product not found in cart")
 
@@ -70,11 +70,25 @@ class ManagerCartMongoDB extends ManagerMongoDB {
         }
     }
 
+    async updateAllProducts(idCart, prodArray) {
+        await this._setConnection()
+        try {
+            const cart = await this.model.findById(idCart)//.populate('products.productId');
+            cart.products = prodArray
+            await cart.save()
+            return cart.products
+        } catch(error) {
+            return error
+        }
+    }
+
     async deleteProductFromCart(idCart, idProduct) {
         await this._setConnection();
         
-        const cart = await this.model.findById(idCart);
-        const productIndex = cart.products.findIndex(product => product.productId === idProduct)
+        const cart = await this.model.findById(idCart).populate('products.productId');
+        const productIndex = cart.products.findIndex(
+            product => {
+                return product.productId.id === idProduct})
 
         try {
             cart.products.splice(productIndex, 1);

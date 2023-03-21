@@ -34,7 +34,7 @@ routerProducts.get('/', async (req, res) => {
             }
         }
 
-        const products = await manager.paginate(filter, options)
+        const products = await productManager.paginate(filter, options)
 
         if ((page > products.totalPages) || (page <= 0)) throw new Error("Parameter 'page' is out of range")
 
@@ -43,9 +43,6 @@ routerProducts.get('/', async (req, res) => {
         const stockLink = stock ? `&stock=${stock}` : ""
         const limitLink = limit ? `&limit=${limit}` : ""
         const sortLink = sort ? `&sort=${sort}` : ""
-        //Links para previous y next page
-        //const prevLink = productsPaginated.hasPrevPage ? `/api/products?category=${category}&limit=${limit}&sort=${sort}&available=${available}&page=${page - 1}` : null
-        //const nextLink = productsPaginated.hasNextPage ? `/api/products?category=${category}&limit=${limit}&sort=${sort}&available=${available}&page=${page - 1}` : null
 
         const prevPageLink = products.hasPrevPage ? `/api/products?page=${products.prevPage}${limitLink}${categoryLink}${stockLink}${sortLink}` : null
         const nextPageLink = products.hasNextPage ? `/api/products?page=${products.nextPage}${limitLink}${categoryLink}${stockLink}${sortLink}` : null
