@@ -1,5 +1,6 @@
 import { ManagerMongoDB } from "../../../db/mongoDBManager.js";
 import { Schema } from "mongoose";
+import paginate from "mongoose-paginate-v2";
 
 const url = process.env.URLMONGODB
 
@@ -39,8 +40,12 @@ const productSchema = new Schema({
     }
 })
 
+productSchema.plugin(paginate)
+
+
 export default class ManagerProductsMongoDB extends ManagerMongoDB {
     constructor() {
         super(url, "products", productSchema)
     }
+
 }

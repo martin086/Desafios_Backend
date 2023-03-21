@@ -7,7 +7,11 @@ const managerData = await getManagerProducts()
 const productManager = new managerData()
 
 
-routerProducts.get('/', async (req, res) => { 
+routerProducts.get('/', async (req, res) => {
+    //Links para previous y next page
+    //const prevLink = productsPaginated.hasPrevPage ? `/api/products?category=${category}&limit=${limit}&sort=${sort}&available=${available}&page=${page - 1}` : null
+    //const nextLink = productsPaginated.hasNextPage ? `/api/products?category=${category}&limit=${limit}&sort=${sort}&available=${available}&page=${page - 1}` : null
+ 
     const { limit } = req.query; 
     console.log("Limit is: ", limit)
     let products
@@ -30,10 +34,16 @@ routerProducts.get('/:id', async (req, res) => {
 routerProducts.post('/', async (req, res) => {
     try {
         const info = req.body;
-        let product = await productManager.addElements(info);
-        res.send({response: product})
+        let response = await productManager.addElements(info);
+        res.send({
+            status: "success",
+            payload: response,
+        });
     } catch (error) {
-        res.send(error)
+        res.send({
+            status: "error",
+            payload: error,
+        });
     }
 });
   

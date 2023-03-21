@@ -19,7 +19,12 @@ app.use(express.urlencoded({extended:true}))
 app.set("port", process.env.PORT || 8080)
 
 //Handlebars
-app.engine('handlebars', engine())
+app.engine('handlebars', engine({
+    runtimeOptions: {
+        allowProtoPropertiesByDefault: true,
+        allowProtoMethodsByDefault: true,
+    }
+}))
 app.set('view engine', 'handlebars')
 app.set('views', path.resolve(__dirname, "./views"))
 
@@ -57,3 +62,4 @@ io.on("connection", async (socket) => {
         socket.emit("allMessages", messages)
     })
 })
+
