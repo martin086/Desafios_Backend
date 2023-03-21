@@ -36,7 +36,7 @@ const productSchema = new Schema({
     },
     thumbnail: {
         type: Array,
-        default: [""]
+        default: []
     }
 })
 
@@ -48,4 +48,12 @@ export default class ManagerProductsMongoDB extends ManagerMongoDB {
         super(url, "products", productSchema)
     }
 
+    async paginate(filter, options) {
+        this._setConnection()
+        try {
+            return await this.model.paginate(filter, options)
+        } catch (error) {
+            return error
+        }
+    }
 }

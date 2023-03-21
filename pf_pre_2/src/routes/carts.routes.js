@@ -13,18 +13,74 @@ const prodManager = new prodManagerData()
 //const userManagerData = await getManagerUsers()
 //const userManager = new userManagerData()
 
-//Get Carts and populate
+//Get specified Cart and populate
 routerCart.get('/:cid', async (req, res) => { 
-    const cart = await cartManager.getElementById(req.params.cid)//.populate()
-    res.send(cart)
-})
-//Create Cart (Postman only)
-routerCart.post('/', async (req, res) => { 
-    const cart = await cartManager.addElements()
-    res.send(cart)
+    try {
+        const cart = await cartManager.getElementById(req.params.cid)
+        const popCart = await cart.populate({path:'products.productId', model: cartManager.productModel})
+        
+        res.send({
+            status: "success",
+            payload: popCart
+        })
+    } catch (error) {
+        res.send({
+            status: "error",
+            payload: error
+        })
+    }
 })
 
-//Agrega un producto o un array de productos específico al carrito
+//Create New Cart
+routerCart.post('/', async (req, res) => { 
+    try {
+        const cart = {}
+        const newCart = await cartManager.addElements(cart)
+        res.send({
+            status: "success",
+            payload: newCart
+        })
+
+    } catch (error) {
+        res.send({
+            status: "error",
+            payload: error
+        })
+    }
+})
+
+//Add a product to Cart
+routerCart.post('/:cid/products/:pid', async (req, res) => { 
+    const idCart = req.params.cid;
+    const idProduct = req.params.pid;
+    
+    try {
+        const newProduct = await prodManager.getElementById(idProduct);
+        //console.log(newProduct)
+        if(newProduct) {
+            console.log("llegué al if")
+            const cart = await cartManager.addProductToCart(idCart, idProduct);
+            
+            res.send({
+                status: "success",
+                payload: cart
+            })
+        } else {
+            res.send({
+                status: "error",
+                payload: `Product ${idProduct} not found.`
+            })
+        }
+        
+    } catch (error) {
+        res.send({
+            status: "error",
+            payload: `Product ${idProduct} was not added.`
+        })
+    }
+})
+
+//Add an array of products to the cart
 routerCart.put('/:cid', async (req, res) => { 
     try {
         const cartData = await cartManager.getElementById((req.params.cid));
@@ -45,14 +101,11 @@ routerCart.put('/:cid', async (req, res) => {
     }
 })
 
-//Actualiza solo la cantidad del producto pasada por body.
+//Update only the quantity of a single product.
 routerCart.put('/:cid/products/:pid', async (req, res) => { 
     try {
-        const prodQty = parseInt(req.body);
-        const productData = await prodManager.getElementById((req.params.pid));
-        const cartData = await cartManager.getElementById((req.params.cid));
-
-        const updatedProduct = await ManagerCartMongoDB.updateProdQty(cartData, productData, prodQty);
+        const {quantity} = req.body;
+        const updatedProduct = await cartManager.updateProdQty(req.params.cid, req.params.pid, quantity);
 
         res.send({
             status: "success",
@@ -67,7 +120,7 @@ routerCart.put('/:cid/products/:pid', async (req, res) => {
     }
 })
 
-//Elimina TODOS los productos contenidos en el carrito.
+//Remove all products from cart.
 routerCart.delete('/:cid', async (req, res) => {
     try {
         const cartData = await cartManager.getElementById((req.params.cid))

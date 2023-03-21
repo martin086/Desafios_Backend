@@ -12,7 +12,7 @@ export class ManagerMongoDB {
         this.model = mongoose.model(this.collection, this.schema)
     }
 
-    async #setConnection() { //Se usa # para convertirlo en método privado
+    async _setConnection() { //Se usa # para convertirlo en método privado
         try {
             await mongoose.connect(this.#url)
             console.log("MongoDB connected")
@@ -22,7 +22,7 @@ export class ManagerMongoDB {
     }
 
     async addElements(elements) { //Agrego 1 o varios elementos
-        this.#setConnection()
+        this._setConnection()
         try {
             const insertar = await this.model.insertMany(elements)
             console.log("llegué a insertar", insertar)
@@ -33,7 +33,7 @@ export class ManagerMongoDB {
     }
     
     async getElements(limit) {
-        this.#setConnection()
+        this._setConnection()
         try {
             return await this.model.find().limit(limit)
         } catch(error) {
@@ -42,7 +42,7 @@ export class ManagerMongoDB {
     }
 
     async getElementById(id) {
-        this.#setConnection()
+        this._setConnection()
         try {
             return await this.model.findById(id)
         } catch(error) {
@@ -51,7 +51,7 @@ export class ManagerMongoDB {
     }
 
     async updateElement(id, info) {
-        this.#setConnection()
+        this._setConnection()
         try {
             return await this.model.findByIdAndUpdate(id, info)
         } catch(error) {
@@ -60,7 +60,7 @@ export class ManagerMongoDB {
     }
 
     async deleteElement(id) {
-        this.#setConnection()
+        this._setConnection()
         try {
             return await this.model.findByIdAndDelete(id)
         } catch(error) {

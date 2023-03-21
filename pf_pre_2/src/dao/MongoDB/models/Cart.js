@@ -1,10 +1,10 @@
 import { ManagerMongoDB } from "../../../db/mongoDBManager.js";
-import { Schema } from "mongoose";
-import paginate from "mongoose-paginate-v2";
+import mongoose, { Schema } from "mongoose";
+import ManagerProductsMongoDB from "./Product.js";
 
 const url = process.env.URLMONGODB
 
-const cartSchema = new Schema({
+const cartSchema = new mongoose.Schema({
     products: {
         type: [
             {
@@ -16,10 +16,6 @@ const cartSchema = new Schema({
                 quantity: {
                     type: Number,
                     default: 1
-                },
-                price: {
-                    type: Number,
-                    required: true
                 }
             }
         ],
@@ -31,20 +27,21 @@ const cartSchema = new Schema({
     }
 });
 
-cartSchema.plugin(paginate)
-
 
 class ManagerCartMongoDB extends ManagerMongoDB {
     constructor() {
         super(url, "carts", cartSchema)
-
+        this.productModel = ManagerProductsMongoDB.model
     }
-    async addProductToCart(idCart, prodArray) {
-        this._setConnection()
-        const cart = await this.model.findById(idCart)
-        const newProducts = prodArray
+    async addProductToCart(idCart, idProduct) {
+        await this._setConnection()
         try {
-            cart.products = newProducts
+            console.log("esto es el cart", idCart, " y esto es el prod", idProduct)
+            const cart = await this.model.findById(idCart);
+            cart.products.push({
+                productId: idProduct
+                //quantity: prodQty
+            })
             await cart.save()
             return cart.products
         } catch(error) {
@@ -53,9 +50,15 @@ class ManagerCartMongoDB extends ManagerMongoDB {
     }
     async updateProdQty(idCart, idProduct, prodQty) {
         await this._setConnection() // con el _ se pasa a protected
-        
-        const cart = await this.model.findById(idCart);
-        const productIndex = cart.products.findIndex(product => product.productId === idProduct)
+        //Get cart and check if product exists
+        const cart = await this.model.findById(idCart).populate('products.productId');
+        console.log("este es el updated", cart)
+        const productIndex = cart.products.findIndex(
+            product => {
+                console.log(product.productId.id)
+                console.log(idProduct)
+                return product.productId.id === idProduct}) 
+        if (productIndex === -1) throw new Error("Product not found in cart")
 
         try {
             let product = cart.products[productIndex];
