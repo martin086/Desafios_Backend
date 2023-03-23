@@ -44,7 +44,6 @@ app.use('/', routerViews)
 //         mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
 //         ttl: 30
 //     }),
-//     //store: new fileStore({ path: './sessions', ttl: 10000, retries: 1 }),
 //     secret: process.env.SESSION_SECRET,
 //     resave: true,
 //     saveUninitialized: true

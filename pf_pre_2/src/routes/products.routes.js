@@ -27,13 +27,15 @@ routerProducts.get('/', async (req, res) => {
 
         // Sorting definition, if no parameter is received, do not sort
         if (sort != undefined) {
-            if (sort != "ASC" && sort != "DESC") {
+            if (sort.toLowerCase() != "asc" && sort.toLowerCase() != "desc") {
                 throw new Error("Invalid sorting parameter")
             } else {
-                sort == "ASC" ? options.sort = "price" : options.sort = "-price"
+                sort.toLowerCase() == "asc" ? options.sort = "price" : options.sort = "-price"
             }
         }
-
+        
+        
+        // Perform the query with filters and sorting
         const products = await productManager.paginate(filter, options)
 
         if ((page > products.totalPages) || (page <= 0)) throw new Error("Parameter 'page' is out of range")
