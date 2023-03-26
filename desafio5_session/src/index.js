@@ -1,22 +1,34 @@
 import 'dotenv/config'
 import express from 'express'
-import * as path from 'path'
-import { __dirname } from "./path.js"
+import session from 'express-session'
+import cookieParser from 'cookie-parser'
+import multer from 'multer'
 import { Server } from 'socket.io'
 import { engine } from 'express-handlebars'
 import { getManagerMessages } from './dao/daoManager.js'
-import routerProducts from './routes/products.routes.js'
-import routerSocket from './routes/socket.routes.js'
-import routerCart from './routes/carts.routes.js'
-import routerViews from './routes/views.routes.js'
+import * as path from 'path'
+import { __dirname } from "./path.js"
+import router from './routes/index.routes.js'
 import MongoStore from 'connect-mongo'
 
 //Express Server
 const app = express()
 
 //Middlewares
+app.use(cookieParser(process.env.SIGNED_COOKIE))
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
+app.use(session({
+    store: MongoStore.create({
+        mongoUrl: process.env.URLMONGODB,
+        mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
+        ttl: 30
+    }),
+    secret: process.env.SESSION_SECRET,
+    resave: true,
+    saveUninitialized: true
+}))
+
 //Port
 app.set("port", process.env.PORT || 8080)
 
@@ -31,23 +43,19 @@ app.set('view engine', 'handlebars')
 app.set('views', path.resolve(__dirname, "./views"))
 
 //Routes
-app.use('/', express.static(__dirname + '/public'))
-app.use('/', routerSocket)
-app.use('/realtimeproducts', routerSocket)
-app.use('/api/products', routerProducts)
-app.use('/api/carts', routerCart)
-app.use('/chat', routerSocket)
-app.use('/', routerViews)
-// app.use(session({
-//     store: MongoStore.create({
-//         mongoUrl: process.env.URLMONGODBURL,
-//         mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
-//         ttl: 30
-//     }),
-//     secret: process.env.SESSION_SECRET,
-//     resave: true,
-//     saveUninitialized: true
-// }))
+app.use('/', router)
+
+//Storage
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'src/public/img')
+    },
+    filename: (req, file, cb) => {
+        cb(null, `${Date.now()}${file.originalname}`)
+    }
+})
+
+const upload = multer({ storage: storage })
 
 //Launch
 const server = app.listen(app.get("port"), ()=> console.log(`Server on port ${app.get("port")}`))

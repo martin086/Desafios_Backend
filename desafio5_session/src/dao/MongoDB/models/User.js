@@ -1,44 +1,49 @@
-import { ManagerMongoDB } from "../../../db/mongoDBManager.js";
-import {Schema, model} from "mongoose";
+import { ManagerMongoDB } from "../db/mongoDBManager.js";
+import { Schema } from "mongoose";
 
 const url = process.env.URLMONGODB
 
 const userSchema = new Schema({
-  name: {
+  first_name: {
     type: String,
     required: true
   },
-  lastname: {
+  last_name: {
     type: String,
     required: true,
     index: true
   },
-  username: {
-    type: String,
-    required: true,
-    unique: true
-  },
   email: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
+    index: true
+  },
+  rol: {
+    type: String,
+    required: true,
+    default: "User"
   },
   password: {
     type: String,
     required: true
-  },
-  date: {
-    type: Date,
-    default: Date.now
   }
 });
 
 // const userModel = model('Users', userSchema);
 // export default userModel
-class ManagerUserMongoDB extends ManagerMongoDB {
+export class ManagerUserMongoDB extends ManagerMongoDB {
   constructor() {
       super(url, "users", userSchema)
   }
-}
 
-export default ManagerUserMongoDB
+  async getElementByEmail(email) {
+    super.setConnection()
+    try {
+      return await this.model.findOne({ email: email })
+    } catch (error) {
+      return error
+    }
+  }
+  
+}

@@ -1,26 +1,20 @@
-import { ManagerMongoDB } from "../../../db/mongoDBManager.js";
+import { ManagerMongoDB } from "../db/mongoDBManager.js";
 import mongoose, { Schema } from "mongoose";
-import ManagerProductsMongoDB from "./Product.js";
 
 const url = process.env.URLMONGODB
 
 const cartSchema = new mongoose.Schema({
-    products: {
-        type: [
-            {
-                productId: {
-                    type: Schema.Types.ObjectId,
-                    ref: 'products',
-                    required: true
+    products: [{
+            productId: {
+                type: Schema.Types.ObjectId,
+                ref: 'products',
+                required: true
                 },
-                quantity: {
-                    type: Number,
-                    default: 1
+            quantity: {
+                type: Number,
+                default: 1
                 }
-            }
-        ],
-        default: []
-    },
+            }],
     createdAt: {
         type: Date,
         default: Date.now
@@ -28,28 +22,34 @@ const cartSchema = new mongoose.Schema({
 });
 
 
-class ManagerCartMongoDB extends ManagerMongoDB {
+export class ManagerCartMongoDB extends ManagerMongoDB {
     constructor() {
         super(url, "carts", cartSchema)
-        this.productModel = ManagerProductsMongoDB.model
     }
-    async addProductToCart(idCart, idProduct) {
-        await this._setConnection()
+    async addProductCart(idCart, idProduct, quantity) {
+        super.setConnection()
         try {
-            console.log("esto es el cart", idCart, " y esto es el prod", idProduct)
+            //console.log("esto es el cart", idCart, " y esto es el prod", idProduct)
             const cart = await this.model.findById(idCart);
             cart.products.push({
                 productId: idProduct,
-                //quantity: quantity
+                quantity: quantity
             })
             await cart.save()
-            return cart.products
+            return cart
         } catch(error) {
             return error
         }
     }
+
+    async getProductsCart() {
+        super.setConnection()
+        const prods = await this.model.find().populate("products.productId")
+        return prods
+    }
+
     async updateProdQty(idCart, idProduct, prodQty) {
-        await this._setConnection() // con el _ se pasa a protected
+        super.setConnection()
         //Get cart and check if product exists
         const cart = await this.model.findById(idCart).populate('products.productId');
         console.log("Cart actual: ", cart)
@@ -71,7 +71,7 @@ class ManagerCartMongoDB extends ManagerMongoDB {
     }
 
     async updateAllProducts(idCart, prodArray) {
-        await this._setConnection()
+        super.setConnection()
         try {
             const cart = await this.model.findById(idCart)//.populate('products.productId');
             cart.products = prodArray
@@ -83,8 +83,7 @@ class ManagerCartMongoDB extends ManagerMongoDB {
     }
 
     async deleteProductFromCart(idCart, idProduct) {
-        await this._setConnection();
-        
+        super.setConnection();
         const cart = await this.model.findById(idCart).populate('products.productId');
         const productIndex = cart.products.findIndex(
             product => {
@@ -100,7 +99,7 @@ class ManagerCartMongoDB extends ManagerMongoDB {
     }
 
     async deleteAllProducts(idCart) {
-        await this._setConnection();
+        super.setConnection();
         
         const cart = await this.model.findById(idCart);
         try {
@@ -112,5 +111,3 @@ class ManagerCartMongoDB extends ManagerMongoDB {
         }
     }
 }
-
-export default ManagerCartMongoDB

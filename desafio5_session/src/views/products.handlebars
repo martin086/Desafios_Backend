@@ -1,4 +1,19 @@
 <h1 class="text-center">Lista de productos con paginación</h1>
+  
+  <div class="container-user-actions">
+    <p>Bienvenidx <b>{{userFirst}}</b></p>
+    <p>Rol: <b>{{userRole}}</b></p>
+    <a href="/api/session/logout">Logout</a>
+  </div>
+
+  <div class="container-categories">
+    <span>Categorías: </span>
+    <a href="?">Todas</a>
+    <a href="?category=aireacondicionado">A/A</a>
+    <a href="?category=cobre">Cobre</a>
+    <a href="?category=aislacion">Aislación</a>
+</div>
+
   <div class="container">
     <div class="row">
       {{#each payload}}

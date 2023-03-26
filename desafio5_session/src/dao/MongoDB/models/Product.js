@@ -1,4 +1,4 @@
-import { ManagerMongoDB } from "../../../db/mongoDBManager.js";
+import { ManagerMongoDB } from "../db/mongoDBManager.js";
 import { Schema } from "mongoose";
 import paginate from "mongoose-paginate-v2";
 
@@ -13,15 +13,15 @@ const productSchema = new Schema({
         type: String,
         required: true
     },
-    price: {
-        type: Number,
-        required: true,
-        index: true
-    },
     code: {
         type: String,
         required: true,
         unique: true,
+    },
+    price: {
+        type: Number,
+        required: true,
+        index: true
     },
     status: {
         type: Boolean,
@@ -51,7 +51,7 @@ export default class ManagerProductsMongoDB extends ManagerMongoDB {
     }
 
     async paginate(filter, options) {
-        this._setConnection()
+        super.setConnection()
         try {
             return await this.model.paginate(filter, options)
         } catch (error) {
