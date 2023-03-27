@@ -1,7 +1,10 @@
-import { getManagerCart } from '../dao/daoManager.js'
+import { getManagerCart, getManagerProducts } from '../dao/daoManager.js'
 
-const data = await getManagerCart()
-const cartManager = new data.ManagerCartMongoDB
+const cartManagerData = await getManagerCart()
+const cartManager = cartManagerData
+
+const productManagerData = await getManagerProducts()
+const productManager = new productManagerData()
 
 //Create New Cart
 export const createCart = async (req, res) => {
@@ -43,7 +46,7 @@ export const addProductCart = async (req, res) => {
     const idProduct = req.params.pid;
     
     try {
-        const newProduct = await prodManager.getElementById(idProduct);
+        const newProduct = await productManager.getElementById(idProduct);
         //console.log(newProduct)
         if(newProduct) {
             console.log("llegué al if")

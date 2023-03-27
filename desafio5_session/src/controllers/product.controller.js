@@ -1,7 +1,7 @@
 import { getManagerProducts } from "../dao/daoManager.js";
 
 const productManagerData = await getManagerProducts()
-const productManager = new productManagerdata()
+const productManager = new productManagerData()
 
 //Get all existing products.
 export const getProducts = async (req, res) => {
