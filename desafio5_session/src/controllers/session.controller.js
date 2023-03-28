@@ -10,7 +10,7 @@ export const getSession = async (req, res) => {
             }
             return sessionData
         } else {
-            res.redirect('/login', 500, { message: "Logueate para continuar" })
+            res.redirect('/login', 500, { message: "Please Login" })
         }
     } catch (error) {
         res.status(500).json({
@@ -21,10 +21,10 @@ export const getSession = async (req, res) => {
 
 export const checkLogin = async (req, res) => {
     try {
-        // Get login info from form
+        
         const { email, password } = req.body
 
-        if (email === "admin@backend.com" && password === "adminBack3nd") {
+        if (email === "adminCoder@coder.com" && password === "adminCod3r123") {
             req.session.login = true
             req.session.userFirst = "Admin Backend"
             req.session.role = "admin"
@@ -41,7 +41,7 @@ export const checkLogin = async (req, res) => {
                 res.redirect('/products')
             } else {
                 res.status(401).json({
-                    message: "User or password incorrect"
+                    message: "Please check your credentials."
                 })
             }
         }

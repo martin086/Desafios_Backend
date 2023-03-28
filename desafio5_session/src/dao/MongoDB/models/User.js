@@ -19,15 +19,19 @@ const userSchema = new Schema({
     unique: true,
     index: true
   },
-  rol: {
+  password: {
+    type: String,
+    required: true
+  },
+  role: {
     type: String,
     required: true,
     default: "User"
   },
-  password: {
-    type: String,
-    required: true
-  }
+  createdAt: {
+    type: Date,
+    default: Date.now
+}
 });
 
 // const userModel = model('Users', userSchema);

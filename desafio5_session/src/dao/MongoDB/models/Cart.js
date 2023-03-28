@@ -1,9 +1,10 @@
 import { ManagerMongoDB } from "../db/mongoDBManager.js";
-import mongoose, { Schema } from "mongoose";
+import { Schema } from "mongoose";
+import ManagerProductsMongoDB from "./Product.js";
 
 const url = process.env.URLMONGODB
 
-const cartSchema = new mongoose.Schema({
+const cartSchema = new Schema({
     products: [{
             productId: {
                 type: Schema.Types.ObjectId,
@@ -25,11 +26,12 @@ const cartSchema = new mongoose.Schema({
 class ManagerCartMongoDB extends ManagerMongoDB {
     constructor() {
         super(url, "carts", cartSchema)
+        this.productModel = ManagerProductsMongoDB.model
     }
-    async addProductCart(idCart, idProduct, quantity) {
+    async addProductToCart(idCart, idProduct, quantity) {
         super.setConnection()
         try {
-            //console.log("esto es el cart", idCart, " y esto es el prod", idProduct)
+            console.log("esto es el cart", idCart, " y esto es el prod", idProduct)
             const cart = await this.model.findById(idCart);
             cart.products.push({
                 productId: idProduct,

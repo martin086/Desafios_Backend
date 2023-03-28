@@ -5,7 +5,7 @@ const userManagerData = await getManagerUsers()
 export const userManager = new userManagerData()
 
 export const createUser = async (req, res) => {
-    const { first_name, last_name, email, rol, password } = req.body
+    const { first_name, last_name, email, password, role = "user" } = req.body
 
     try {
         const user = await userManager.getElementByEmail(email)
@@ -19,13 +19,13 @@ export const createUser = async (req, res) => {
                 first_name: first_name,
                 last_name: last_name,
                 email: email,
-                rol: rol,
-                password: hashPassword
+                password: hashPassword,
+                role: role
             }])
 
             res.status(200).json({
                 message: { message: "User created",
-                createdUser }
+                userCreated }
             })
         }
 

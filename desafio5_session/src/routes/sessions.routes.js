@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { destroySession, checkLogin, getSession } from "../controllers/session.controller.js";
+import { destroySession, checkLogin } from "../controllers/session.controller.js";
 
 const routerSession = Router()
 

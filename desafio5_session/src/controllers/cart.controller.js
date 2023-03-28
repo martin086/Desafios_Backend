@@ -43,13 +43,13 @@ export const createCart = async (req, res) => {
 }
 
 //Add a product to Cart
-export const addProductCart = async (req, res) => {
+export const addProductToCart = async (req, res) => {
     const idCart = req.params.cid;
     const idProduct = req.params.pid;
-    
+    console.log(idCart, idProduct)
     try {
         const newProduct = await productManager.getElementById(idProduct);
-        //console.log(newProduct)
+        console.log(newProduct)
         if(newProduct) {
             console.log("llegué al if")
             const cart = await cartManager.addProductToCart(idCart, idProduct);
