@@ -33,10 +33,16 @@ class ManagerCartMongoDB extends ManagerMongoDB {
         try {
             console.log("esto es el cart", idCart, " y esto es el prod", idProduct)
             const cart = await this.model.findById(idCart);
-            cart.products.push({
-                productId: idProduct,
-                quantity: quantity
-            })
+            const productIndex = cart.products.findIndex(product => product.productId.equals(idProduct))
+            console.log("indice", productIndex)
+            if (productIndex === -1) {
+                cart.products.push({
+                    productId: idProduct,
+                    quantity: quantity
+                })   
+            } else {
+                cart.products[productIndex].quantity += quantity
+            }
             await cart.save()
             return cart
         } catch(error) {

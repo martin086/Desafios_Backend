@@ -28,10 +28,10 @@ export const checkLogin = async (req, res) => {
             req.session.login = true
             req.session.userFirst = "Admin Backend"
             req.session.role = "admin"
-            console.log(`${email} logged in`)
+            console.log(`${email} logged in as ${req.session.role}`)
             res.redirect('/products')
         } else {
-            const user = await userManager.getUserByEmail(email)
+            const user = await userManager.getElementByEmail(email)
 
             if (user && validatePassword(password, user.password)) {
                 req.session.login = true

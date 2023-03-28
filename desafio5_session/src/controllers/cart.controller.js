@@ -46,31 +46,46 @@ export const createCart = async (req, res) => {
 export const addProductToCart = async (req, res) => {
     const idCart = req.params.cid;
     const idProduct = req.params.pid;
-    console.log(idCart, idProduct)
+    //console.log(idCart, idProduct)
+
     try {
-        const newProduct = await productManager.getElementById(idProduct);
-        console.log(newProduct)
-        if(newProduct) {
-            console.log("llegué al if")
-            const cart = await cartManager.addProductToCart(idCart, idProduct);
+        const cart = await cartManager.addProductToCart(idCart, idProduct, 1);
             
-            res.send({
-                status: "success",
-                payload: cart
-            })
-        } else {
-            res.send({
-                status: "error",
-                payload: `Product ${idProduct} not found.`
-            })
-        }
-        
+        res.send({
+            status: "success",
+            payload: cart
+        })
     } catch (error) {
         res.send({
             status: "error",
-            payload: `Product ${idProduct} was not added.`
+            payload: `Product ${idProduct} not found.`
         })
     }
+
+    // try {
+    //     const newProduct = await productManager.getElementById(idProduct);
+    //     console.log(newProduct)
+    //     if(newProduct) {
+    //         console.log("llegué al if")
+    //         const cart = await cartManager.addProductToCart(idCart, idProduct);
+            
+    //         res.send({
+    //             status: "success",
+    //             payload: cart
+    //         })
+    //     } else {
+    //         res.send({
+    //             status: "error",
+    //             payload: `Product ${idProduct} not found.`
+    //         })
+    //     }
+        
+    // } catch (error) {
+    //     res.send({
+    //         status: "error",
+    //         payload: `Product ${idProduct} was not added.`
+    //     })
+    // }
 }
 //Add an array of products to the cart
 export const updateAllCart = async (req, res) => {
