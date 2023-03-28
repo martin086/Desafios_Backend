@@ -2,7 +2,7 @@ import { getManagerUsers } from "../dao/daoManager.js";
 import { createHash } from "../utils/bcrypt.js";
 
 const userManagerData = await getManagerUsers()
-export const userManager = userManagerData
+export const userManager = new userManagerData()
 
 export const createUser = async (req, res) => {
     const { first_name, last_name, email, rol, password } = req.body

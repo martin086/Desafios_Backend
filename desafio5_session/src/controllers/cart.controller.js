@@ -1,10 +1,28 @@
 import { getManagerCart, getManagerProducts } from '../dao/daoManager.js'
 
 const cartManagerData = await getManagerCart()
-const cartManager = cartManagerData
+const cartManager = new cartManagerData()
 
 const productManagerData = await getManagerProducts()
 const productManager = new productManagerData()
+
+//Get specified Cart and populate
+export const getCart = async (req, res) => {
+    try {
+        const cart = await cartManager.getElementById(req.params.cid)
+        const popCart = await cart.populate({path:'products.productId', model: cartManager.productModel})
+        
+        res.send({
+            status: "success",
+            payload: popCart
+        })
+    } catch (error) {
+        res.send({
+            status: "error",
+            payload: error.message
+        })
+    }
+}
 
 //Create New Cart
 export const createCart = async (req, res) => {
@@ -19,27 +37,11 @@ export const createCart = async (req, res) => {
     } catch (error) {
         res.send({
             status: "error",
-            payload: error
+            payload: error.message
         })
     }
 }
-//Get specified Cart and populate
-export const getCart = async (req, res) => {
-    try {
-        const cart = await cartManager.getElementById(req.params.cid)
-        const popCart = await cart.populate({path:'products.productId', model: cartManager.productModel})
-        
-        res.send({
-            status: "success",
-            payload: popCart
-        })
-    } catch (error) {
-        res.send({
-            status: "error",
-            payload: error
-        })
-    }
-}
+
 //Add a product to Cart
 export const addProductCart = async (req, res) => {
     const idCart = req.params.cid;

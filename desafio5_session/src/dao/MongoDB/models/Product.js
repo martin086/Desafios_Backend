@@ -45,7 +45,7 @@ const productSchema = new Schema({
 productSchema.plugin(paginate)
 
 
-export default class ManagerProductsMongoDB extends ManagerMongoDB {
+class ManagerProductsMongoDB extends ManagerMongoDB {
     constructor() {
         super(url, "products", productSchema)
     }
@@ -59,3 +59,5 @@ export default class ManagerProductsMongoDB extends ManagerMongoDB {
         }
     }
 }
+
+export default ManagerProductsMongoDB

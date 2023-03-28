@@ -32,7 +32,7 @@ const userSchema = new Schema({
 
 // const userModel = model('Users', userSchema);
 // export default userModel
-export class ManagerUserMongoDB extends ManagerMongoDB {
+class ManagerUserMongoDB extends ManagerMongoDB {
   constructor() {
       super(url, "users", userSchema)
   }
@@ -47,3 +47,5 @@ export class ManagerUserMongoDB extends ManagerMongoDB {
   }
   
 }
+
+export default ManagerUserMongoDB

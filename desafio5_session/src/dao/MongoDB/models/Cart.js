@@ -22,7 +22,7 @@ const cartSchema = new mongoose.Schema({
 });
 
 
-export class ManagerCartMongoDB extends ManagerMongoDB {
+class ManagerCartMongoDB extends ManagerMongoDB {
     constructor() {
         super(url, "carts", cartSchema)
     }
@@ -111,3 +111,5 @@ export class ManagerCartMongoDB extends ManagerMongoDB {
         }
     }
 }
+
+export default ManagerCartMongoDB
