@@ -50,7 +50,7 @@ export const renderProducts = async (req, res) => {
     try {
         let { limit = 10, page = 1, category = undefined, stock = undefined, sort = undefined } = req.query;
 
-        // Creating links to prev and next pages
+        // Links to prev and next pages
         const categoryLink = category ? `&category=${category}` : ""
         const stockLink = stock ? `&stock=${stock}` : ""
         const limitLink = limit ? `&limit=${limit}` : ""
@@ -88,7 +88,7 @@ export const renderProducts = async (req, res) => {
     } catch (error) {
         res.render('products', {
             status: "error",
-            payload: error
+            payload: error.message
         })
         console.log(error)
     }
