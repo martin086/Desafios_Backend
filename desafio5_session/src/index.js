@@ -10,6 +10,8 @@ import * as path from 'path'
 import { __dirname } from "./path.js"
 import router from './routes/index.routes.js'
 import MongoStore from 'connect-mongo'
+import initializePassport from './config/passport.js'
+import passport from 'passport'
 
 //Express Server
 const app = express()
@@ -28,6 +30,11 @@ app.use(session({
     resave: true,
     saveUninitialized: true
 }))
+
+//Passport
+initializePassport()
+app.use(passport.initialize())
+app.use(passport.session())
 
 //Port
 app.set("port", process.env.PORT || 8080)

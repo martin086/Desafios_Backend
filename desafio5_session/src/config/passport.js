@@ -1,8 +1,8 @@
 import passport from "passport";
 import local from 'passport-local';
 import GitHubStrategy from 'passport-github2';
-import { userManager } from "../controllers/user.controller";
-import { createHash, validatePassword } from "../utils/bcrypt";
+import { userManager } from "../controllers/user.controller.js";
+import { createHash, validatePassword } from "../utils/bcrypt.js";
 
 //Passport se maneja como un middleware.
 const LocalStrategy = local.Strategy //Estrategia local de auth.
@@ -12,7 +12,7 @@ const initializePassport = () => {
     passport.use('register', new LocalStrategy(
         { passReqToCallback: true, usernameField: 'email' }, async (req, username, password, done) => {
             //Validar y crear Usuario
-            const { first_name, last_name, email, age } = req.body
+            const { first_name, last_name, email } = req.body
             try {
                 const user = await userManager.getElementByEmail(username) //Username = email
 
