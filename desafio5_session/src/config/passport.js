@@ -94,8 +94,10 @@ const initializePassport = () => {
     passport.serializeUser((user, done) => {
         if (Array.isArray(user)) {
             done(null, user[0]._id)
+        } else {
+            done(null, user._id)
         }
-        done(null, user._id)
+        
     })
     //Eliminar la sesion del usuario
     passport.deserializeUser(async (id, done) => {
