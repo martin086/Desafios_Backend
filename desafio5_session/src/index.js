@@ -24,7 +24,7 @@ app.use(session({
     store: MongoStore.create({
         mongoUrl: process.env.URLMONGODB,
         mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
-        ttl: 30
+        ttl: 90
     }),
     secret: process.env.SESSION_SECRET,
     resave: true,
