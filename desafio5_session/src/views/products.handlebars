@@ -17,7 +17,8 @@
   <div class="container">
     <div class="row">
       {{#each payload}}
-      <div class="col-sm-4 product">
+      <div class="card col-sm-2 cardProduct">
+        <img class="card-img-top imgCardProducts" src={{thumbnail}} alt="">
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">{{title}}</h5>
@@ -25,6 +26,7 @@
             <p class="card-text">{{price}}</p>
           </div>
         </div>
+        <button class="btn btn-primary my-1" id="addToCartBtn">Comprar</button>
       </div>
       {{/each}}
     </div>
@@ -43,4 +45,4 @@
     </div>
   </div>
 
-<script src="/js/products.js"></script>
+{{!-- <script src="/js/products.js"></script> --}}
