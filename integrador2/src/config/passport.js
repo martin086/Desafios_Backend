@@ -16,10 +16,9 @@ const initializePassport = () => {
     
     const cookieExtractor = (req) => {
         //Si existen cookies en el browser, verifico si existe la cookie de JWT. Si no, asigno null.
-        const token = (req && req.cookies) ? req.cookies('jwtCookies') : null
+        const token = req.cookies ? req.cookies.jwtCookies : null
                                             //Si no existe, undefined.
-        return token
-        
+        return token    
     }
 
     passport.use('jwt', new JWTStrategy({

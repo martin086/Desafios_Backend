@@ -19,5 +19,8 @@ router.use('/api/session', routerSession)
 //router.use('/realtimeproducts', routerSocket)
 router.use('/chat', routerSocket)
 router.use('/authSession', routerGithub)
+router.use('*', (req,res) => {
+    res.status(404).send({error: "404 - Page not found"})
+})
 
 export default router
