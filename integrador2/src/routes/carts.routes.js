@@ -4,7 +4,7 @@ import { addProductToCart, createCart, emptyCart, getCart, removeProductCart, up
 const routerCart = Router()
 
 routerCart.get('/:cid', getCart)
-routerCart.post('/', createCart)
+//routerCart.post('/', createCart) Eliminamos la ruta porque ahora se crea con el usuario.
 routerCart.post('/:cid/products/:pid', addProductToCart)
 routerCart.put('/:cid', updateAllCart)
 routerCart.put('/:cid/products/:pid', updateProdQtyCart)
