@@ -28,6 +28,10 @@ const userSchema = new Schema({
     required: true,
     default: "User"
   },
+  idCart: {
+    type: Schema.Types.ObjectId,
+    ref: 'carts'
+  },
   createdAt: {
     type: Date,
     default: Date.now

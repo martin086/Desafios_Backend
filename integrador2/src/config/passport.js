@@ -3,6 +3,7 @@ import local from 'passport-local';
 import GitHubStrategy from 'passport-github2';
 import jwt from 'passport-jwt';
 import { userManager } from "../controllers/user.controller.js";
+import { cartManager } from "../controllers/cart.controller.js";
 import { createHash, validatePassword } from "../utils/bcrypt.js";
 
 //Passport se maneja como un middleware.
@@ -40,18 +41,19 @@ const initializePassport = () => {
             try {
                 const user = await userManager.getElementByEmail(username) //Username = email
 
-                if (user) { //Usario existe
+                if (user) { //Usuario existe
                     return done(null, false) //null que no hubo errores y false que no se creo el usuario
 
                 }
 
                 const passwordHash = createHash(password)
-
+                const cartCreated = await cartManager.addElements() 
                 const userCreated = await userManager.addElements([{
                     first_name: first_name,
                     last_name: last_name,
                     email: email,
-                    password: passwordHash
+                    password: passwordHash,
+                    idCart: cartCreated[0]._id
                 }])
 
                 return done(null, userCreated) //Usuario creado correctamente

@@ -1,7 +1,7 @@
 import { getManagerCart, getManagerProducts } from '../dao/daoManager.js'
 
 const cartManagerData = await getManagerCart()
-const cartManager = new cartManagerData()
+ export const cartManager = new cartManagerData()
 
 const productManagerData = await getManagerProducts()
 const productManager = new productManagerData()
