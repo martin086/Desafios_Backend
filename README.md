@@ -1,7 +1,7 @@
 # Desafios_Backend
 This folder contains all the challenges for the Backend course @Coderhouse.
 
-# Confidenza - Ecommerce: Final project for the Backend course @[CoderHouse](https://www.coderhouse.com) (class #39685)
+## Confidenza - Ecommerce: Final project for the Backend course @[CoderHouse](https://www.coderhouse.com) (class #39685)
 ## Student: Martín Suarez
 ### Path to the project: [/Desafios_Backend/final](https://github.com/martin086/Desafios_Backend/tree/master/final)
   
@@ -36,31 +36,35 @@ Backend for an e-commerce site
 
 - [express.js](https://expressjs.com/es/)
 `npm i express --save`
-- [socket.io](https://socket.io/)
-`npm i socket.io`
-- [dotenv](https://www.npmjs.com/package/dotenv/)
-`npm i dotenv`
+- [express session](https://www.npmjs.com/package/express-session)
+`npm i express-session`
 - [express-handlebars](https://handlebarsjs.com/)
 `npm i express-handlebars`
+- [dotenv](https://www.npmjs.com/package/dotenv/)
+`npm i dotenv`
+- [connect-mongo](https://www.npmjs.com/package/connect-mongo)
+`npm i connect-mongo`
 - [mongoose](https://mongoosejs.com/)
 `npm i mongoose`
 - [mongoose-paginate-v2](https://www.npmjs.com/package/mongoose-paginate-v2)
 `npm i mongoose-paginate-v2`
+- [bcrypt](https://www.npmjs.com/package/bcrypt)
+`npm i bcrypt`
+- [cookie-parser](https://www.npmjs.com/package/cookie-parser)
+`npm i cookie-parser`
+- [passport](https://www.npmjs.com/package/passport)
+`npm i passport`
+	- also used: "passport-github2", "passport-jwt", "passport-local",
 - [multer](https://www.npmjs.com/package/multer)
 `npm i multer`
+- [socket.io](https://socket.io/)
+`npm i socket.io`
+- [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
+`npm i jsonwebtoken`
 - [nodemon](https://nodemon.io/)
 `npm i nodemon -D`
 
-Other Used Dependencies:
-"bcrypt": "^5.1.0",
-"connect-mongo": "^5.0.0",
-"cookie-parser": "^1.4.6",
-"express-session": "^1.17.3",
-"jsonwebtoken": "^9.0.0",
-"passport": "^0.6.0",
-"passport-github2": "^0.1.12",
-"passport-jwt": "^4.0.1",
-"passport-local": "^1.0.0",
+
 
 
 
