@@ -3,7 +3,7 @@ This folder contains all the challenges for the Backend course @Coderhouse.
 
 ## Confidenza - Ecommerce: Final project for the Backend course @[CoderHouse](https://www.coderhouse.com) (class #39685)
 ## Student: Martín Suarez
-### Path to the project: [/Desafios_Backend/final](https://github.com/martin086/Desafios_Backend/tree/master/final)
+### Path to the final project: [/Desafios_Backend/final](https://github.com/martin086/Desafios_Backend/tree/master/final)
   
 
 Backend for an e-commerce site
