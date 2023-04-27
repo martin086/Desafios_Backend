@@ -1,16 +1,14 @@
-import { getManagerCart, getManagerProducts } from '../dao/daoManager.js'
+import { findCartById, createCart, updateCart } from "../services/CartService.js";
+import { findProductById } from "../services/ProductService.js";
+import productModel from "../models/MongoDB/productModel.js";
 
-const cartManagerData = await getManagerCart()
- export const cartManager = new cartManagerData()
-
-const productManagerData = await getManagerProducts()
-const productManager = new productManagerData()
 
 //Get specified Cart and populate
 export const getCart = async (req, res) => {
     try {
-        const cart = await cartManager.getElementById(req.params.cid)
-        const popCart = await cart.populate({path:'products.productId', model: cartManager.productModel})
+        const cart = await findCartById(req.params.cid)
+        console.log(cart)
+        const popCart = await cart.populate({path:'products.productId', model: productModel})
         
         res.send({
             status: "success",
@@ -25,10 +23,10 @@ export const getCart = async (req, res) => {
 }
 
 //Create New Cart
-export const createCart = async (req, res) => {
+export const createNewCart = async (req, res) => {
     try {
         const cart = {}
-        const newCart = await cartManager.addElements(cart)
+        const newCart = await createCart(cart)
         res.send({
             status: "success",
             payload: newCart

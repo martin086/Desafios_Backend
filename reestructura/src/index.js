@@ -69,25 +69,25 @@ const upload = multer({ storage: storage })
 const server = app.listen(app.get("port"), ()=> console.log(`Server on port ${app.get("port")}`))
 
 //Socket.io
-const io = new Server(server);
+// const io = new Server(server);
 
-const data = await getManagerMessages();
-const managerMessages = new data();
+// const data = await getManagerMessages();
+// const managerMessages = new data();
 
-io.on("connection", async (socket) => {
-    console.log("Client connected");
-    socket.on("message", async (info) => {
-        console.log(info)
-        await managerMessages.addElements([info])
-        const messages = await managerMessages.getElements()
-        console.log(messages)
-        socket.emit("allMessages", messages)
-    })
+// io.on("connection", async (socket) => {
+//     console.log("Client connected");
+//     socket.on("message", async (info) => {
+//         console.log(info)
+//         await managerMessages.addElements([info])
+//         const messages = await managerMessages.getElements()
+//         console.log(messages)
+//         socket.emit("allMessages", messages)
+//     })
 
-    socket.on("load messages", async () => {
-        const messages = await managerMessages.getElements()
-        console.log(messages)
-        socket.emit("allMessages", messages)
-    })
-})
+//     socket.on("load messages", async () => {
+//         const messages = await managerMessages.getElements()
+//         console.log(messages)
+//         socket.emit("allMessages", messages)
+//     })
+// })
 

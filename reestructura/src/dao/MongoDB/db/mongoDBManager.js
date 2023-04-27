@@ -23,7 +23,6 @@ export class ManagerMongoDB {
         this.setConnection()
         try {
             const insert = await this.model.insertMany(elements)
-            //console.log("llegué a insertar", insertar)
             return insert
         } catch(error) {
             return error

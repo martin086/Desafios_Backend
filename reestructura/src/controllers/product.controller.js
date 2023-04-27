@@ -1,7 +1,4 @@
-import { getManagerProducts } from "../dao/daoManager.js";
-
-const productManagerData = await getManagerProducts()
-const productManager = new productManagerData()
+import { findProducts, findProductById, createOneProduct, updateOneProduct, deleteOneProduct } from "../services/ProductService.js";
 
 //Get all existing products.
 export const getProducts = async (req, res) => {
@@ -32,7 +29,7 @@ export const getProducts = async (req, res) => {
         
         
         // Perform the query with filters and sorting
-        const products = await productManager.paginate(filter, options)
+        const products = await findProducts.paginate(filter, options)
 
         if ((page > products.totalPages) || (page <= 0)) throw new Error("Parameter 'page' is out of range")
 
@@ -69,7 +66,7 @@ export const getProducts = async (req, res) => {
 //Get a single product
 export const getProduct = async (req, res) => {
     try {
-        const product = await productManager.getElementById(req.params.pid)
+        const product = await findProductById(req.params.pid)
         res.send({
             status: "success",
             payload: product
@@ -85,7 +82,7 @@ export const getProduct = async (req, res) => {
 export const createProduct = async (req, res) => {
     try {
         const info = req.body;
-        let response = await productManager.addElements(info);
+        let response = await createOneProduct(info);
         res.send({
             status: "success",
             payload: response,
@@ -100,7 +97,7 @@ export const createProduct = async (req, res) => {
 //Update a single product
 export const updateProduct = async (req, res) => {
     try {
-        const product = await productManager.updateElement(req.params.pid, req.body)
+        const product = await updateOneProduct(req.params.pid, req.body)
         res.send({
             status: "success",
             payload: `Producto ${JSON.stringify(product)} actualizado.`
@@ -116,7 +113,7 @@ export const updateProduct = async (req, res) => {
 //Delete a single product.
 export const deleteProduct = async (req, res) => {
     try {
-        const product = await productManager.deleteElement(req.params.pid) 
+        const product = await deleteOneProduct(req.params.pid) 
         res.send({
             status: "success",
             payload: `Producto ${JSON.stringify(product)} eliminado.`

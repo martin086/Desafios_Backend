@@ -2,9 +2,9 @@ import passport from "passport";
 import local from 'passport-local';
 import GitHubStrategy from 'passport-github2';
 import jwt from 'passport-jwt';
-import { userManager } from "../controllers/user.controller.js";
-import { cartManager } from "../controllers/cart.controller.js";
 import { createHash, validatePassword } from "../utils/bcrypt.js";
+import { findUserByEmail, findUserById, createUser } from "../services/UserService.js";
+import { createCart } from "../services/CartService.js";
 
 //Passport se maneja como un middleware.
 const LocalStrategy = local.Strategy //Estrategia local de auth.
@@ -39,7 +39,7 @@ const initializePassport = () => {
             //Validar y crear Usuario
             const { first_name, last_name, email } = req.body
             try {
-                const user = await userManager.getElementByEmail(username) //Username = email
+                const user = await findUserByEmail(username) //Username = email
 
                 if (user) { //Usuario existe
                     return done(null, false) //null que no hubo errores y false que no se creo el usuario
@@ -47,8 +47,8 @@ const initializePassport = () => {
                 }
 
                 const passwordHash = createHash(password)
-                const cartCreated = await cartManager.addElements() 
-                const userCreated = await userManager.addElements([{
+                const cartCreated = await createCart() 
+                const userCreated = await createUser([{
                     first_name: first_name,
                     last_name: last_name,
                     email: email,
@@ -69,7 +69,7 @@ const initializePassport = () => {
     passport.use('login', new LocalStrategy({ usernameField: 'email' }, async (username, password, done) => {
 
         try {
-            const user = await userManager.getElementByEmail(username)
+            const user = await findUserByEmail(username)
 
             if (!user) { //Usuario no encontrado
                 return done(null, false)
@@ -94,17 +94,19 @@ const initializePassport = () => {
 
         try {
             console.log(profile)
-            const user = await userManager.getElementByEmail(profile._json.email)
+            const user = await findUserByEmail(profile._json.email)
 
             if(user) { //Usuario ya existe en BDD (ya se logueó antes)
                 done(null, user)
             } else {
                 const passwordHash = createHash('coder123')
-                const userCreated = await userManager.addElements([{
+                const cartCreated = await createCart()
+                const userCreated = await createUser([{
                     first_name: profile._json.name,
                     last_name: ' ',
                     email: profile._json.email,
-                    password: passwordHash //Contraseña por default
+                    password: passwordHash, //Contraseña por default
+                    idCart: cartCreated._id
                 }])
 
                 done(null, userCreated)
@@ -127,7 +129,7 @@ const initializePassport = () => {
     })
     //Eliminar la sesion del usuario
     passport.deserializeUser(async (id, done) => {
-        const user = await userManager.getElementById(id)
+        const user = await findUserById(id)
         done(null, user)
 
     })

@@ -1,29 +1,30 @@
+//const selectedDB = process.env.DBSELECTION
 
 //O importo MongoDB o importo Postgres
 export const getManagerProducts = async() => {
-    const modelProduct = process.env.DBSELECTION == 1 
-    ? await import('./MongoDB/models/Product.js').then(module => module.default) 
-    : await import('./Postgresql/models/Product.js').then(module => module.default)
-    return modelProduct
+    const productModel = process.env.DBSELECTION == 1 
+    ? await import('../models/MongoDB/productModel.js').then(module => module.default) 
+    : await import('../models/Postgresql/productModel.js').then(module => module.default)
+    return productModel
 }
 
 export const getManagerCart = async() => {
-    const modelCart = process.env.DBSELECTION == 1 
-    ? await import('./MongoDB/models/Cart.js').then(module => module.default) 
-    : await import('./Postgresql/models/Cart.js').then(module => module.default)
-    return modelCart
+    const cartModel = process.env.DBSELECTION == 1 
+    ? await import('../models/MongoDB/cartModel.js').then(module => module.default) 
+    : await import('../models/Postgresql/cartModel.js').then(module => module.default)
+    return cartModel
 }
 
 export const getManagerMessages = async() => {
-    const modelMessage = process.env.DBSELECTION == 1 
-    ? await import('./MongoDB/models/Message.js').then(module => module.default) 
-    : await import('./Postgresql/models/Message.js').then(module => module.default)
-    return modelMessage
+    const messageModel = process.env.DBSELECTION == 1 
+    ? await import('../models/MongoDB/messageModel.js').then(module => module.default) 
+    : await import('../models/Postgresql/messageModel.js').then(module => module.default)
+    return messageModel
 }
 
 export const getManagerUsers = async() => {
-    const modelUser = process.env.DBSELECTION == 1 
-    ? await import('./MongoDB/models/User.js').then(module => module.default) 
-    : await import('./Postgresql/models/User.js').then(module => module.default)
-    return modelUser
+    const userModel = process.env.DBSELECTION == 1 
+    ? await import('../models/MongoDB/userModel.js').then(module => module.default) 
+    : await import('../models/Postgresql/userModel.js').then(module => module.default)
+    return userModel
 }

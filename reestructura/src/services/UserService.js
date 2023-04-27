@@ -29,10 +29,26 @@ export const findUserByEmail = async (email) => {
 
 export const createUser = async (user) => {
     try {
-        const newUser = await userModel(user)
+        const newUser = await userModel.create(user)
         await newUser.save()
         return newUser
     } catch (error) {
         throw new Error(error)
+    }
+}
+
+export const deleteUser = async (id) => {
+    try {
+        return await userModel.findByIdAndDelete(id);
+    } catch (error) {
+        throw new Error(error);
+    }
+}
+
+export const updateUser = async (id, info) => {
+    try {
+        return await userModel.findByIdAndUpdate(id, info);
+    } catch (error) {
+        throw new Error(error);
     }
 }

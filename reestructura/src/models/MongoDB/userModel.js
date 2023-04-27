@@ -1,7 +1,7 @@
 //import { ManagerMongoDB } from "../../dao/MongoDB/db/mongoDBManager.js";
 import { Schema, model } from "mongoose";
 
-const url = process.env.URLMONGODB
+//const url = process.env.URLMONGODB
 
 const userSchema = new Schema({
   first_name: {
