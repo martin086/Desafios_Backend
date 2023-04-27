@@ -48,13 +48,13 @@ const initializePassport = () => {
 
                 const passwordHash = createHash(password)
                 const cartCreated = await createCart() 
-                const userCreated = await createUser([{
+                const userCreated = await createUser({
                     first_name: first_name,
                     last_name: last_name,
                     email: email,
                     password: passwordHash,
-                    idCart: cartCreated[0]._id
-                }])
+                    idCart: cartCreated._id
+                })
 
                 return done(null, userCreated) //Usuario creado correctamente
 
