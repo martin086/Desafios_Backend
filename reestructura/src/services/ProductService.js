@@ -19,6 +19,15 @@ export const findProductById = async (id) => {
     }
 }
 
+export const paginateProducts = async (filters, options) => {
+    try {
+        const paginated = await productModel.paginate(filters, options);
+        return paginated 
+    } catch (error) {
+        throw error
+    }
+}
+
 export const createOneProduct = async (prod) => {
     try {
         const newProduct = await productModel.insertMany(prod)

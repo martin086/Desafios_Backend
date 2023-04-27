@@ -1,5 +1,6 @@
 import 'dotenv/config'
 import express from 'express'
+import mongoose from 'mongoose'
 import session from 'express-session'
 import cookieParser from 'cookie-parser'
 import multer from 'multer'
@@ -12,6 +13,20 @@ import router from './routes/index.routes.js'
 import MongoStore from 'connect-mongo'
 import initializePassport from './config/passport.js'
 import passport from 'passport'
+import cors from 'cors'
+
+// const whiteList = ['http://localhost:3000'] //Rutas validas a mi servidor
+
+// const corsOptions = { //Reviso si el cliente que intenta ingresar a mi servidor esta o no en esta lista
+//     origin: (origin, callback) => {
+//         if (whiteList.indexOf(origin) !== -1) {
+//             callback(null, true)
+//         } else {
+//             callback(new Error('Not allowed by Cors'))
+//         }
+//     }
+// }
+
 
 //Express Server
 const app = express()
@@ -30,6 +45,18 @@ app.use(session({
     resave: true,
     saveUninitialized: true
 }))
+
+//Mongoose
+const connectionMongoose = async () => {
+    await mongoose.connect(process.env.URLMONGODB, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    })
+        .catch((err) => console.log(err));
+}
+
+connectionMongoose()
+
 
 //Passport
 initializePassport()

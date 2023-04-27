@@ -10,7 +10,9 @@ program.parse()
 const enviroment = program.opts().mode
 
 dotenv.config({
-    path: enviroment === "DEVELOPMENT" ? './.env.development' : './.env.production'
+    path: enviroment === "DEVELOPMENT" 
+    ? './.env.development' 
+    : './.env.production'
 })
 
 export default {

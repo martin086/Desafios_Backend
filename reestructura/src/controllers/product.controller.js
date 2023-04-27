@@ -1,4 +1,4 @@
-import { findProducts, findProductById, createOneProduct, updateOneProduct, deleteOneProduct } from "../services/ProductService.js";
+import { findProducts, findProductById, paginateProducts, createOneProduct, updateOneProduct, deleteOneProduct } from "../services/ProductService.js";
 
 //Get all existing products.
 export const getProducts = async (req, res) => {
@@ -29,7 +29,7 @@ export const getProducts = async (req, res) => {
         
         
         // Perform the query with filters and sorting
-        const products = await findProducts.paginate(filter, options)
+        const products = await paginateProducts(filter, options)
 
         if ((page > products.totalPages) || (page <= 0)) throw new Error("Parameter 'page' is out of range")
 

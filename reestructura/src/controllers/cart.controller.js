@@ -8,7 +8,8 @@ export const getCart = async (req, res) => {
     try {
         const cart = await findCartById(req.params.cid)
         console.log(cart)
-        const popCart = await cart.populate({path:'products.productId', model: productModel})
+        const popCart = await cart.populate({
+            path:'products.productId', model: productModel})
         
         res.send({
             status: "success",
