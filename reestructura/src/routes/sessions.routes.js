@@ -1,11 +1,14 @@
 import { Router } from "express";
-import { destroySession, checkLogin } from "../controllers/session.controller.js";
+import { destroySession, loginUser, registerUser } from "../controllers/session.controller.js";
 import passport from "passport";
 import { passportError, roleVerification } from "../utils/errorMessages.js";
 
 const routerSession = Router()
 
-routerSession.post('/login', checkLogin)
+routerSession.post('/register', registerUser)
+routerSession.post('/login', loginUser)
+
+
 routerSession.get('/logout', destroySession)
 routerSession.get('testJWT', passport.authenticate('jwt', {session: false}, (req, res) => {
     res.send({"message": "tokenJWT"})

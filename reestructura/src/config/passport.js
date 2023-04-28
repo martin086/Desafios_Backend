@@ -55,15 +55,12 @@ const initializePassport = () => {
                     password: passwordHash,
                     idCart: cartCreated._id
                 })
-
                 return done(null, userCreated) //Usuario creado correctamente
 
             } catch (error) {
                 return done(error)
             }
-
         }
-
     ))
     
     passport.use('login', new LocalStrategy({ usernameField: 'email' }, async (username, password, done) => {

@@ -5,7 +5,7 @@ import passport from 'passport';
 const routerUser = Router()
 
 routerUser.get("/", getUsers)
-routerUser.post("/register", passport.authenticate('register'), createNewUser)
+//routerUser.post("/register", passport.authenticate('register'), createNewUser)
 
 export default routerUser
 
