@@ -57,9 +57,9 @@ export const getProducts = async (req, res) => {
         })
 
     } catch (error) {
-        res.send({
-            status: "error",
-            payload: error
+        res.status(500).send({
+            message: "Error en la búsqueda del producto.",
+            error: error.message
         })
     }
 }
@@ -98,12 +98,12 @@ export const createProduct = async (req, res) => {
 export const updateProduct = async (req, res) => {
     try {
         const product = await updateOneProduct(req.params.pid, req.body)
-        res.send({
+        res.status(200).send({
             status: "success",
             payload: `Producto ${JSON.stringify(product)} actualizado.`
         })
     } catch (error) {
-        res.send({
+        res.status(500).send({
             status: "error",
             payload: error
         })       
@@ -114,12 +114,12 @@ export const updateProduct = async (req, res) => {
 export const deleteProduct = async (req, res) => {
     try {
         const product = await deleteOneProduct(req.params.pid) 
-        res.send({
+        res.status(200).send({
             status: "success",
             payload: `Producto ${JSON.stringify(product)} eliminado.`
         })
     } catch (error) {
-        res.send({
+        res.status(500).send({
             status: "error",
             payload: error
         })

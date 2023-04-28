@@ -19,17 +19,17 @@ export const createCart = async (cart) => {
     }
 }
 
-export const deleteCart = async (id) => {
+export const updateCart = async (id, info) => {
     try {
-        return await cartModel.findByIdAndDelete(id);
+        return await cartModel.findByIdAndUpdate(id, info);
     } catch (error) {
         throw new Error(error);
     }
 }
 
-export const updateCart = async (id, info) => {
+export const deleteCart = async (id) => {
     try {
-        return await cartModel.findByIdAndUpdate(id, info);
+        return await cartModel.findByIdAndDelete(id);
     } catch (error) {
         throw new Error(error);
     }
