@@ -1,7 +1,4 @@
-import { getManagerProducts } from "../dao/daoManager.js";
-
-const productManagerData = await getManagerProducts()
-const productManager = new productManagerData()
+import { findProducts, findProductById, paginateProducts, createOneProduct, updateOneProduct, deleteOneProduct } from "../services/ProductService.js";
 
 //Get all existing products.
 export const getProducts = async (req, res) => {
@@ -32,7 +29,7 @@ export const getProducts = async (req, res) => {
         
         
         // Perform the query with filters and sorting
-        const products = await productManager.paginate(filter, options)
+        const products = await paginateProducts(filter, options)
 
         if ((page > products.totalPages) || (page <= 0)) throw new Error("Parameter 'page' is out of range")
 
@@ -60,16 +57,16 @@ export const getProducts = async (req, res) => {
         })
 
     } catch (error) {
-        res.send({
-            status: "error",
-            payload: error
+        res.status(500).send({
+            message: "Error en la búsqueda del producto.",
+            error: error.message
         })
     }
 }
 //Get a single product
 export const getProduct = async (req, res) => {
     try {
-        const product = await productManager.getElementById(req.params.pid)
+        const product = await findProductById(req.params.pid)
         res.send({
             status: "success",
             payload: product
@@ -85,7 +82,7 @@ export const getProduct = async (req, res) => {
 export const createProduct = async (req, res) => {
     try {
         const info = req.body;
-        let response = await productManager.addElements(info);
+        let response = await createOneProduct(info);
         res.send({
             status: "success",
             payload: response,
@@ -100,13 +97,13 @@ export const createProduct = async (req, res) => {
 //Update a single product
 export const updateProduct = async (req, res) => {
     try {
-        const product = await productManager.updateElement(req.params.pid, req.body)
-        res.send({
+        const product = await updateOneProduct(req.params.pid, req.body)
+        res.status(200).send({
             status: "success",
             payload: `Producto ${JSON.stringify(product)} actualizado.`
         })
     } catch (error) {
-        res.send({
+        res.status(500).send({
             status: "error",
             payload: error
         })       
@@ -116,13 +113,13 @@ export const updateProduct = async (req, res) => {
 //Delete a single product.
 export const deleteProduct = async (req, res) => {
     try {
-        const product = await productManager.deleteElement(req.params.pid) 
-        res.send({
+        const product = await deleteOneProduct(req.params.pid) 
+        res.status(200).send({
             status: "success",
             payload: `Producto ${JSON.stringify(product)} eliminado.`
         })
     } catch (error) {
-        res.send({
+        res.status(500).send({
             status: "error",
             payload: error
         })

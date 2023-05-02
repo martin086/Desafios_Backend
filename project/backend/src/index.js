@@ -1,5 +1,6 @@
 import 'dotenv/config'
 import express from 'express'
+import mongoose from 'mongoose'
 import session from 'express-session'
 import cookieParser from 'cookie-parser'
 import multer from 'multer'
@@ -12,6 +13,21 @@ import router from './routes/index.routes.js'
 import MongoStore from 'connect-mongo'
 import initializePassport from './config/passport.js'
 import passport from 'passport'
+import cors from 'cors'
+import nodemailer from 'nodemailer'
+
+// const whiteList = ['http://localhost:3000'] //Rutas validas a mi servidor
+
+// const corsOptions = { //Reviso si el cliente que intenta ingresar a mi servidor esta o no en esta lista
+//     origin: (origin, callback) => {
+//         if (whiteList.indexOf(origin) !== -1) {
+//             callback(null, true)
+//         } else {
+//             callback(new Error('Not allowed by Cors'))
+//         }
+//     }
+// }
+
 
 //Express Server
 const app = express()
@@ -30,6 +46,18 @@ app.use(session({
     resave: true,
     saveUninitialized: true
 }))
+
+//Mongoose
+const connectionMongoose = async () => {
+    await mongoose.connect(process.env.URLMONGODB, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    })
+        .catch((err) => console.log(err));
+}
+
+connectionMongoose()
+
 
 //Passport
 initializePassport()
@@ -65,29 +93,61 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage })
 
+//Nodemailer
+let transporter = nodemailer.createTransport({ //Genero la forma de enviar info desde mail (o sea, desde Gmail con x cuenta)
+    host: 'smtp.gmail.com', //Defino que voy a utilizar un servicio de Gmail
+    port: 465,
+    secure: true,
+    auth: {
+        user: "martinsuarezdev@gmail.com", //Mail del que se envia informacion
+        pass: process.env.EMAIL_PASS,
+        authMethod: 'LOGIN'
+    }
+
+})
+
+app.get('/email', async (req, res) => {
+    console.log(process.env.EMAIL_PASS)
+    await transporter.sendMail({
+        from: 'Test Coder martinsuarezdev@gmail.com',
+        to: "franciscopugh01@gmail.com",
+        subject: "Saludos, buenas noches",
+        html: `
+            <div>
+                <h2>Hola, segunda prueba desde la clase de Coder</h2>
+            </div>
+        `,
+        attachments: []
+    })
+    res.send("Email enviado")
+})
+
+
+
+
 //Launch
 const server = app.listen(app.get("port"), ()=> console.log(`Server on port ${app.get("port")}`))
 
 //Socket.io
-const io = new Server(server);
+// const io = new Server(server);
 
-const data = await getManagerMessages();
-const managerMessages = new data();
+// const data = await getManagerMessages();
+// const managerMessages = new data();
 
-io.on("connection", async (socket) => {
-    console.log("Client connected");
-    socket.on("message", async (info) => {
-        console.log(info)
-        await managerMessages.addElements([info])
-        const messages = await managerMessages.getElements()
-        console.log(messages)
-        socket.emit("allMessages", messages)
-    })
+// io.on("connection", async (socket) => {
+//     console.log("Client connected");
+//     socket.on("message", async (info) => {
+//         console.log(info)
+//         await managerMessages.addElements([info])
+//         const messages = await managerMessages.getElements()
+//         console.log(messages)
+//         socket.emit("allMessages", messages)
+//     })
 
-    socket.on("load messages", async () => {
-        const messages = await managerMessages.getElements()
-        console.log(messages)
-        socket.emit("allMessages", messages)
-    })
-})
+//     socket.on("load messages", async () => {
+//         const messages = await managerMessages.getElements()
+//         console.log(messages)
+//         socket.emit("allMessages", messages)
+//     })
+// })
 
