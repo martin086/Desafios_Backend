@@ -1,5 +1,6 @@
-import { findCartById, createCart, updateCart } from "../services/CartService.js";
-import { findProductById } from "../services/ProductService.js";
+import { findCartById, createCart, updateCart, deleteCart } from "../services/CartService.js";
+import { findProductById, updateOneProduct } from "../services/ProductService.js";
+import { findPurchaseById, createPurchase } from "../services/TicketService.js";
 import productModel from "../models/MongoDB/productModel.js";
 
 
@@ -183,5 +184,62 @@ export const emptyCart = async (req, res) => {
 
     } else {
         return res.status(401).send("No existe sesion activa.")
+    }
+}
+
+
+//Create New Purchase
+export const createNewPurchase = async (req, res) => {
+    if (req.session.login) {
+        const idCart = req.session.user.idCart;
+        const purchaser = req.session.user.email;
+        console.log(idCart, purchaser)
+
+        try {
+            const cart = await findCartById(idCart);
+            const popCart = await cart.populate({ 
+                path: "products.productId", model: productModel})
+            const productArray = popCart.products
+                        
+            if (productArray === -1) {
+                throw new Error("El carrito no contiene productos para facturar.");
+            }
+
+            let totalAmount = 0;
+            //console.log(productArray);
+            productArray.forEach((item) => {
+                console.log(`El precio es: $${item.productId.price}`)
+                console.log(`La cantidad es: ${item.quantity}`)
+                totalAmount += item.productId.price * item.quantity;
+                let stock = parseInt(item.productId.stock);
+                let newStock = (stock - item.quantity);
+                let idProduct = item.productId._id;
+                console.log(`El ID del producto es: ${idProduct}`)
+                console.log(`El stock actual es: ${item.productId.stock}`)
+                console.log(`El nuevo stock sería: ${newStock}`)
+                updateOneProduct(idProduct, {stock: newStock});
+            });
+            console.log(`El monto total de la compra es de: $${totalAmount}.`)
+
+            const invoice = await createPurchase({
+                total_amount: totalAmount,
+                purchaser: purchaser,
+            })     
+
+            const savedInvoice = await invoice.save();
+            await updateCart(idCart, { products: [] });
+            return res.status(201).json({
+                message: 'Purchase created successfully',
+                invoice: savedInvoice,
+            })
+
+
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({
+                message: 'Error creating purchase',
+                error: error,
+            });
+        }
     }
 }
