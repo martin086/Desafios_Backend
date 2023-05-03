@@ -107,14 +107,14 @@ let transporter = nodemailer.createTransport({ //Genero la forma de enviar info 
 })
 
 app.get('/email', async (req, res) => {
-    console.log(process.env.EMAIL_PASS)
+    //console.log(process.env.EMAIL_PASS)
     await transporter.sendMail({
         from: 'Test Coder martinsuarezdev@gmail.com',
         to: "franciscopugh01@gmail.com",
-        subject: "Saludos, buenas noches",
+        subject: "Saludos, nueva prueba",
         html: `
             <div>
-                <h2>Hola, segunda prueba desde la clase de Coder</h2>
+                <h2>Hola, esta es una nueva prueba desde la clase de Coder</h2>
             </div>
         `,
         attachments: []
