@@ -19,6 +19,7 @@ Backend for an e-commerce site
 	- GET '/`cart_id`': Returns a cart with all the products that contains based on cart_id.
 	- POST '/': Creates an empty cart. //Deprecated. Carts are now created when user registers.
 	- POST '/`cart_id`/products/`product_id`': Adds a product based on product_id to a specific cart based on cart_id.
+	- POST '/`cart_id`/purchase': Creates a purchase ticket, based on existing products in cart and updates the current products stock according to subtracted quantities. Uses cart_id.
 	- PUT '/`cart_id`': Replaces the whole content of cart products with the ones sent by body using product_id(s) in JSON format.
 	- PUT '/`cart_id`/products/`product_id`': Modifies the specified quantity of a product using body. Eg.: {"quantity": 2}.
 	- DELETE '/`cart_id`/products/`product_id`': Deletes a specified product completely from the specified cart.
@@ -31,6 +32,10 @@ Backend for an e-commerce site
 - /user
 	- GET '/': Gets all existing users from the DB.
 	- POST '/`register`': Creates a new user in the DB using body in JSON format. (first_name, last_name, email, password)
+
+- /api/chat
+	- GET '/': Gets all messages from the DB.
+	- POST '/': Creates a new message in the DB using body in JSON format. (message)
   
 ## Main Dependencies:
 
@@ -63,10 +68,6 @@ Backend for an e-commerce site
 `npm i jsonwebtoken`
 - [nodemon](https://nodemon.io/)
 `npm i nodemon -D`
-
-
-
-
-
-
+- [nodemon](https://www.npmjs.com/package/nodemailer)
+`npm i nodemailer`
 
