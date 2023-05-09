@@ -29,9 +29,16 @@ export const sendMessage = async (req, res) => {
             message
         })
         const messages = await readMessages()
-        io.emit()
+        io.emit(messages)
+
+        res.status(200).send({
+            message: "Mensaje enviado",
+        });
 
     } catch (error) {
-
+        res.status(500).send({
+            message: "Internal server error.",
+            error: error.message
+        });
     }
 }
