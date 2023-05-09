@@ -211,12 +211,16 @@ export const createNewPurchase = async (req, res) => {
                 console.log(`El precio es: $${item.productId.price}`)
                 console.log(`La cantidad es: ${item.quantity}`)
                 totalAmount += item.productId.price * item.quantity;
+                let idProduct = item.productId._id;
                 let stock = parseInt(item.productId.stock);
                 let newStock = (stock - item.quantity);
-                let idProduct = item.productId._id;
                 console.log(`El ID del producto es: ${idProduct}`)
                 console.log(`El stock actual es: ${item.productId.stock}`)
                 console.log(`El nuevo stock sería: ${newStock}`)
+
+                if (newStock < 0) {
+                    throw new Error(`No hay stock suficiente del producto: ${item.productId.title}. Por favor eliminar del carrito para continuar.`);
+                }
                 updateOneProduct(idProduct, {stock: newStock});
             });
             console.log(`El monto total de la compra es de: $${totalAmount}.`)

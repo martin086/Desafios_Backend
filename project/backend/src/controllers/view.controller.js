@@ -93,3 +93,7 @@ export const renderProducts = async (req, res) => {
         console.log(error)
     }
 }
+
+export const viewChat = async (req, res) => {
+    res.render('chat')
+}

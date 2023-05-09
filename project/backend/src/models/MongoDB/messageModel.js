@@ -1,8 +1,6 @@
 //import { ManagerMongoDB } from "../../../db/mongoDBManager.js";
 import { Schema, model } from "mongoose";
 
-const url = process.env.URLMONGODB //consulto la url desde las variables de entorno
-
 const messageSchema = new Schema({
     name: {
         type: String,

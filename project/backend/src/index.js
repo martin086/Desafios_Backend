@@ -6,7 +6,7 @@ import cookieParser from 'cookie-parser'
 import multer from 'multer'
 import { Server } from 'socket.io'
 import { engine } from 'express-handlebars'
-import { getManagerMessages } from './dao/daoManager.js'
+import { readMessages, createMessage } from './services/MessageService.js'
 import * as path from 'path'
 import { __dirname } from "./path.js"
 import router from './routes/index.routes.js'
@@ -15,6 +15,7 @@ import initializePassport from './config/passport.js'
 import passport from 'passport'
 import cors from 'cors'
 import nodemailer from 'nodemailer'
+import { read } from 'fs'
 
 // const whiteList = ['http://localhost:3000'] //Rutas validas a mi servidor
 
@@ -128,26 +129,23 @@ app.get('/email', async (req, res) => {
 //Launch
 const server = app.listen(app.get("port"), ()=> console.log(`Server on port ${app.get("port")}`))
 
-//Socket.io
-// const io = new Server(server);
+//Socket.io (Chat Server)
+export const io = new Server(server);
 
-// const data = await getManagerMessages();
-// const managerMessages = new data();
+io.on("connection", async (socket) => {
+    console.log("Chat client online");
 
-// io.on("connection", async (socket) => {
-//     console.log("Client connected");
-//     socket.on("message", async (info) => {
-//         console.log(info)
-//         await managerMessages.addElements([info])
-//         const messages = await managerMessages.getElements()
-//         console.log(messages)
-//         socket.emit("allMessages", messages)
-//     })
+    socket.on("message", async newMessage => {
+        await createMessage([newMessage]);
+        const messages = await readMessages();
+        console.log(messages)
+        socket.emit("allMessages", messages)
+    })
 
-//     socket.on("load messages", async () => {
-//         const messages = await managerMessages.getElements()
-//         console.log(messages)
-//         socket.emit("allMessages", messages)
-//     })
-// })
+    socket.on("load messages", async () => {
+        const messages = await readMessages()
+        console.log(messages)
+        socket.emit("allMessages", messages)
+    })
+})
 
