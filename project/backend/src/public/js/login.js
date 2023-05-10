@@ -19,7 +19,7 @@ form.addEventListener('submit', event => {
             if (response.ok) {
                 window.location.href = '/products';
             } else {
-                alert("Datos erróneos")
+                alert("Credenciales inválidas.")
             }
         })
 })

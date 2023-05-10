@@ -33,7 +33,7 @@ export const loginUser = async (req, res, next) => {
                 })
             }
             if (!user) {
-                return res.status(401).send("Correo electrónico o contraseña incorrecta")
+                return res.status(401).send("Datos incorrectos.")
             }
             req.session.login = true;
             req.session.user = user;
@@ -88,8 +88,8 @@ export const getSession = async (req, res) => {
     try {
         if (req.session.login) {
             const sessionData = {
-                name: req.session.userFirst,
-                role: req.session.role
+                name: req.session.user.first_name,
+                role: req.session.user.role
             }
             return sessionData
         } else {

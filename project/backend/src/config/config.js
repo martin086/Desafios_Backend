@@ -7,17 +7,17 @@ program
     .option('--mode <mode>', "Ingrese el modo de trabajo", 'DEVELOPMENT')
 program.parse()
 
-const enviroment = program.opts().mode
+const environment = program.opts().mode
 
 dotenv.config({
-    path: enviroment === "DEVELOPMENT" 
+    path: environment === "DEVELOPMENT" 
     ? './.env.development' 
     : './.env.production'
 })
 
-export default {
-    port: process.env.PORT,
-    mongoURL: process.env.URLMONGODB,
-    user: process.env.USER,
-    password: process.env.PASSWORD
-}
+// export default {
+//     port: process.env.PORT,
+//     mongoURL: process.env.URLMONGODB,
+//     user: process.env.USER,
+//     password: process.env.PASSWORD
+// }

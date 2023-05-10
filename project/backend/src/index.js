@@ -1,4 +1,5 @@
 import 'dotenv/config'
+import './config/config.js'
 import express from 'express'
 import mongoose from 'mongoose'
 import session from 'express-session'
@@ -16,6 +17,8 @@ import passport from 'passport'
 import cors from 'cors'
 import nodemailer from 'nodemailer'
 import { read } from 'fs'
+import { faker } from '@faker-js/faker';
+
 
 // const whiteList = ['http://localhost:3000'] //Rutas validas a mi servidor
 
@@ -149,3 +152,24 @@ io.on("connection", async (socket) => {
     })
 })
 
+
+//Faker /mockingproducts
+// const products = []
+
+// const createRandomProducts = () => {
+//     return {
+//         productId: faker.database.mongodbObjectId(),
+//         code: faker.datatype.uuid(),
+//         price: faker.commerce.price(50, 9000, 0, '$'),
+//         name: faker.commerce.productName(),
+//         description: faker.commerce.productDescription(),
+//         stock: faker.datatype.number({ min: 0, max: 100, precision: 1 }),
+//         img: faker.image.transport()
+//     };
+// }
+
+// for (let i = 0; i < 100; i++) {
+//     products.push(createRandomProducts());
+// }
+
+// console.log(products)

@@ -66,8 +66,17 @@ const initializePassport = () => {
     passport.use('login', new LocalStrategy({ usernameField: 'email' }, async (username, password, done) => {
 
         try {
-            const user = await findUserByEmail(username)
-
+            if (username === process.env.EMAIL && password === process.env.PASSWORD) {
+                const user = {
+                    first_name: process.env.USER,
+                    last_name: " ",
+                    email: process.env.EMAIL,
+                    password: " ",
+                    role: "Admin",
+                };
+                return done(null, user);
+            } else {
+                const user = await findUserByEmail(username)
             if (!user) { //Usuario no encontrado
                 return done(null, false)
             }
@@ -76,6 +85,7 @@ const initializePassport = () => {
             }
 
             return done(null, false) //Contraseña no valida
+            }
 
         } catch (error) {
             return done(error)
