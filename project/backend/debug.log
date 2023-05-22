@@ -1,0 +1,7 @@
+[34minfo[39m: GET en /logger - 8:29:48 PM
+[31mfatal[39m: ALERTA, no hay precios en ciertos productos.
+[34minfo[39m: GET en /logger - 8:30:24 PM
+[31mfatal[39m: ALERTA, no hay precios en ciertos productos.
+[31merror[39m: ALERTA, no hay stock en ciertos productos.
+[33mwarning[39m: WARN, no hay imagenes en ciertos productos.
+[32mdebug[39m: Ok, todo funciona.

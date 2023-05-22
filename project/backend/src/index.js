@@ -16,8 +16,9 @@ import initializePassport from './config/passport.js'
 import passport from 'passport'
 import cors from 'cors'
 import nodemailer from 'nodemailer'
-import { read } from 'fs'
-import { faker } from '@faker-js/faker';
+import { errorHandler } from './config/middlewares.js'
+import { addLogger } from './utils/logger.js'
+
 
 
 // const whiteList = ['http://localhost:3000'] //Rutas validas a mi servidor
@@ -126,7 +127,18 @@ app.get('/email', async (req, res) => {
     res.send("Email enviado")
 })
 
+// Error Handler
+app.use(errorHandler)
 
+//Logger
+app.use(addLogger)
+app.get("/loggerTest", (req,res) => {
+    req.logger.fatal("ALERTA, no hay precios en ciertos productos.")
+    req.logger.error("ALERTA, no hay stock en ciertos productos.")
+    req.logger.warning("WARN, no hay imagenes en ciertos productos.")
+    req.logger.debug("Ok, todo funciona.")
+    res.send("Hola esto es un Logger")
+})
 
 
 //Launch
@@ -153,23 +165,32 @@ io.on("connection", async (socket) => {
 })
 
 
-//Faker /mockingproducts
-// const products = []
+//Subprocesos e Hilos
+// import cluster from 'cluster'
+// import { cpus } from 'os'
+// import express from 'express'
 
-// const createRandomProducts = () => {
-//     return {
-//         productId: faker.database.mongodbObjectId(),
-//         code: faker.datatype.uuid(),
-//         price: faker.commerce.price(50, 9000, 0, '$'),
-//         title: faker.commerce.productName(),
-//         description: faker.commerce.productDescription(),
-//         stock: faker.datatype.number({ min: 0, max: 100, precision: 1 }),
-//         img: faker.image.transport()
-//     };
+// const numSubProcesos = cpus().length
+
+
+// if (cluster.isPrimary) {
+//     console.log("Soy el proceso principal supervisor")
+//     for (let i = 0; i < numSubProcesos; i++) {
+//         cluster.fork() //Genero un proceso hilo
+//     }
+
+// } else {
+//     const app = express()
+//     app.get("/suma", (req, res) => {
+//         let suma = 0
+
+//         for (let i = 0; i < 100000; i++) {
+//             suma += i
+//         }
+//         console.log({ status: "success", message: `Hola, soy un subproceso con el id ${process.pid} con el resultado ${suma}` })
+//         res.send("Hola")
+//     })
+//     console.log(`Hola, soy un subproceso con el id ${process.pid}`)
+//     app.listen(4000, () => console.log("Server on port 4000"))
+//     //cluster.fork() No puedo generar un subproceso a traves de un subproceso
 // }
-
-// for (let i = 0; i < 100; i++) {
-//     products.push(createRandomProducts());
-// }
-
-// console.log(products)

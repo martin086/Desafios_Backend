@@ -1,3 +1,5 @@
+import { EErrors } from "../utils/customErrors/enums.js"
+
 export const checkSessionRole = (role) => {
     return (req, res, next) => {
         if (!req.session.login) {
@@ -22,5 +24,17 @@ export const isSessionActive = async (req, res, next) => {
             message: "Internal server error",
             error: error.message
         })
+    }
+}
+
+
+// ErrorHandler
+export const errorHandler = (error, req, res, next) => {
+    switch (error.code) {
+        case EErrors.REQUIRED_ERROR:
+            res.send({ status: `error`, error: error.name })
+            break
+        default:
+            res.send({ status: `error`, error: `Unhandled error` })
     }
 }
