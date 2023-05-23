@@ -1,9 +1,41 @@
-[31mfatal[39m: ALERTA, no hay precios en ciertos productos.
-[31mfatal[39m: ALERTA, no hay precios en ciertos productos.
-[31mfatal[39m: ALERTA, no hay precios en ciertos productos.
-[31mfatal[39m: ALERTA, no hay precios en ciertos productos.
-[31mfatal[39m: ALERTA, no hay precios en ciertos productos.
-[31mfatal[39m: ALERTA, no hay precios en ciertos productos.
-[31merror[39m: ALERTA, no hay stock en ciertos productos.
-[31merror[39m: ALERTA, no hay stock en ciertos productos.
-[33mwarning[39m: WARN, no hay imagenes en ciertos productos.
+[34minfo[39m: GET en /logger - 1:50:42 PM
+[34minfo[39m: GET en /logger - 1:51:20 PM
+[34minfo[39m: GET en /logger - 1:51:24 PM
+[34minfo[39m: GET en /logger - 1:54:04 PM
+[34minfo[39m: GET en /logger - 2:05:16 PM
+[34minfo[39m: GET en /logger - 2:05:16 PM
+[34minfo[39m: GET en /logger - 2:05:27 PM
+[34minfo[39m: GET en /logger - 2:09:41 PM
+[34minfo[39m: GET en /logger - 2:33:50 PM
+[34minfo[39m: GET en /logger - 2:33:50 PM
+[34minfo[39m: GET en /loggerbla - 2:33:55 PM
+[34minfo[39m: GET en /error - 2:34:01 PM
+[34minfo[39m: GET en /logger - 2:34:10 PM
+[34minfo[39m: GET en /logger - 2:36:39 PM
+[34minfo[39m: GET en /logger - 2:36:39 PM
+[34minfo[39m: GET en /loggerTest/fatal - 2:40:00 PM
+[34minfo[39m: GET en /loggerTest/fatal - 2:40:35 PM
+[34minfo[39m: GET en /loggerTest/error - 2:40:48 PM
+[34minfo[39m: GET en /loggerTest/fatal - 2:57:50 PM
+[34minfo[39m: GET en /loggerTest - 2:57:54 PM
+[31mfatal[39m: 2:57:54 PM - ERROR FATAL, no hay precios en ciertos productos.
+[31merror[39m: 2:57:54 PM - ERROR, no hay stock en ciertos productos.
+[33mwarning[39m: 2:57:54 PM - WARNING, no hay imagenes en ciertos productos.
+[34minfo[39m: 2:57:54 PM - INFO, algunos avisos.
+[34minfo[39m: GET en /loggerTest - 2:59:18 PM
+[31mfatal[39m: 2:59:18 PM - ERROR FATAL, no hay precios en ciertos productos.
+[31merror[39m: 2:59:18 PM - ERROR, no hay stock en ciertos productos.
+[33mwarning[39m: 2:59:18 PM - WARNING, no hay imagenes en ciertos productos.
+[34minfo[39m: 2:59:18 PM - INFO, algunos avisos.
+[34minfo[39m: GET en /loggerTest - 2:59:37 PM
+[31mfatal[39m: 2:59:37 PM - ERROR FATAL, no hay precios en ciertos productos.
+[31merror[39m: 2:59:37 PM - ERROR, no hay stock en ciertos productos.
+[33mwarning[39m: 2:59:37 PM - WARNING, no hay imagenes en ciertos productos.
+[34minfo[39m: 2:59:37 PM - INFO, algunos avisos.
+[34minfo[39m: GET en /loggerTest - 3:00:34 PM
+[31mfatal[39m: 3:00:34 PM - ERROR FATAL, no hay precios en ciertos productos.
+[31merror[39m: 3:00:34 PM - ERROR, no hay stock en ciertos productos.
+[33mwarning[39m: 3:00:34 PM - WARNING, no hay imagenes en ciertos productos.
+[34minfo[39m: 3:00:34 PM - INFO, algunos avisos.
+[34minfo[39m: GET en /logger - 3:01:19 PM
+[34minfo[39m: GET en /logger - 3:01:19 PM

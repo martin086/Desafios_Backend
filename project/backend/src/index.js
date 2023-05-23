@@ -83,6 +83,9 @@ app.set('view engine', 'handlebars')
 app.set('views', path.resolve(__dirname, "./views"))
 app.use('/', express.static(__dirname + '/public'))
 
+//Logger
+app.use(addLogger)
+
 //Routes
 app.use('/', router)
 
@@ -129,17 +132,6 @@ app.get('/email', async (req, res) => {
 
 // Error Handler
 app.use(errorHandler)
-
-//Logger
-app.use(addLogger)
-app.get("/loggerTest", (req,res) => {
-    req.logger.fatal("ALERTA, no hay precios en ciertos productos.")
-    req.logger.error("ALERTA, no hay stock en ciertos productos.")
-    req.logger.warning("WARN, no hay imagenes en ciertos productos.")
-    req.logger.debug("Ok, todo funciona.")
-    res.send("Hola esto es un Logger")
-})
-
 
 //Launch
 const server = app.listen(app.get("port"), ()=> console.log(`Server on port ${app.get("port")}`))
