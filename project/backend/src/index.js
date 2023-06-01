@@ -186,3 +186,13 @@ io.on("connection", async (socket) => {
 //     app.listen(4000, () => console.log("Server on port 4000"))
 //     //cluster.fork() No puedo generar un subproceso a traves de un subproceso
 // }
+
+
+export const isTokenExpired = (passwordData) => {
+    const elapsedTime = Date.now() - passwordData.timestamp //Tiempo desde que se realizó la petición de cambio de contraseña.
+    const expirationTime = 60 * 60 * 1000 //Una hora
+    return elapsedTime >= expirationTime //Si True, expiró el token. Si False, todavía no.
+}
+
+//Vistas de hbs: recuperar contraseña en login
+//https://www.youtube.com/watch?v=O49g_OVPe6Q

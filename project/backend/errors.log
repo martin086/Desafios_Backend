@@ -39,3 +39,33 @@
 [34minfo[39m: 3:00:34 PM - INFO, algunos avisos.
 [34minfo[39m: GET en /logger - 3:01:19 PM
 [34minfo[39m: GET en /logger - 3:01:19 PM
+[34minfo[39m: GET en /login - 19:44:01
+[34minfo[39m: GET en /favicon.ico - 19:44:02
+[34minfo[39m: POST en /api/session/login - 19:44:12
+[34minfo[39m: GET en /products - 19:44:12
+[34minfo[39m: GET en /api/products?&limit=10&page=1 - 19:44:12
+[34minfo[39m: GET en /products?page=2 - 19:44:20
+[34minfo[39m: GET en /api/products?&limit=10&page=2 - 19:44:20
+[34minfo[39m: GET en /products?category=aislacion - 19:44:22
+[34minfo[39m: GET en /api/products?&category=aislacion&limit=10&page=1 - 19:44:22
+[34minfo[39m: GET en /products?category=cobre - 19:44:27
+[34minfo[39m: GET en /api/products?&category=cobre&limit=10&page=1 - 19:44:27
+[34minfo[39m: GET en /products?category=aireacondicionado - 19:44:29
+[34minfo[39m: GET en /api/products?&category=aireacondicionado&limit=10&page=1 - 19:44:29
+[34minfo[39m: GET en /products? - 19:44:31
+[34minfo[39m: GET en /api/products?&limit=10&page=1 - 19:44:31
+[34minfo[39m: GET en /products?page=2 - 19:44:33
+[34minfo[39m: GET en /api/products?&limit=10&page=2 - 19:44:33
+[34minfo[39m: GET en /products?page=3 - 19:44:35
+[34minfo[39m: GET en /api/products?&limit=10&page=3 - 19:44:35
+[34minfo[39m: GET en /products?page=4 - 19:44:37
+[34minfo[39m: GET en /api/products?&limit=10&page=4 - 19:44:37
+[34minfo[39m: GET en /products?page=5 - 19:44:41
+[34minfo[39m: GET en /api/products?&limit=10&page=5 - 19:44:41
+[34minfo[39m: GET en /api/session/logout - 19:44:47
+[34minfo[39m: GET en / - 19:44:47
+[34minfo[39m: GET en /products - 19:44:47
+[34minfo[39m: GET en /api/products?&limit=10&page=1 - 19:44:47
+[34minfo[39m: GET en /api/session/logout - 19:44:50
+[34minfo[39m: GET en / - 19:44:50
+[34minfo[39m: GET en /login - 19:44:50
