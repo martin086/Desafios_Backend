@@ -15,6 +15,20 @@ export const viewRegister = (req, res) => {
     res.render('register')
 }
 
+export const viewRecoverPassword = (req, res) => {
+    res.render('recover');
+};
+export const viewRecoveryEmailSent = (req, res) => {
+    res.render('recoveryEmailSent');
+};
+export const viewResetPassword = (req, res) => {
+    res.render('reset');
+};
+export const viewResetPasswordSuccess = (req, res) => {
+    res.render('resetSuccess');
+};
+
+
 export const viewCarts = async (req, res) => {
     try {
 

@@ -34,7 +34,16 @@ const userSchema = new Schema({
   createdAt: {
     type: Date,
     default: Date.now
-}
+  },
+  passwordResetToken: {
+    type: String,
+    default: '',
+  },
+  passwordResetExpires: {
+    type: Date,
+    required: true,
+    default: Date.now
+  }
 });
 
 const userModel = model('Users', userSchema);

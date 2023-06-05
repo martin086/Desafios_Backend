@@ -7,7 +7,6 @@ const routerSession = Router()
 
 routerSession.post('/register', registerUser)
 routerSession.post('/login', loginUser)
-
 routerSession.get('/logout', destroySession)
 routerSession.get('/current', getSession)
 

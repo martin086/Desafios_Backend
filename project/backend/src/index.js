@@ -102,33 +102,33 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage })
 
 //Nodemailer
-let transporter = nodemailer.createTransport({ //Genero la forma de enviar info desde mail (o sea, desde Gmail con x cuenta)
-    host: 'smtp.gmail.com', //Defino que voy a utilizar un servicio de Gmail
-    port: 465,
-    secure: true,
-    auth: {
-        user: "martinsuarezdev@gmail.com", //Mail del que se envia informacion
-        pass: process.env.EMAIL_PASS,
-        authMethod: 'LOGIN'
-    }
+// let transporter = nodemailer.createTransport({ //Genero la forma de enviar info desde mail (o sea, desde Gmail con x cuenta)
+//     host: 'smtp.gmail.com', //Defino que voy a utilizar un servicio de Gmail
+//     port: 465,
+//     secure: true,
+//     auth: {
+//         user: "martinsuarezdev@gmail.com", //Mail del que se envia informacion
+//         pass: process.env.EMAIL_PASS,
+//         authMethod: 'LOGIN'
+//     }
 
-})
+// })
 
-app.get('/email', async (req, res) => {
-    //console.log(process.env.EMAIL_PASS)
-    await transporter.sendMail({
-        from: 'Test Coder martinsuarezdev@gmail.com',
-        to: "franciscopugh01@gmail.com",
-        subject: "Saludos, nueva prueba",
-        html: `
-            <div>
-                <h2>Hola, esta es una nueva prueba desde la clase de Coder</h2>
-            </div>
-        `,
-        attachments: []
-    })
-    res.send("Email enviado")
-})
+// app.get('/email', async (req, res) => {
+//     //console.log(process.env.EMAIL_PASS)
+//     await transporter.sendMail({
+//         from: 'Test Coder martinsuarezdev@gmail.com',
+//         to: "franciscopugh01@gmail.com",
+//         subject: "Saludos, nueva prueba",
+//         html: `
+//             <div>
+//                 <h2>Hola, esta es una nueva prueba desde la clase de Coder</h2>
+//             </div>
+//         `,
+//         attachments: []
+//     })
+//     res.send("Email enviado")
+// })
 
 // Error Handler
 app.use(errorHandler)
@@ -188,11 +188,10 @@ io.on("connection", async (socket) => {
 // }
 
 
-export const isTokenExpired = (passwordData) => {
-    const elapsedTime = Date.now() - passwordData.timestamp //Tiempo desde que se realizó la petición de cambio de contraseña.
-    const expirationTime = 60 * 60 * 1000 //Una hora
-    return elapsedTime >= expirationTime //Si True, expiró el token. Si False, todavía no.
-}
+// export const isTokenExpired = (passwordData) => {
+//     const elapsedTime = Date.now() - passwordData.timestamp //Tiempo desde que se realizó la petición de cambio de contraseña.
+//     const expirationTime = 60 * 60 * 1000 //Una hora
+//     return elapsedTime >= expirationTime //Si True, expiró el token. Si False, todavía no.
+// }
 
-//Vistas de hbs: recuperar contraseña en login
 //https://www.youtube.com/watch?v=O49g_OVPe6Q

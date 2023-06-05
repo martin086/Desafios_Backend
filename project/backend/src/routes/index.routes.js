@@ -16,7 +16,7 @@ const router = Router()
 router.use('/', routerViews)
 router.use('/api/products', routerProduct)
 router.use('/api/carts', routerCart)
-router.use('/user', routerUser)
+router.use('/api/user', routerUser)
 router.use('/api/session', routerSession)
 router.use('/api/chat', routerChat)
 
