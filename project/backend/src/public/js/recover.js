@@ -15,10 +15,10 @@ form.addEventListener('submit', event => {
         body: new URLSearchParams(formData).toString()
     }
 
-    fetch('password/recover', options)
+    fetch('api/session/password/createlink', options)
         .then(response => {
             if (response.ok) {
-                window.location.href = 'password/recoveryEmailSent'
+                window.location.href = 'password/forgot'
             } else {
                 throw new Error('Error al recuperar contraseña')
             }

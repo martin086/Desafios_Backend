@@ -16,16 +16,11 @@ export const viewRegister = (req, res) => {
 }
 
 export const viewRecoverPassword = (req, res) => {
-    res.render('recover');
+    res.render('forgotPassword');
 };
-export const viewRecoveryEmailSent = (req, res) => {
-    res.render('recoveryEmailSent');
-};
+
 export const viewResetPassword = (req, res) => {
-    res.render('reset');
-};
-export const viewResetPasswordSuccess = (req, res) => {
-    res.render('resetSuccess');
+    res.render('resetPassword');
 };
 
 

@@ -125,7 +125,7 @@ const initializePassport = () => {
     
 
 
-    //Iniciar la session del usuario
+    //Iniciar la sesion del usuario
     passport.serializeUser((user, done) => {
         if (Array.isArray(user)) {
             done(null, user[0]._id)

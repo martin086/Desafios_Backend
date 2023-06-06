@@ -1,8 +1,8 @@
 //import { getManagerUsers } from "../dao/daoManager.js";
-import { createHash } from "../utils/bcrypt.js";
 import { findUsers, findUserById, findUserByEmail, findUserByToken, createUser, deleteUser, updateUser } from "../services/UserService.js";
 import nodemailer from 'nodemailer';
 import crypto from "crypto";
+import { createHash } from "../utils/bcrypt.js";
 
 export const getUsers = async (req,res) => {
     try {
@@ -75,96 +75,86 @@ export const updateUserById = async (req, res) => {
 
 
 //Password Recovery
-let transporter = nodemailer.createTransport({ //Genero la forma de enviar info desde mail (o sea, desde Gmail con x cuenta)
-    host: 'smtp.gmail.com', //Defino que voy a utilizar un servicio de Gmail
-    port: 465,
-    secure: true,
-    auth: {
-        user: "martinsuarezdev@gmail.com", //Mail del que se envia informacion
-        pass: process.env.EMAIL_PASS,
-        authMethod: 'LOGIN'
-    }
-})
 
-export const recoverPassword = async (req, res) => {
-    const { email } = req.body;
-    if(!email) {
-        return res.status(400).send({message: "User email is required."})
-    }
-    try {
-        const user = await findUserByEmail(email);
-        const token = crypto.randomBytes(20).toString('hex');
-        if (!user) {
-            return res.render('password/recover', {
-            error: 'User with this email does not exist',
-            });
-        }
+// export const recoverPassword = async (req, res) => {
+//     const { email } = req.body;
+//     if(!email) {
+//         return res.status(400).send({message: "User email is required."})
+//     }
+//     try {
+//         const user = await findUserByEmail(email);
+//         const token = crypto.randomBytes(20).toString('hex');
+//         if (!user) {
+//             return res.render('password/recover', {
+//             error: 'User with this email does not exist',
+//             });
+//         }
         
-        user.passwordResetToken = token;
-        user.passwordResetExpires = Date.now() + 3600000; // 1 hour
-        await user.save();
+//         user.passwordResetToken = token;
+//         user.passwordResetExpires = Date.now() + 3600000; // 1 hour
+//         await user.save();
 
-        const mailOptions = {
-            from: 'martinsuarezdev@gmail.com',
-            to: user.email,
-            subject: 'Password Recovery',
-            text: `Click the following link to reset your password: http://localhost:${process.env.PORT}/password/reset/${token}`,
-        };
+//         const mailOptions = {
+//             from: 'martinsuarezdev@gmail.com',
+//             to: user.email,
+//             subject: 'Password Recovery',
+//             text: `Click the following link to reset your password: http://localhost:${process.env.PORT}/password/reset/${token}`,
+//         };
 
-        await transporter.sendMail(mailOptions);
+//         await transporter.sendMail(mailOptions);
 
-        res.cookie('resetToken', token);
-        res.render('password/recoveryEmailSent', { message: 'Password recovery email sent!' });
-        console.log("Password recovery email sent.")
-    } catch (error) {
-        console.error(error);
-        res.render('password/recover', { error: 'An error occurred. Please try again.' });
-    }
-};
+//         res.cookie('resetToken', token);
+//         res.render('password/recoveryEmailSent', { message: 'Password recovery email sent!' });
+//         console.log("Password recovery email sent.")
+//     } catch (error) {
+//         console.error(error);
+//         res.render('password/recover', { error: 'An error occurred. Please try again.' });
+//     }
+// };
 
-export const resetPassword = async (req, res) => {
-    try {
-        const { resetToken } = req.cookies;
-        const { password, confirmPassword } = req.body;
+// export const resetPassword = async (req, res) => {
+//     try {
+//         const { resetToken } = req.cookies;
+//         const { password, confirmPassword } = req.body;
 
-        console.log(`Token de recuperación: ${resetToken}`);
-        console.log(`Nuevo password: ${password} / Confirmación: ${confirmPassword}`)
+//         console.log(`Token de recuperación: ${resetToken}`);
+//         console.log(`Nuevo password: ${password} / Confirmación: ${confirmPassword}`)
 
-        if (password !== confirmPassword) {
-            return res.render('password/reset', {
-            token,
-            error: 'Passwords do not match',
-            });
-        }
+//         if (password !== confirmPassword) {
+//             return res.render('password/reset', {
+//             token,
+//             error: 'Passwords do not match',
+//             });
+//         }
 
-        const user = await findUserByToken({resetToken})
-        console.log(user)
+//         const user = await findUserByToken({resetToken})
+//         console.log(user)
 
-        if (!user) {
-            return res.render('password/reset', {
-            token,
-            error: 'Token is invalid. Please try again.',
-            });
-        }
+//         if (!user) {
+//             return res.render('password/reset', {
+//             token,
+//             error: 'Token is invalid. Please try again.',
+//             });
+//         }
 
-        const isTokenExpired = () => {
-            const elapsedTime = Date.now() - resetToken.timestamp //Tiempo desde que se realizó la petición de cambio de contraseña.
-            const expirationTime = user.passwordResetExpires //Una hora
-            return elapsedTime >= expirationTime //Si True, expiró el token. Si False, todavía no.
-        }
+//         const isTokenExpired = () => {
+//             const elapsedTime = Date.now() - resetToken.timestamp //Tiempo desde que se realizó la petición de cambio de contraseña.
+//             const expirationTime = user.passwordResetExpires //Una hora
+//             return elapsedTime >= expirationTime //Si True, expiró el token. Si False, todavía no.
+//         }
 
-        if(isTokenExpired) {
-            res.status(400).send('Token has expired. Please try again.');
-        }
-  
-        user.password = createHash(password);
-        user.passwordResetToken = undefined;
-        user.passwordResetExpires = undefined;
-        await user.save();
-  
-      res.render('password/resetSuccess', { message: 'Password reset successful!' });
-    } catch (error) {
-      console.error(error);
-      res.render('password/reset', { token, error: 'An error occurred. Please try again.' });
-    }
-  };
+//         if(isTokenExpired) {
+//             res.status(400).send('Token has expired. Please try again.');
+//         }
+
+//         user.password = createHash(password);
+//         user.passwordResetToken = undefined;
+//         user.passwordResetExpires = undefined;
+//         await user.save();
+
+//         res.render('password/resetSuccess', { message: 'Password reset successful!' });
+//     } catch (error) {
+//         console.error(error);
+//         res.render('password/reset', { token, error: 'An error occurred. Please try again.' });
+//     }
+// };

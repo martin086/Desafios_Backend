@@ -102,20 +102,19 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage })
 
 //Nodemailer
-// let transporter = nodemailer.createTransport({ //Genero la forma de enviar info desde mail (o sea, desde Gmail con x cuenta)
-//     host: 'smtp.gmail.com', //Defino que voy a utilizar un servicio de Gmail
-//     port: 465,
-//     secure: true,
-//     auth: {
-//         user: "martinsuarezdev@gmail.com", //Mail del que se envia informacion
-//         pass: process.env.EMAIL_PASS,
-//         authMethod: 'LOGIN'
-//     }
-
-// })
+export const transporter = nodemailer.createTransport({ //Genero la forma de enviar info desde mail (o sea, desde Gmail con x cuenta)
+    host: 'smtp.gmail.com', //Defino que voy a utilizar un servicio de Gmail
+    port: 465,
+    secure: true,
+    auth: {
+        user: process.env.MAILER_USER, //Mail del que se envia informacion
+        pass: process.env.MAILER_PASS,
+        authMethod: 'LOGIN'
+    }
+})
 
 // app.get('/email', async (req, res) => {
-//     //console.log(process.env.EMAIL_PASS)
+//     //console.log(process.env.MAILER_PASS)
 //     await transporter.sendMail({
 //         from: 'Test Coder martinsuarezdev@gmail.com',
 //         to: "franciscopugh01@gmail.com",

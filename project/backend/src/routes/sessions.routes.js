@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { destroySession, getSession, loginUser, registerUser } from "../controllers/session.controller.js";
+import { destroySession, getSession, loginUser, registerUser, sendResetPwdLink, resetPassword } from "../controllers/session.controller.js";
 // import passport from "passport";
 // import { passportError, roleVerification } from "../utils/errorMessages.js";
 
@@ -9,6 +9,9 @@ routerSession.post('/register', registerUser)
 routerSession.post('/login', loginUser)
 routerSession.get('/logout', destroySession)
 routerSession.get('/current', getSession)
+
+routerSession.post('/password/createlink', sendResetPwdLink)
+routerSession.put('/password/reset', resetPassword)
 
 
 // Rutas con JWT
