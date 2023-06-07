@@ -18,6 +18,8 @@ import cors from 'cors'
 import nodemailer from 'nodemailer'
 import { errorHandler } from './config/middlewares.js'
 import { addLogger } from './utils/logger.js'
+import swaggerJSDoc from 'swagger-jsdoc'
+import swaggerUiExpress from 'swagger-ui-express'
 
 
 
@@ -62,6 +64,21 @@ const connectionMongoose = async () => {
 }
 
 connectionMongoose()
+
+//Swagger
+const swaggerOptions = {
+    definition: {
+        openapi: '3.0.1',
+        info: {
+            title: "Ecommerce Final Project - Coderhouse",
+            decription: "Proyecto final de backend. Comisión: 39685. Alumno: Martín Suarez."
+        }
+    },
+    apis: [`${__dirname}/docs/**/*.yaml`]
+}
+
+const specs = swaggerJSDoc(swaggerOptions)
+app.use('/apidocs', swaggerUiExpress.serve, swaggerUiExpress.setup(specs))
 
 
 //Passport
