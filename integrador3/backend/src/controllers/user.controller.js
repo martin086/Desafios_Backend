@@ -73,25 +73,26 @@ export const updateUserById = async (req, res) => {
 
 
 export const setPremium = async (req, res, next) => {
+    const userID = req.params.uid
+    console.log(`El id de usuario es: ${userID}`)
+    const userFound = await findUserById(userID)
     try {
-        const foundUser = await findUserById(req.params.uid)
-
-        if (!foundUser) {
+        
+        if (!userFound) {
         res.status(404).send({
             status: 'error',
-            message: 'User not found'
-        })
-        return next()
+            message: 'User was not found'
+            })
+            return next()
         }
 
         let role
-        // * No admins in DB
-        foundUser.role === Roles.USER ? role = Roles.PREMIUM : role = Roles.USER
-        await updateUser(req.params.uid, { role: role })
+        userFound.role === Roles.USER ? role = Roles.PREMIUM : role = Roles.USER
+        await updateUser(userID, { role: role })
 
         res.status(200).send({
         status: 'success',
-        message: `User ${foundUser.email} role is now: ${role}`
+        message: `User ${userFound.email} role is now: ${role}`
         })
 
     } catch (error) {

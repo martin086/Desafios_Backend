@@ -22,13 +22,13 @@ const userSchema = new Schema({
     required: true
   },
   role: {
-    type: String,
+    type: Number,
     required: true,
-    default: "User"
+    default: Roles.USER
   },
   idCart: {
     type: Schema.Types.ObjectId,
-    ref: 'Carts',
+    ref: 'premiumCarts',
     required: true
   },
   createdAt: {

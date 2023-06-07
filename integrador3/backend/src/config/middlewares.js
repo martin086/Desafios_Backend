@@ -8,7 +8,7 @@ export const Roles = Object.freeze({
 
 export const checkSessionRole = (reqRole) => {
     return (req, res, next) => {
-        if (!req.session.login || req.session.user.role === Roles.ADMIN) {
+        if (req.session.login || req.session.user.role === Roles.ADMIN) {
             if (req.session.user.role < reqRole) {
                 return res.status(401).send("Access denied.");
             }
