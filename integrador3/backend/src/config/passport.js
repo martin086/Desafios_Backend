@@ -5,7 +5,7 @@ import jwt from 'passport-jwt';
 import { createHash, validatePassword } from "../utils/bcrypt.js";
 import { findUserByEmail, findUserById, createUser } from "../services/UserService.js";
 import { createCart } from "../services/CartService.js";
-import { Roles } from "../middlewares/session.js";
+import { Roles } from "./middlewares.js";
 
 //Passport se maneja como un middleware.
 const LocalStrategy = local.Strategy //Estrategia local de auth.

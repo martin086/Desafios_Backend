@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import { Roles } from "../../middlewares/session.js";
+import { Roles } from "../../config/middlewares.js";
 
 const userSchema = new Schema({
   first_name: {
