@@ -1,0 +1,73 @@
+paths:
+  /api/carts/:
+    get:
+      summary: "Consulta un carrito dado su id"
+      tags:
+        - Carts
+      responses:
+        "200":
+          description: "Usuarios encontrados"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#components/schemas/Cart"
+        "500":
+          description: "Error del servidor al obtener los usuarios"
+  /api/carts/{cid}:
+    get:  
+      summary: "Consultar un carrito dado su id"
+      tags:
+        - Carts
+      parameters:
+      - name: cid
+        in: path
+        required: true
+        description: "Id del carrito solicitado"
+        schema: 
+          $type: String
+      
+      responses:
+        "200":
+          description: "Carrito encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#components/schemas/Cart"
+
+components:
+  schemas:
+    Cart:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: "Id autogenerado"
+        products:
+          type: Array
+          properties:
+            productId: 
+              type: ObjectId
+              $ref: "#components/schemas/Products"
+              description: "Producto individual"
+            quantity:
+              type: Number
+              description: "Cantidad del producto individual"
+            _id:
+              type: ObjectId
+              description: "Id autogenerado"
+          description: "Array de productos que contiene el Carrito"
+        createdAt:
+          type: Date
+          description: "Fecha de creación del Carrito"
+      example:
+        _id: [ObjectId("6436f58b47eb1743c5ba8861")]
+        products:
+          productId: [ObjectId("64161c9e14b853ddd7d54551")]
+          quantity: 1
+          _id: [ObjectId("648252698a36c66a3764d839")]
+        createdAt: 2023-06-07T22:16:32.444+00:00
+
+
+

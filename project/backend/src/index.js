@@ -70,8 +70,8 @@ const swaggerOptions = {
     definition: {
         openapi: '3.0.1',
         info: {
-            title: "Ecommerce Final Project - Coderhouse",
-            decription: "Proyecto final de backend. Comisión: 39685. Alumno: Martín Suarez."
+            title: "Backend Final Project - Coderhouse",
+            description: "Proyecto final de backend. Comisión: 39685. Alumno: Martín Suarez."
         }
     },
     apis: [`${__dirname}/docs/**/*.yaml`]
