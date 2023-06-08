@@ -29,7 +29,7 @@ Backend for an e-commerce site
 	- POST '/`login`': Logs a user if it exists in DB using body in JSON format. (first_name, last_name, email, password)
 	- GET '/`logout`': Logs a user out the session.
 
-- /user
+- /api/user
 	- GET '/': Gets all existing users from the DB.
 	- POST '/`register`': Creates a new user in the DB using body in JSON format. (first_name, last_name, email, password)
 

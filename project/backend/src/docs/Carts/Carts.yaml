@@ -49,7 +49,7 @@ components:
           properties:
             productId: 
               type: ObjectId
-              $ref: "#components/schemas/Products"
+              $ref: "#components/schemas/Product"
               description: "Producto individual"
             quantity:
               type: Number
