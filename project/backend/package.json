@@ -6,7 +6,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon src/index.js --mode DEVELOPMENT",
-    "prod": "nodemon src/index.js --mode PRODUCTION"
+    "prod": "nodemon src/index.js --mode PRODUCTION",
+    "test": "mocha test/User.test.js"
   },
   "keywords": [],
   "author": "",
@@ -37,6 +38,8 @@
     "winston": "^3.8.2"
   },
   "devDependencies": {
+    "chai": "^4.3.7",
+    "mocha": "^10.2.0",
     "nodemon": "^2.0.21"
   }
 }

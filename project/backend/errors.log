@@ -528,3 +528,13 @@
 [34minfo[39m: POST en /api/carts/6436f58b47eb1743c5ba8861/products/64161c9e14b853ddd7d54551 - 7:12:57 PM
 [34minfo[39m: POST en /api/carts/6436f58b47eb1743c5ba8861/products/641611240f61fb679b68d007 - 7:13:59 PM
 [34minfo[39m: GET en /api/session/logout - 7:21:44 PM
+[34minfo[39m: GET en / - 8:56:19 PM
+[34minfo[39m: GET en /login - 8:56:19 PM
+[34minfo[39m: GET en /authSession/githubSession - 8:56:29 PM
+[34minfo[39m: GET en /authSession/githubSession?code=190809dbc80b0e566a3a - 8:56:30 PM
+[34minfo[39m: GET en /products - 8:56:31 PM
+[34minfo[39m: GET en /api/products?&limit=10&page=1 - 8:56:31 PM
+[34minfo[39m: GET en /api/session/logout - 8:56:34 PM
+[34minfo[39m: GET en / - 8:56:34 PM
+[34minfo[39m: GET en /login - 8:56:34 PM
+[34minfo[39m: GET en /login - 11:16:09 AM

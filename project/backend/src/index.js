@@ -63,6 +63,16 @@ const connectionMongoose = async () => {
         .catch((err) => console.log(err));
 }
 
+//Conexión para Testing
+export const connectionTestMongoose = async () => {
+    await mongoose.connect(process.env.URLMONGOTEST, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    })
+        .catch((err) => console.log(err));
+}
+
+
 connectionMongoose()
 
 //Swagger

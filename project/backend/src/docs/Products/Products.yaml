@@ -15,6 +15,23 @@ paths:
                   $ref: "#components/schemas/Product"
         "500":
           description: "Error del servidor al obtener los productos"
+    
+    post:
+      summary: "Adds products to the DB using body in JSON format."
+      tags:
+        - Products
+      responses:
+        "200":
+          description: "Agrega el listado de productos pasado por JSON usando el body."
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#components/schemas/Product"
+        "500":
+          description: "Error del servidor al obtener los productos"
+  
   /api/products/{pid}:
     get:  
       summary: "Consultar un producto dado su id"
@@ -27,7 +44,6 @@ paths:
         description: "Id del producto solicitado."
         schema: 
           $type: String
-      
       responses:
         "200":
           description: "Producto encontrado"
@@ -35,6 +51,50 @@ paths:
             application/json:
               schema:
                 $ref: "#components/schemas/Product"
+        "500":
+          description: "Error del servidor al obtener el/los productos"
+    
+    put:  
+      summary: "Modifies a product from the DB based on product_id"
+      tags:
+        - Products
+      parameters:
+      - name: pid
+        in: path
+        required: true
+        description: "Modificar alguna o todas las propiedades de un producto dado."
+        schema: 
+          $type: String
+      responses:
+        "200":
+          description: "Producto modificado"
+          content:
+            application/json:
+              schema:
+                $ref: "#components/schemas/Product"
+        "500":
+          description: "Error del servidor al actualizar el/los productos"
+
+    delete:  
+      summary: "Deletes a product from the DB based on product_id"
+      tags:
+        - Products
+      parameters:
+      - name: pid
+        in: path
+        required: true
+        description: "Eliminar un producto dado de la base de productos."
+        schema: 
+          $type: String
+      responses:
+        "200":
+          description: "Producto eliminado"
+          content:
+            application/json:
+              schema:
+                $ref: "#components/schemas/Product"
+        "500":
+          description: "Error del servidor al eliminar el/los productos"
 
 components:
   schemas:
