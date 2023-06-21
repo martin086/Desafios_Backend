@@ -68,6 +68,6 @@ Backend for an e-commerce site
 `npm i jsonwebtoken`
 - [nodemon](https://nodemon.io/)
 `npm i nodemon -D`
-- [nodemon](https://www.npmjs.com/package/nodemailer)
+- [nodemailer](https://www.npmjs.com/package/nodemailer)
 `npm i nodemailer`
 
