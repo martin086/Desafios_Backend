@@ -1,0 +1,78 @@
+.cardProducto {
+    width: 18rem;
+    margin: 4px;
+    background-color: hsl(0, 0%, 97%);
+}
+
+.cardBody {
+    background-color: white;
+    margin-bottom: 3px;
+    text-align: center;
+    color: black;
+}
+
+.cardBodyDark {
+    background-color: hsl(0, 0%, 60%);
+    margin: 1% 2%;
+    text-align: center;
+    color: whitesmoke;
+    border-radius: 2%;
+}
+
+img {
+    margin-top:3px;
+}
+
+.cardProductos {
+    margin: 4px;
+    align-items:center;
+    justify-content: center;
+}
+
+.darkMode {
+    background-color: black;
+    color: gainsboro;
+}
+
+.darkMode h2 {
+    color: gainsboro;
+}
+
+.card-img-top {
+    max-height:200px;
+    object-fit:cover;
+}
+
+.cartWidget {
+    position: relative;
+    left: 33%;
+    color:white;
+}
+
+.cantCarrito {
+    position: relative;
+    left: 13%;
+}
+
+.nav-item {
+    margin: 10px;
+}
+
+.itemDetail {
+    max-width: 540px;
+    margin-top: 20px;
+}
+
+.imgBody {
+    display: block;
+    margin: auto;
+    max-height: 100%;
+}
+
+.cartContainer {
+    margin-top:3%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
