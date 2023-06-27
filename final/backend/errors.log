@@ -542,3 +542,11 @@
 [34minfo[39m: GET en /login - 7:15:38 PM
 [34minfo[39m: GET en /favicon.ico - 7:15:39 PM
 [34minfo[39m: GET en /login - 7:15:49 PM
+[34minfo[39m: POST en /api/session/register - 21:48:55
+[34minfo[39m: POST en /api/session/login - 21:48:57
+[34minfo[39m: GET en /api/session/current - 21:48:58
+[34minfo[39m: POST en /api/session/register - 21:49:00
+[34minfo[39m: POST en /api/session/login - 21:49:01
+[34minfo[39m: GET en /api/session/current - 21:49:02
+[34minfo[39m: POST en /api/carts/undefined/products/641611240f61fb679b68d007 - 21:49:04
+[34minfo[39m: DELETE en /api/carts/undefined/products/641611240f61fb679b68d007 - 21:49:06

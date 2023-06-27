@@ -63,6 +63,8 @@ const connectionMongoose = async () => {
         .catch((err) => console.log(err));
 }
 
+connectionMongoose()
+
 //Conexión para Testing
 export const connectionTestMongoose = async () => {
     await mongoose.connect(process.env.URLMONGOTEST, {
@@ -72,7 +74,6 @@ export const connectionTestMongoose = async () => {
         .catch((err) => console.log(err));
 }
 
-//connectionMongoose()
 
 //Swagger
 const swaggerOptions = {

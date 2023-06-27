@@ -7,7 +7,7 @@ const expect = chai.expect
 const requester = supertest('http://localhost:8080') //Config inicial de la ruta para testear
 
 //Conexión a BDD Testing
-await connectionTestMongoose()
+//await connectionTestMongoose()
 
 describe('Test de la app Ecommerce', () => {
     //Test de Session
