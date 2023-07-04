@@ -64,7 +64,7 @@ export const deleteUserByEmail = async (email) => {
 
 export const updateUser = async (id, info) => {
     try {
-        return await userModel.findByIdAndUpdate(id, info, {new: true});
+        const user = await userModel.findByIdAndUpdate(id, info, {new: true});
         await user.save()
         return user
     } catch (error) {

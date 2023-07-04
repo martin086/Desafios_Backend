@@ -591,3 +591,68 @@
 [34minfo[39m: POST en /api/session/login - 6:00:58 PM
 [34minfo[39m: POST en /api/user/6436f58b47eb1743c5ba8864/documents - 6:01:07 PM
 [34minfo[39m: No file attached
+[34minfo[39m: POST en /api/session/login - 6:34:22 PM
+[34minfo[39m: POST en /api/user/6436f58b47eb1743c5ba8864/documents - 6:35:57 PM
+[34minfo[39m: POST en /api/session/login - 6:36:09 PM
+[34minfo[39m: POST en /api/user/6436f58b47eb1743c5ba8864/documents - 6:37:26 PM
+[34minfo[39m: GET en /api/user/ - 6:41:48 PM
+[34minfo[39m: GET en /favicon.ico - 6:41:48 PM
+[34minfo[39m: GET en /api/user/ - 6:43:56 PM
+[34minfo[39m: POST en /api/session/login - 6:46:32 PM
+[34minfo[39m: POST en /api/user/6436f58b47eb1743c5ba8864/documents - 6:46:39 PM
+[34minfo[39m: POST en /api/user/6436f58b47eb1743c5ba8864/documents - 6:48:36 PM
+[34minfo[39m: POST en /api/session/login - 6:48:40 PM
+[34minfo[39m: POST en /api/user/6436f58b47eb1743c5ba8864/documents - 6:48:44 PM
+[34minfo[39m: No file attached
+[34minfo[39m: POST en /api/user/6436f58b47eb1743c5ba8864/documents - 6:48:48 PM
+[34minfo[39m: POST en /api/user/6436f58b47eb1743c5ba8864/documents - 6:52:45 PM
+[34minfo[39m: POST en /api/session/login - 6:52:48 PM
+[34minfo[39m: POST en /api/user/6436f58b47eb1743c5ba8864/documents - 6:52:58 PM
+[34minfo[39m: POST en /api/user/6436f58b47eb1743c5ba8864/documents - 6:53:56 PM
+[34minfo[39m: No file attached
+[34minfo[39m: POST en /api/user/6436f58b47eb1743c5ba8864/documents - 6:54:05 PM
+[34minfo[39m: POST en /api/session/login - 6:56:31 PM
+[34minfo[39m: GET en / - 6:58:13 PM
+[34minfo[39m: GET en /login - 6:58:13 PM
+[34minfo[39m: GET en /register - 6:58:18 PM
+[34minfo[39m: POST en /api/session/register - 6:58:36 PM
+[34minfo[39m: GET en / - 6:58:42 PM
+[34minfo[39m: GET en /login - 6:58:42 PM
+[34minfo[39m: POST en /api/session/login - 6:58:52 PM
+[34minfo[39m: GET en /products - 6:58:53 PM
+[34minfo[39m: GET en /api/products?&limit=10&page=1 - 6:58:53 PM
+[34minfo[39m: POST en /api/session/login - 6:59:57 PM
+[34minfo[39m: POST en /api/user/64a4960cd8c6bccc2783f36a/documents - 7:01:02 PM
+[34minfo[39m: POST en /api/user/64a4960cd8c6bccc2783f36a/documents - 7:01:59 PM
+[34minfo[39m: POST en /api/user/64a4960cd8c6bccc2783f36a/documents - 7:03:12 PM
+[34minfo[39m: POST en /api/user/64a4960cd8c6bccc2783f36a/documents - 7:03:29 PM
+[34minfo[39m: POST en /api/user/64a4960cd8c6bccc2783f36a/documents - 7:04:57 PM
+[34minfo[39m: No file uploaded
+[34minfo[39m: POST en /api/user/64a4960cd8c6bccc2783f36a/documents - 7:05:13 PM
+[34minfo[39m: POST en /api/session/login - 7:06:11 PM
+[34minfo[39m: POST en /api/user/64a4960cd8c6bccc2783f36a/documents - 7:06:25 PM
+[34minfo[39m: POST en /api/session/login - 7:09:57 PM
+[34minfo[39m: POST en /api/user/64a4960cd8c6bccc2783f36a/documents - 7:11:05 PM
+[34minfo[39m: POST en /api/session/login - 7:13:38 PM
+[34minfo[39m: POST en /api/session/login - 7:14:22 PM
+[34minfo[39m: POST en /api/user/64a4960cd8c6bccc2783f36a/documents - 7:14:27 PM
+[34minfo[39m: GET en /products? - 7:20:43 PM
+[34minfo[39m: GET en / - 7:20:48 PM
+[34minfo[39m: GET en /login - 7:20:48 PM
+[34minfo[39m: POST en /api/session/login - 7:20:59 PM
+[34minfo[39m: GET en /products - 7:20:59 PM
+[34minfo[39m: GET en /api/products?&limit=10&page=1 - 7:20:59 PM
+[34minfo[39m: POST en /api/user/64a4960cd8c6bccc2783f36a/documents - 7:27:09 PM
+[34minfo[39m: POST en /api/session/login - 7:27:13 PM
+[34minfo[39m: POST en /api/user/64a4960cd8c6bccc2783f36a/documents - 7:27:20 PM
+[34minfo[39m: POST en /api/session/login - 7:32:12 PM
+[34minfo[39m: POST en /api/user/64a4960cd8c6bccc2783f36a/documents - 7:32:19 PM
+[34minfo[39m: 
+        <UPLOAD>
+        user email: martin086@gmail.com 
+        user id:    64a4960cd8c6bccc2783f36a
+        file name:  perfil.jpg
+        file type:  image/jpeg
+        file size:  32734
+        file path:  C:\Users\Martin\My Drive\Code\Backend\Desafios\final\backend\src\public\documents\64a4960cd8c6bccc2783f36a_perfil.jpg
+        -------------------------EOF------------------------

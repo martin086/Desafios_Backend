@@ -76,7 +76,7 @@ export const uploadDocs = async (req, res, next) => {
         const userID = req.params.uid
 
         if (!files) {
-        req.logger.info('No file attached')
+        req.logger.info('No file uploaded')
         return res.status(400).send('No file attached')
         }
 
