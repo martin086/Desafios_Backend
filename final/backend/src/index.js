@@ -116,7 +116,8 @@ app.use(addLogger)
 //Routes
 app.use('/', router)
 
-//Storage
+//Storage Multer
+/*
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, 'src/public/img')
@@ -127,6 +128,7 @@ const storage = multer.diskStorage({
 })
 
 const upload = multer({ storage: storage })
+*/
 
 //Nodemailer
 export const transporter = nodemailer.createTransport({ //Genero la forma de enviar info desde mail (o sea, desde Gmail con x cuenta)

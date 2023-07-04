@@ -550,3 +550,44 @@
 [34minfo[39m: GET en /api/session/current - 21:49:02
 [34minfo[39m: POST en /api/carts/undefined/products/641611240f61fb679b68d007 - 21:49:04
 [34minfo[39m: DELETE en /api/carts/undefined/products/641611240f61fb679b68d007 - 21:49:06
+[34minfo[39m: GET en /login - 20:02:57
+[34minfo[39m: GET en /favicon.ico - 20:02:58
+[34minfo[39m: POST en /api/session/login - 20:03:10
+[34minfo[39m: POST en /api/session/login - 20:03:15
+[34minfo[39m: POST en /api/session/login - 20:03:21
+[34minfo[39m: GET en /products - 20:03:21
+[34minfo[39m: GET en /api/products?&limit=10&page=1 - 20:03:21
+[34minfo[39m: GET en /products?page=2 - 20:03:29
+[34minfo[39m: GET en /api/products?&limit=10&page=2 - 20:03:29
+[34minfo[39m: GET en /api/session/logout - 20:03:31
+[34minfo[39m: GET en / - 20:03:31
+[34minfo[39m: GET en /login - 20:03:31
+[34minfo[39m: GET en /api/user?email=martin086@gmail.com - 20:13:29
+[34minfo[39m: GET en /api/user - 20:13:43
+[34minfo[39m: GET en /api/users - 20:13:54
+[34minfo[39m: GET en /api/user - 20:13:58
+[34minfo[39m: GET en /api/user/6436f58b47eb1743c5ba8864 - 20:14:47
+[34minfo[39m: GET en /api/user/6436f58b47eb1743c5ba8864 - 20:18:17
+[34minfo[39m: GET en /api/user - 20:18:52
+[34minfo[39m: GET en /api/user/6436f58b47eb1743c5ba8864 - 20:18:58
+[34minfo[39m: GET en /api/user/6436f58b47eb1743c5ba8864 - 20:21:27
+[34minfo[39m: GET en /api/user/6436f58b47eb1743c5ba8864 - 20:23:13
+[34minfo[39m: GET en /api/user/6436f58b47eb1743c5ba8864 - 20:23:30
+[34minfo[39m: GET en /api/user?email=martin086@gmail.com - 20:28:37
+[34minfo[39m: GET en /api/user/6436f58b47eb1743c5ba8864 - 20:31:11
+[34minfo[39m: GET en /api/user?id=6436f58b47eb1743c5ba8864 - 20:31:43
+[34minfo[39m: GET en /api/user?_id=6436f58b47eb1743c5ba8864 - 20:31:57
+[34minfo[39m: GET en /api/user?_id=6436f58b47eb1743c5ba8864 - 20:32:41
+[34minfo[39m: GET en /api/user - 20:34:56
+[34minfo[39m: GET en /api/user?email=martin086@gmail.com - 20:35:38
+[34minfo[39m: GET en /api/user?email=martin086@gmail.com - 20:37:19
+[34minfo[39m: GET en /api/user/martin086@gmail.com - 20:37:33
+[34minfo[39m: GET en /api/user/6436f58b47eb1743c5ba8864 - 20:39:02
+[34minfo[39m: GET en /api/user - 20:44:26
+[34minfo[39m: GET en /api/user/martin086@gmail.com - 20:44:34
+[34minfo[39m: GET en /api/user/6436f58b47eb1743c5ba8864 - 20:44:37
+[34minfo[39m: GET en /api/user - 5:59:57 PM
+[34minfo[39m: POST en /api/user/6436f58b47eb1743c5ba8864/documents - 6:00:43 PM
+[34minfo[39m: POST en /api/session/login - 6:00:58 PM
+[34minfo[39m: POST en /api/user/6436f58b47eb1743c5ba8864/documents - 6:01:07 PM
+[34minfo[39m: No file attached

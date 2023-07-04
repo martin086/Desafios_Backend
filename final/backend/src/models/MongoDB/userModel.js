@@ -34,6 +34,20 @@ const userSchema = new Schema({
   createdAt: {
     type: Date,
     default: Date.now
+  },
+  lastConnection: {
+    type: Date,
+    default: Date.now
+  },
+  documents: {
+    type: [{
+      name: {
+        type: String,
+      },
+      reference: {
+        type: String,
+      }
+    }]
   }
 });
 
